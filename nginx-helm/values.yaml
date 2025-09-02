@@ -1,0 +1,2 @@
+nginxMessage: nginx
+nginxReplicas: 1

@@ -1,0 +1,13 @@
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --kubelet-insecure-tls
+    target:
+      group: apps
+      kind: Deployment
+      name: metrics-server
+      namespace: kube-system
+      version: v1
+resources:
+  - https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
