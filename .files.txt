@@ -1,0 +1,16 @@
+.editorconfig
+.prettierrc
+notebook/img/github.webp
+notebook/img/kind.webp
+notebook/img/kubeadm.webp
+notebook/img/kubernetes.webp
+notebook/img/linkedin.webp
+notebook/img/microk8s.webp
+notebook/img/ubuntu.webp
+notebook/install.md
+kubeadm.webp
+kubernetes.webp
+kind.webp
+microk8s.webp
+.files.txt
+README.md
