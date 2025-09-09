@@ -22,7 +22,8 @@ https://blog.wescale.fr/microk8s-le-kube-facile
 
 https://kind.sigs.k8s.io/docs/user/configuration  
 
-https://www.youtube.com/playlist?list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
+https://www.youtube.com/playlist?list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap  
+https://www.youtube.com/playlist?list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL
 
 &nbsp;
 
