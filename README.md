@@ -3,7 +3,7 @@
 [![Kubernetes](kubernetes.webp "Kubernetes")](https://kubernetes.io)
 [![MicroK8s](microk8s.webp "MikroK8s")](https://microk8s.io)
 [![Kind](kind.webp "Kind")](https://kind.sigs.k8s.io)
-[![Kubeadm](kubeadm.webp "Kubernetes")](https://kubernetes.io/docs/reference/setup-tools/kubeadm)
+[![Kubeadm](kubeadm.webp "Kubeadm")](https://kubernetes.io/docs/reference/setup-tools/kubeadm)
 
 ## TABLE OF CONTENTS
 
