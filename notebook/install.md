@@ -78,6 +78,19 @@ kubectl: /usr/bin/kubectl
 $ kubectl version --client
 Client Version: v1.34.1
 Kustomize Version: v5.7.1
+
+$ kubectl version --client --output=yaml | yq
+clientVersion:
+  buildDate: "2025-09-09T19:44:50Z"
+  compiler: gc
+  gitCommit: 93248f9ae092f571eb870b7664c534bfc7d00f03
+  gitTreeState: clean
+  gitVersion: v1.34.1
+  goVersion: go1.24.6
+  major: "1"
+  minor: "34"
+  platform: linux/amd64
+kustomizeVersion: v5.7.1
 ```
 
 ```bash
