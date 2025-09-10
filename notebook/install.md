@@ -108,10 +108,20 @@ README.md
 $ whereis kubeadm
 kubeadm: /usr/bin/kubeadm
 
-$ kubeadm version
-kubeadm version: &version.Info{Major:"1", Minor:"34", EmulationMajor:"", EmulationMinor:"", MinCompatibilityMajo
-r:"", MinCompatibilityMinor:"", GitVersion:"v1.34.1", GitCommit:"93248f9ae092f571eb870b7664c534bfc7d00f03", GitT
-reeState:"clean", BuildDate:"2025-09-09T19:43:15Z", GoVersion:"go1.24.6", Compiler:"gc", Platform:"linux/amd64"}
+$ kubeadm version --output=short
+v1.34.1
+
+$ kubeadm version --output=yaml | yq
+clientVersion:
+  buildDate: "2025-09-09T19:43:15Z"
+  compiler: gc
+  gitCommit: 93248f9ae092f571eb870b7664c534bfc7d00f03
+  gitTreeState: clean
+  gitVersion: v1.34.1
+  goVersion: go1.24.6
+  major: "1"
+  minor: "34"
+  platform: linux/amd64
 ```
 
 &nbsp;
