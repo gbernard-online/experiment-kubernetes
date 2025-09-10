@@ -119,6 +119,47 @@ clientVersion:
   platform: linux/amd64
 ```
 
+```bash
+$ sudo mkdir --verbose /opt/kubectl-neat
+mkdir: created directory '/opt/kubectl-neat'
+
+$ curl --fail --location --show-error --silent \
+https://github.com/itaysk/kubectl-neat/releases/latest/download/kubectl-neat_linux_amd64.tar.gz |
+sudo tar --directory=/opt/kubectl-neat --extract --gunzip --verbose 
+LICENSE
+kubectl-neat
+
+$ sudo chown --verbose root: /opt/kubectl-neat/{kubectl-neat,LICENSE}
+changed ownership of '/opt/kubectl-neat/kubectl-neat' from 501:staff to root:root
+changed ownership of '/opt/kubectl-neat/LICENSE' from 501:staff to root:root
+
+$ sudo ln --symbolic --verbose /opt/kubectl-neat/kubectl-neat /usr/local/bin/kubectl-neat
+'/usr/local/bin/kubectl-neat' -> '/opt/kubectl-neat/kubectl-neat'
+
+$ kubectl-neat version
+kubectl-neat version: 2.0.4
+```
+
+```bash
+$ sudo mkdir --verbose /opt/kubeconform
+mkdir: created directory '/opt/kubeconform'
+
+$ curl --fail --location --show-error --silent \
+https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz |
+sudo tar --directory=/opt/kubeconform --extract --gunzip --verbose 
+LICENSE
+kubeconform
+
+$ sudo chown --verbose root: /opt/kubectl-neat/LICENSE
+changed ownership of '/opt/kubectl-neat/LICENSE' from 501:staff to root:root
+
+$ sudo ln --symbolic --verbose /opt/kubeconform/kubeconform /usr/local/bin/kubeconform
+'/usr/local/bin/kubeconform' -> '/opt/kubeconform/kubeconform'
+
+$ kubeconform -v
+v0.7.0
+```
+
 ## INSTALL - KUBERNETES - MICROK8S - UBUNTU 24
 
 [![Kubernetes](img/kubernetes.webp "Kubernetes")](https://kubernetes.io)1
