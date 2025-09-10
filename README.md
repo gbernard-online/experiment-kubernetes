@@ -12,7 +12,7 @@
 ## REFERENCES
 
 https://kubernetes.io/docs/home  
-https://kubernetes.io/docs/reference
+https://kubernetes.io/docs/reference  
 https://kubernetes.io/docs/reference/kubectl  
 https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands  
 https://kubernetes.io/docs/tutorials/
