@@ -17,6 +17,9 @@ https://kubernetes.io/docs/reference/kubectl
 https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands  
 https://kubernetes.io/docs/tutorials/
 
+https://github.com/itaysk/kubectl-neat  
+https://github.com/yannh/kubeconform
+
 https://microk8s.io/tutorials  
 https://blog.wescale.fr/microk8s-le-kube-facile
 
