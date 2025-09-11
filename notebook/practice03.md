@@ -2,6 +2,8 @@
 
 ## REFERENCES
 
+https://kubernetes.io/docs/reference/kubectl/generated/kubectl_api-resources  
+https://kubernetes.io/docs/reference/kubectl/generated/kubectl_create  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_scale  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_edit
 
@@ -57,61 +59,81 @@ $ kubectl get replicasets.apps nginx
 NAME    DESIRED   CURRENT   READY   AGE
 nginx   3         3         0       5s
 
-
-
-
-
-
-
-
-
 $ kubectl get pods --selector=app=nginx
 NAME          READY   STATUS    RESTARTS   AGE
-nginx-5hvcg   1/1     Running   0          10s
-nginx-dn97b   1/1     Running   0          10s
-nginx-ttmlv   1/1     Running   0          10s
+nginx-mmb2b   1/1     Running   0          15s
+nginx-phw8v   1/1     Running   0          15s
+nginx-tbkrh   1/1     Running   0          15s
 
 $ kubectl describe pods --selector=app=nginx | fgrep Controlled
 Controlled By:  ReplicaSet/nginx
 Controlled By:  ReplicaSet/nginx
 Controlled By:  ReplicaSet/nginx
 
+$ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
+cluster-worker-red
+cluster-worker-yellow
+cluster-worker-green
+
 $ kubectl scale replicaset nginx --replicas=9
 replicaset.apps/nginx scaled
 
 $ kubectl get replicasets.apps nginx
 NAME    DESIRED   CURRENT   READY   AGE
-nginx   9         9         9       2m26s
+nginx   9         9         9       68s
 
 $ kubectl get pods --selector=app=nginx
 NAME          READY   STATUS    RESTARTS   AGE
-nginx-5hvcg   1/1     Running   0          2m34s
-nginx-74w9p   1/1     Running   0          11s
-nginx-7bqlw   1/1     Running   0          11s
-nginx-dn97b   1/1     Running   0          2m34s
-nginx-n747d   1/1     Running   0          11s
-nginx-pzczl   1/1     Running   0          11s
-nginx-qwnv4   1/1     Running   0          11s
-nginx-s27h6   1/1     Running   0          11s
-nginx-ttmlv   1/1     Running   0          2m34s
+nginx-2bht7   1/1     Running   0          27s
+nginx-7pwwh   1/1     Running   0          27s
+nginx-dpc4t   1/1     Running   0          27s
+nginx-h6bfs   1/1     Running   0          27s
+nginx-lwq87   1/1     Running   0          27s
+nginx-mmb2b   1/1     Running   0          80s
+nginx-phw8v   1/1     Running   0          80s
+nginx-tbkrh   1/1     Running   0          80s
+nginx-wzz2r   1/1     Running   0          27s
+
+$ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
+cluster-worker-green
+cluster-worker-yellow
+cluster-worker-green
+cluster-worker-yellow
+cluster-worker-red
+cluster-worker-red
+cluster-worker-yellow
+cluster-worker-green
+cluster-worker-red
 
 $ kubectl edit replicasets.apps nginx
 replicaset.apps/nginx edited
+
+$ kubectl get replicasets.apps nginx --output=jsonpath='{.status.replicas}' && echo
+6
+
+$ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
+cluster-worker-green
+cluster-worker-yellow
+cluster-worker-green
+cluster-worker-yellow
+cluster-worker-red
+cluster-worker-green
 
 $ kubectl scale replicaset nginx --replicas=0
 replicaset.apps/nginx scaled
 
 $ kubectl get replicasets.apps nginx
 NAME    DESIRED   CURRENT   READY   AGE
-nginx   0         0         0       4m9s
+nginx   0         0         0       2m43s
 
 $ kubectl get pods --selector=app=nginx
 No resources found in default namespace.
 
-$ kubectl delete 
+$ kubectl delete --filename=replicaset.yaml
+replicaset.apps "nginx" deleted
 
-
-
+$ rm --verbose replicaset.yaml
+removed 'replicaset.yaml'
 ```
 
 &nbsp;
