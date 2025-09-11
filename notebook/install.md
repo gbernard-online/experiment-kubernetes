@@ -3,21 +3,26 @@
 ## REFERENCES
 
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux  
-https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm
+https://kubernetes.io/docs/reference/kubectl/generated/kubectl_version  
+https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get  
+https://kubernetes.io/docs/reference/kubectl/generated/kubectl_cluster-info
+
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm  
+https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-version/
 
 https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s  
 https://microk8s.io/docs/working-with-kubectl  
 https://microk8s.io/docs/command-reference#heading--microk8s-kubectl
 
-  
 https://kind.sigs.k8s.io/docs/user/configuration  
 https://kind.sigs.k8s.io/docs/user/ingress  
 https://iamunnip.hashnode.dev/kind-creating-a-kubernetes-cluster-part-1  
 https://iamunnip.hashnode.dev/kind-configuring-extra-port-mappings-ipv6-networking-part-4  
 https://iamunnip.hashnode.dev/kind-setting-up-an-ingress-controller-part-5
 
-https://www.youtube.com/watch?v=23MhuIVYMHE&list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL  
-https://www.youtube.com/watch?v=buRvk-Atyes&list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL
+https://www.youtube.com/watch?v=23MhuIVYMHE&list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL&index=1  
+https://www.youtube.com/watch?v=buRvk-Atyes&list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL&index=2  
+https://www.youtube.com/watch?v=AskMZMtjk2g&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap&index=9
 
 ## INSTALL - KUBERNETES - KUBEADM - UBUNTU 24
 
