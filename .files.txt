@@ -8,6 +8,8 @@ notebook/img/linkedin.webp
 notebook/img/microk8s.webp
 notebook/img/ubuntu.webp
 notebook/install.md
+notebook/practice01.md
+notebook/practice02.md
 kubeadm.webp
 kubernetes.webp
 kind.webp
