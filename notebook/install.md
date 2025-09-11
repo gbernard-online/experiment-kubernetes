@@ -3,9 +3,18 @@
 ## REFERENCES
 
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux  
-https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm  
-https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s#1-overview  
-https://kind.sigs.k8s.io/docs/user/quick-start/#installing-from-release-binaries
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm
+
+https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s  
+https://microk8s.io/docs/working-with-kubectl  
+https://microk8s.io/docs/command-reference#heading--microk8s-kubectl
+
+  
+https://kind.sigs.k8s.io/docs/user/configuration  
+https://kind.sigs.k8s.io/docs/user/ingress  
+https://iamunnip.hashnode.dev/kind-creating-a-kubernetes-cluster-part-1  
+https://iamunnip.hashnode.dev/kind-configuring-extra-port-mappings-ipv6-networking-part-4  
+https://iamunnip.hashnode.dev/kind-setting-up-an-ingress-controller-part-5
 
 https://www.youtube.com/watch?v=23MhuIVYMHE&list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL  
 https://www.youtube.com/watch?v=buRvk-Atyes&list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL
@@ -125,7 +134,7 @@ mkdir: created directory '/opt/kubectl-neat'
 
 $ curl --fail --location --show-error --silent \
 https://github.com/itaysk/kubectl-neat/releases/latest/download/kubectl-neat_linux_amd64.tar.gz |
-sudo tar --directory=/opt/kubectl-neat --extract --gunzip --verbose 
+sudo tar --directory=/opt/kubectl-neat --extract --gunzip --verbose
 LICENSE
 kubectl-neat
 
@@ -146,7 +155,7 @@ mkdir: created directory '/opt/kubeconform'
 
 $ curl --fail --location --show-error --silent \
 https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz |
-sudo tar --directory=/opt/kubeconform --extract --gunzip --verbose 
+sudo tar --directory=/opt/kubeconform --extract --gunzip --verbose
 LICENSE
 kubeconform
 
@@ -248,15 +257,9 @@ ubuntu   Ready    <none>   7m10s   v1.32.8
 $ microk8s kubectl get services
 NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   7m31s
+```
 
-$ microk8s kubectl get nodes
-NAME     STATUS   ROLES    AGE     VERSION
-ubuntu   Ready    <none>   8m28s   v1.32.8
-
-$ microk8s kubectl get services
-NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
-kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   9m4s
-
+```bash
 $ microk8s enable metrics-server
 Infer repository core for addon metrics-server
 Enabling Metrics-Server
@@ -276,6 +279,27 @@ $ sleep 30
 ```
 
 ```bash
+$ sudo microk8s enable ingress
+Infer repository core for addon ingress
+Enabling Ingress
+ingressclass.networking.k8s.io/public created
+ingressclass.networking.k8s.io/nginx created
+namespace/ingress created
+serviceaccount/nginx-ingress-microk8s-serviceaccount created
+clusterrole.rbac.authorization.k8s.io/nginx-ingress-microk8s-clusterrole created
+role.rbac.authorization.k8s.io/nginx-ingress-microk8s-role created
+clusterrolebinding.rbac.authorization.k8s.io/nginx-ingress-microk8s created
+rolebinding.rbac.authorization.k8s.io/nginx-ingress-microk8s created
+configmap/nginx-load-balancer-microk8s-conf created
+configmap/nginx-ingress-tcp-microk8s-conf created
+configmap/nginx-ingress-udp-microk8s-conf created
+daemonset.apps/nginx-ingress-microk8s-controller created
+Ingress is enabled
+
+$ sleep 60
+```
+
+```bash
 $ microk8s kubectl config view --raw >$HOME/.kube/config
 
 $ kubectl version
@@ -291,6 +315,172 @@ Server Version: v1.32.8
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
+$ kind --version
+kind version 0.30.0
+```
+
+```bash
+$ kind create cluster --config=- <<EOF
+apiVersion: kind.x-k8s.io/v1alpha4
+kind: Cluster
+name: cluster
+nodes:
+- extraPortMappings:
+  - containerPort: 80
+    hostPort: 80
+    listenAddress: 127.0.0.1
+    protocol: TCP
+  - containerPort: 443
+    hostPort: 443
+    listenAddress: 127.0.0.1
+    protocol: TCP
+  role: control-plane
+- kubeadmConfigPatches:
+  - |
+    kind: JoinConfiguration
+    nodeRegistration:
+      name: cluster-worker-green
+  labels:
+    color: green
+  role: worker
+- kubeadmConfigPatches:
+  - |
+    kind: JoinConfiguration
+    nodeRegistration:
+      name: cluster-worker-red
+  labels:
+    color: red
+  role: worker
+- kubeadmConfigPatches:
+  - |
+    kind: JoinConfiguration
+    nodeRegistration:
+      name: cluster-worker-yellow
+  labels:
+    color: yellow
+  role: worker
+EOF
+Creating cluster "cluster" ...
+ ✓ Ensuring node image (kindest/node:v1.34.0) 🖼
+ ✓ Preparing nodes 📦 📦 📦 📦  
+ ✓ Writing configuration 📜 
+ ✓ Starting control-plane 🕹️ 
+ ✓ Installing CNI 🔌 
+ ✓ Installing StorageClass 💾 
+ ✓ Joining worker nodes 🚜 
+Set kubectl context to "kind-cluster"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-cluster
+
+Thanks for using kind! 😊
+
+$ kubectl cluster-info --context=kind-cluster
+Kubernetes control plane is running at https://127.0.0.1:41155
+CoreDNS is running at https://127.0.0.1:41155/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+
+$ kubectl cluster-info dump --context=kind-cluster | jq .
+|...|
+
+$ kubectl version
+Client Version: v1.33.5
+Kustomize Version: v5.6.0
+Server Version: v1.34.0
+
+$ kubectl get nodes
+NAME                    STATUS   ROLES           AGE     VERSION
+cluster-control-plane   Ready    control-plane   2m22s   v1.34.0
+cluster-worker-green    Ready    <none>          2m9s    v1.34.0
+cluster-worker-red      Ready    <none>          2m9s    v1.34.0
+cluster-worker-yellow   Ready    <none>          2m9s    v1.34.0
+
+$ kubectl get services
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   2m34s
+
+$ kubectl get nodes
+NAME     STATUS   ROLES    AGE     VERSION
+ubuntu   Ready    <none>   8m28s   v1.32.8
+
+$ kubectl get services
+NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   9m4s
+```
+
+```bash
+$ cat >kustomization.yaml <<EOF
+patches:
+- patch: |-
+    - op: add
+      path: /spec/template/spec/containers/0/args/-
+      value: --kubelet-insecure-tls
+  target:
+    kind: Deployment
+    name: metrics-server
+    namespace: kube-system
+resources:
+- https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+EOF
+
+$ kubectl apply --kustomize=.
+serviceaccount/metrics-server created
+clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader created
+clusterrole.rbac.authorization.k8s.io/system:metrics-server created
+rolebinding.rbac.authorization.k8s.io/metrics-server-auth-reader created
+clusterrolebinding.rbac.authorization.k8s.io/metrics-server:system:auth-delegator created
+clusterrolebinding.rbac.authorization.k8s.io/system:metrics-server created
+service/metrics-server created
+deployment.apps/metrics-server created
+apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io created
+
+$ sleep 30
+
+$ rm --verbose kustomization.yaml
+removed 'kustomization.yaml'
+```
+
+```bash
+$ cat >kustomization.yaml <<EOF
+patches:
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector/kubernetes.io~1hostname"
+      value: cluster-control-plane
+  target:
+    kind: Deployment
+    name: ingress-nginx-controller
+    namespace: ingress-nginx
+resources:
+- https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/kind/deploy.yaml
+EOF
+
+$ kubectl apply --kustomize=.
+namespace/ingress-nginx created
+serviceaccount/ingress-nginx created
+serviceaccount/ingress-nginx-admission created
+role.rbac.authorization.k8s.io/ingress-nginx created
+role.rbac.authorization.k8s.io/ingress-nginx-admission created
+clusterrole.rbac.authorization.k8s.io/ingress-nginx created
+clusterrole.rbac.authorization.k8s.io/ingress-nginx-admission created
+rolebinding.rbac.authorization.k8s.io/ingress-nginx created
+rolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
+clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx created
+clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
+configmap/ingress-nginx-controller created
+service/ingress-nginx-controller created
+service/ingress-nginx-controller-admission created
+deployment.apps/ingress-nginx-controller created
+job.batch/ingress-nginx-admission-create created
+job.batch/ingress-nginx-admission-patch created
+ingressclass.networking.k8s.io/nginx created
+validatingwebhookconfiguration.admissionregistration.k8s.io/ingress-nginx-admission created
+
+$ sleep 60
+
+$ rm --verbose kustomization.yaml
+removed 'kustomization.yaml'
 ```
 
 &nbsp;
