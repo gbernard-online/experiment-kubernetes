@@ -102,6 +102,7 @@ pod "alpine" deleted
 $ rm --verbose pod.yaml
 removed 'pod.yaml'
 ```
+
 &nbsp;
 
 `-`
