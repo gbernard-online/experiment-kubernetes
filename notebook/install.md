@@ -320,8 +320,24 @@ Server Version: v1.32.8
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
+$ sudo mkdir --verbose /opt/kind
+mkdir: created directory '/opt/kind'
+
+$ sudo curl --fail --location --output /opt/kind/kind-linux-amd64 --show-error --silent \
+https://github.com/kubernetes-sigs/kind/releases/latest/download/kind-linux-amd64
+
+$ sudo chmod --verbose +x /opt/kind/kind-linux-amd64
+mode of '/opt/kind/kind-linux-amd64' changed from 0644 (rw-r--r--) to 0755 (rwxr-xr-x)
+
+$ sudo ln --symbolic --verbose /opt/kind/kind-linux-amd64 /usr/local/bin/kind
+'/usr/local/bin/kind' -> '/opt/kind/kind-linux-amd64'
+
 $ kind --version
 kind version 0.30.0
+
+$ kind completion bash | sudo dd of=/etc/bash_completion.d/kind status=none
+
+$ logout
 ```
 
 ```bash
