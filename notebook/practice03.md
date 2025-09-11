@@ -9,7 +9,7 @@ https://kubernetes.io/docs/reference/kubectl/generated/kubectl_edit
 
 https://www.youtube.com/watch?v=7gxiNW3nSW8&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
-## PRACTICE #3 - KUBERNETES - MICROK8S - UBUNTU 24
+## PRACTICE #3 - KUBERNETES - KIND - UBUNTU 24
 
 [![Kubernetes](img/kubernetes.webp "Kubernetes")](https://kubernetes.io)1
 [![Kind](img/kind.webp "Kind")](https://kind.sigs.k8s.io)0
