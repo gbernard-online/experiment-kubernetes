@@ -21,9 +21,9 @@ https://github.com/itaysk/kubectl-neat
 https://github.com/yannh/kubeconform
 
 https://microk8s.io/tutorials  
-https://blog.wescale.fr/microk8s-le-kube-facile
+https://microk8s.io/docs/command-reference
 
-https://kind.sigs.k8s.io/docs/user/configuration  
+https://kind.sigs.k8s.io/docs/user/quick-start
 
 https://www.youtube.com/playlist?list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap  
 https://www.youtube.com/playlist?list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL
