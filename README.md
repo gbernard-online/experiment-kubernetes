@@ -9,6 +9,9 @@
 
 [Install](notebook/install.md)
 
+[Practice #01](notebook/practice01.md)  
+[Practice #02](notebook/practice02.md)
+
 ## REFERENCES
 
 https://kubernetes.io/docs/home  
