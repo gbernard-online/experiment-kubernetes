@@ -263,6 +263,13 @@ ubuntu   Ready    <none>   7m10s   v1.32.8
 $ microk8s kubectl get services
 NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   7m31s
+
+$ microk8s kubectl config view --raw >$HOME/.kube/config
+
+$ kubectl version
+Client Version: v1.33.5
+Kustomize Version: v5.6.0
+Server Version: v1.32.8
 ```
 
 ```bash
@@ -319,15 +326,6 @@ pod/nginx-ingress-microk8s-controller-8wfnl condition met
 
 $ microk8s status --addon=ingress
 enabled
-```
-
-```bash
-$ microk8s kubectl config view --raw >$HOME/.kube/config
-
-$ kubectl version
-Client Version: v1.33.5
-Kustomize Version: v5.6.0
-Server Version: v1.32.8
 ```
 
 ## INSTALL - KUBERNETES - KIND - UBUNTU 24
