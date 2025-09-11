@@ -10,7 +10,8 @@
 [Install](notebook/install.md)
 
 [Practice #01](notebook/practice01.md)  
-[Practice #02](notebook/practice02.md)
+[Practice #02](notebook/practice02.md)  
+[Practice #03](notebook/practice03.md)
 
 ## REFERENCES
 
