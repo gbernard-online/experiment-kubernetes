@@ -9,6 +9,77 @@
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
+$ kubectl get pods
+No resources found in default namespace.
+
+$ kubectl run nginx --image=nginx:alpine
+pod/nginx created
+
+$ kubectl get pods
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          16s
+
+$ kubectl get pods --output=wide
+NAME    READY   STATUS    RESTARTS   AGE   IP             NODE     NOMINATED NODE   READINESS GATES
+nginx   1/1     Running   0          28s   10.1.243.202   ubuntu   <none>           <none>
+
+$ kubectl get pods --no-headers --output=wide
+nginx   1/1   Running   0     42s   10.1.243.202   ubuntu   <none>   <none>
+
+$ curl --fail --show-error --silent 10.1.243.202
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+|...|
+
+$ kubectl get pods nginx --output=yaml
+apiVersion: v1
+kind: Pod
+metadata:
+|...|
+
+$ kubectl describe pods nginx
+Name:             nginx
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             ubuntu/172.16.0.225
+|...|
+
+$ kubectl delete pods nginx
+pod "nginx" deleted
+```
+
+```bash
+$ kubectl run alpine --image=alpine:latest --overrides='{"spec":{"restartPolicy":"OnFailure"}}' -- sleep 10
+pod/alpine created
+
+$ kubectl get pods
+NAME     READY   STATUS    RESTARTS   AGE
+alpine   1/1     Running   0          9s
+
+$ kubectl get pods
+NAME     READY   STATUS      RESTARTS   AGE
+alpine   0/1     Completed   0          18s
+
+$ kubectl delete pods alpine
+pod "alpine" deleted
+```
+
+```bash
+$ kubectl run alpine --image=alpine:latest --rm --stdin --tty -- ash
+If you donʼt see a command prompt, try pressing enter.
+/ # hostname 
+alpine
+/ # ls /sys/class/net
+eth0  lo
+/ # exit
+Session ended, resume using 'kubectl attach alpine -c alpine -i -t' command when the pod is running
+pod "alpine" deleted
+
+$ kubectl get pods
+No resources found in default namespace.
 ```
 
 &nbsp;
