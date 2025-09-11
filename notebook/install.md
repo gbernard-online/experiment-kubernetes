@@ -265,6 +265,9 @@ kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   7m31s
 ```
 
 ```bash
+$ microk8s status --addon=metrics-server
+disabled
+
 $ microk8s enable metrics-server
 Infer repository core for addon metrics-server
 Enabling Metrics-Server
@@ -280,10 +283,16 @@ apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io created
 clusterrolebinding.rbac.authorization.k8s.io/microk8s-admin created
 Metrics-Server is enabled
 
+$ microk8s status --addon=metrics-server
+enabled
+
 $ sleep 30
 ```
 
 ```bash
+$ microk8s status --addon=ingress
+disabled
+
 $ sudo microk8s enable ingress
 Infer repository core for addon ingress
 Enabling Ingress
@@ -300,6 +309,9 @@ configmap/nginx-ingress-tcp-microk8s-conf created
 configmap/nginx-ingress-udp-microk8s-conf created
 daemonset.apps/nginx-ingress-microk8s-controller created
 Ingress is enabled
+
+$ microk8s status --addon=ingress
+enabled
 
 $ sleep 60
 ```
