@@ -20,9 +20,9 @@ https://iamunnip.hashnode.dev/kind-creating-a-kubernetes-cluster-part-1
 https://iamunnip.hashnode.dev/kind-configuring-extra-port-mappings-ipv6-networking-part-4  
 https://iamunnip.hashnode.dev/kind-setting-up-an-ingress-controller-part-5
 
-https://www.youtube.com/watch?v=23MhuIVYMHE&list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL&index=1  
-https://www.youtube.com/watch?v=buRvk-Atyes&list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL&index=2  
-https://www.youtube.com/watch?v=AskMZMtjk2g&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap&index=9
+https://www.youtube.com/watch?v=23MhuIVYMHE&list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL  
+https://www.youtube.com/watch?v=buRvk-Atyes&list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL  
+https://www.youtube.com/watch?v=AskMZMtjk2g&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
 ## INSTALL - KUBERNETES - KUBEADM - UBUNTU 24
 
