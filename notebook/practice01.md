@@ -6,7 +6,6 @@ https://kubernetes.io/docs/reference/kubectl/generated/kubectl_run
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete
 
-
 https://www.youtube.com/watch?v=ElVwAByDkf4&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap&index=10
 
 ## PRACTICE #1 - KUBERNETES - MICROK8S - UBUNTU 24
