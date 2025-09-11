@@ -76,7 +76,7 @@ pod "alpine" deleted
 ```bash
 $ kubectl run alpine --image=alpine:latest --rm --stdin --tty -- ash
 If you donʼt see a command prompt, try pressing enter.
-/ # hostname 
+/ # hostname
 alpine
 / # ls /sys/class/net
 eth0  lo
