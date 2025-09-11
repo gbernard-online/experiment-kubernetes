@@ -15,13 +15,6 @@ https://www.youtube.com/watch?v=3iyMOfgZqAo&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
-```
-
-
-
-
-
-```bash
 $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --restart=OnFailure  -- sleep 10
 apiVersion: v1
 kind: Pod
@@ -42,7 +35,8 @@ spec:
   restartPolicy: OnFailure
 status: {}
 
-$ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --restart=OnFailure -- sleep 10 | kubectl-neat | tee pod.yaml
+$ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --restart=OnFailure -- sleep 10 |
+kubectl-neat | tee pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -66,8 +60,7 @@ DESCRIPTION:
     Pod is a collection of containers that can run on a host. This resource is
     created by clients and scheduled onto hosts.
 
-FIELDS:
-...
+|...|
 
 $ kubectl explain pods.spec --recursive
 KIND:       Pod
@@ -77,7 +70,11 @@ FIELD: spec <PodSpec>
 
 
 DESCRIPTION:
-...
+    Specification of the desired behavior of the pod. More info:
+    https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+    PodSpec is a description of a pod.
+
+|...|
 
 $ kubectl apply --filename=pod.yaml
 pod/alpine created
@@ -97,33 +94,14 @@ $ kubectl get pods alpine --output=yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  annotations:
-    cni.projectcalico.org/containerID: db21901fc8440d95e170fe716b6d0e84346c9b8ad995478ffacc34dac5296350
-    cni.projectcalico.org/podIP: ""
-    cni.projectcalico.org/podIPs: ""
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"labels":{"run":"alpine"},"name":"alpine","namespace":"default"},"spec":{"containers":[{"args":["sleep","10"],"image":"alpine:latest","name":"alpine"}],"restartPolicy":"OnFailure"}}
-  creationTimestamp: "2025-07-09T16:30:33Z"
-  labels:
-    run: alpine
-  name: alpine
-  namespace: default
-  resourceVersion: "8568"
-  uid: c77045bd-4661-4ddd-be0e-076ee61c574b
-...
+|...|
 
 $ kubectl delete --filename=pod.yaml
 pod "alpine" deleted
 
 $ rm --verbose pod.yaml
 removed 'pod.yaml'
-
 ```
-
-
-
-
-
 &nbsp;
 
 `-`
