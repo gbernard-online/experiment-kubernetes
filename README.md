@@ -11,7 +11,9 @@
 
 [Practice #01](notebook/practice01.md)  
 [Practice #02](notebook/practice02.md)  
-[Practice #03](notebook/practice03.md)
+[Practice #03](notebook/practice03.md)  
+[Practice #04](notebook/practice04.md)  
+[Practice #05](notebook/practice05.md)
 
 ## REFERENCES
 
