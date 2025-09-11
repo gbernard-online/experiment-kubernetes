@@ -12,11 +12,6 @@ https://kubernetes.io/docs/reference/kubectl/generated/kubectl_top
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
-```
-
-
-
-```bash
 $ kubectl run nginx --dry-run=client --image=nginx:alpine --output=yaml | kubectl-neat
 apiVersion: v1
 kind: Pod
@@ -42,16 +37,7 @@ $ kubectl logs pods/nginx
 /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
 /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
 /docker-entrypoint.sh: Configuration complete; ready for start up
-2025/07/09 20:34:57 [notice] 1#1: using the "epoll" event method
-2025/07/09 20:34:57 [notice] 1#1: nginx/1.29.0
-2025/07/09 20:34:57 [notice] 1#1: built by gcc 14.2.0 (Alpine 14.2.0)
-2025/07/09 20:34:57 [notice] 1#1: OS: Linux 5.15.0-143-generic
-2025/07/09 20:34:57 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 65536:65536
-2025/07/09 20:34:57 [notice] 1#1: start worker processes
-2025/07/09 20:34:57 [notice] 1#1: start worker process 30
-2025/07/09 20:34:57 [notice] 1#1: start worker process 31
-2025/07/09 20:34:57 [notice] 1#1: start worker process 32
-2025/07/09 20:34:57 [notice] 1#1: start worker process 33
+|...|
 
 $ kubectl get events --field-selector=involvedObject.name=nginx
 LAST SEEN   TYPE     REASON      OBJECT      MESSAGE
@@ -70,12 +56,7 @@ nginx   0m           4Mi
 
 $ kubectl delete pods nginx
 pod "nginx" deleted
-
 ```
-
-
-
-
 
 &nbsp;
 
