@@ -9,7 +9,7 @@ https://www.youtube.com/watch?v=AFEU_mBbzr0&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 https://www.youtube.com/watch?v=WSfB7Ae4SPg&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
 
-## PRACTICE #4 - KUBERNETES - MICROK8S - UBUNTU 24
+## PRACTICE #4 - KUBERNETES - KIND - UBUNTU 24
 
 [![Kubernetes](img/kubernetes.webp "Kubernetes")](https://kubernetes.io)1
 [![Kind](img/kind.webp "Kind")](https://kind.sigs.k8s.io)0
