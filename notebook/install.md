@@ -5,10 +5,11 @@
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_version  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get  
-https://kubernetes.io/docs/reference/kubectl/generated/kubectl_cluster-info
+https://kubernetes.io/docs/reference/kubectl/generated/kubectl_cluster-info  
+https://kubernetes.io/docs/reference/kubectl/generated/kubectl_wait
 
 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm  
-https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-version/
+https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-version
 
 https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s  
 https://microk8s.io/docs/working-with-kubectl  
@@ -283,10 +284,12 @@ apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io created
 clusterrolebinding.rbac.authorization.k8s.io/microk8s-admin created
 Metrics-Server is enabled
 
+$ kubectl wait pods --for=condition=ready \
+--namespace=kube-system --selector=k8s-app=metrics-server
+pod/metrics-server-7dbd8b5cc9-brs2z condition met
+
 $ microk8s status --addon=metrics-server
 enabled
-
-$ sleep 30
 ```
 
 ```bash
@@ -310,10 +313,12 @@ configmap/nginx-ingress-udp-microk8s-conf created
 daemonset.apps/nginx-ingress-microk8s-controller created
 Ingress is enabled
 
+$ kubectl wait pods --for=condition=ready \
+--namespace=ingress --selector=name=nginx-ingress-microk8s --timeout=60s
+pod/nginx-ingress-microk8s-controller-8wfnl condition met
+
 $ microk8s status --addon=ingress
 enabled
-
-$ sleep 60
 ```
 
 ```bash
@@ -468,7 +473,9 @@ service/metrics-server created
 deployment.apps/metrics-server created
 apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io created
 
-$ sleep 30
+$ kubectl wait pods --for=condition=ready \
+--namespace=kube-system --selector=k8s-app=metrics-server
+pod/metrics-server-7dbd8b5cc9-brs2z condition met
 
 $ rm --verbose kustomization.yaml
 removed 'kustomization.yaml'
@@ -510,7 +517,9 @@ job.batch/ingress-nginx-admission-patch created
 ingressclass.networking.k8s.io/nginx created
 validatingwebhookconfiguration.admissionregistration.k8s.io/ingress-nginx-admission created
 
-$ sleep 60
+$ kubectl wait pods --for=condition=ready \
+--namespace=ingress-nginx --selector=app.kubernetes.io/component=controller --timeout=60s
+pod/ingress-nginx-controller-5db8bc667-2qvdj condition met
 
 $ rm --verbose kustomization.yaml
 removed 'kustomization.yaml'
