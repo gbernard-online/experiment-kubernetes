@@ -94,7 +94,7 @@ $ kubectl run alpine --image=alpine:latest --rm --stdin --tty -- ash
 If you donʼt see a command prompt, try pressing enter.
 / # hostname
 alpine
-/ # ls -w 1/sys/class/net
+/ # ls -w 1 /sys/class/net
 eth0
 lo
 / # exit
