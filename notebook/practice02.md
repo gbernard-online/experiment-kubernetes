@@ -8,7 +8,8 @@ https://kubernetes.io/docs/reference/kubectl/generated/kubectl_top
 
 https://www.youtube.com/watch?v=ElVwAByDkf4&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap  
 https://www.youtube.com/watch?v=MbQllww-qRw&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap  
-https://www.youtube.com/watch?v=3iyMOfgZqAo&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
+https://www.youtube.com/watch?v=3iyMOfgZqAo&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap  
+https://www.youtube.com/watch?v=naLtWR6uEWY&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
 ## PRACTICE #2 - KUBERNETES - MICROK8S - UBUNTU 24
 
