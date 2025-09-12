@@ -2,6 +2,7 @@
 
 ## REFERENCES
 
+https://kubernetes.io/docs/concepts/workloads/pods  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_explain  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_top
