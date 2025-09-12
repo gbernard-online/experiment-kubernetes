@@ -90,16 +90,10 @@ pod "alpine" deleted
 ```
 
 ```bash
-$ kubectl run alpine --image=alpine:latest --rm --stdin --tty -- ash
-If you donʼt see a command prompt, try pressing enter.
+$ kubectl run alpine --image=alpine:latest --quiet --rm --stdin --tty -- ash
 / # hostname
 alpine
-/ # ls -w 1 /sys/class/net
-eth0
-lo
 / # exit
-Session ended, resume using 'kubectl attach alpine -c alpine -i -t' command when the pod is running
-pod "alpine" deleted
 
 $ kubectl get pods
 No resources found in default namespace.
@@ -192,16 +186,10 @@ pod "alpine" deleted
 ```
 
 ```bash
-$ kubectl run alpine --image=alpine:latest --rm --stdin --tty -- ash
-If you donʼt see a command prompt, try pressing enter.
+$ kubectl run alpine --image=alpine:latest --quiet --rm --stdin --tty -- ash
 / # hostname
 alpine
-/ # ls -w 1 /sys/class/net
-eth0
-lo
 / # exit
-Session ended, resume using 'kubectl attach alpine -c alpine -i -t' command when the pod is running
-pod "alpine" deleted
 
 $ kubectl get pods
 No resources found in default namespace.
