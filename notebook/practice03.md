@@ -2,6 +2,7 @@
 
 ## REFERENCES
 
+https://kubernetes.io/docs/concepts/workloads/controllers/replicaset  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_api-resources  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_create  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_scale  
