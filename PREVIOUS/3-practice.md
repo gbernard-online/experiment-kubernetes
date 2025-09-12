@@ -251,7 +251,7 @@ $ kubectl get pods nginx --output=wide
 NAME    READY   STATUS    RESTARTS   AGE   IP             NODE     NOMINATED NODE   READINESS GATES
 nginx   1/1     Running   0          43s   10.1.243.214   ubuntu   <none>           <none>
 
-$ curl --fail --show-error --silent http://10.1.243.214
+$ curl --connect-timeout 5 --fail --show-error --silent http://10.1.243.214
 OK
 
 $ kubectl delete --filename=pod.yaml
