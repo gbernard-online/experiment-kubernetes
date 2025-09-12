@@ -27,7 +27,8 @@ DESCRIPTION:
     Deployment enables declarative updates for Pods and ReplicaSets.
 |...|
 
-$ kubectl create deployment nginx --dry-run=client --output=yaml --image=nginx:alpine --replicas=3 | kubectl-neat | tee deployment.yaml
+$ kubectl create deployment nginx --dry-run=client --output=yaml --image=nginx:alpine --replicas=3 |
+kubectl-neat | tee deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
