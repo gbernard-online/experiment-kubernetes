@@ -2,6 +2,7 @@
 
 ## REFERENCES
 
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_annotate  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_rollout
 
