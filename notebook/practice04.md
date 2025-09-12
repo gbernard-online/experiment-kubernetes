@@ -2,6 +2,7 @@
 
 ## REFERENCES
 
+https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config
 
 https://www.youtube.com/watch?v=xX14RxILY0Q&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
