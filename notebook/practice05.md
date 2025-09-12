@@ -8,16 +8,11 @@ https://kubernetes.io/docs/reference/kubectl/generated/kubectl_rollout
 https://www.youtube.com/watch?v=AFEU_mBbzr0&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap  
 https://www.youtube.com/watch?v=WSfB7Ae4SPg&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
-
-## PRACTICE #4 - KUBERNETES - KIND - UBUNTU 24
+## PRACTICE #5 - KUBERNETES - KIND - UBUNTU 24
 
 [![Kubernetes](img/kubernetes.webp "Kubernetes")](https://kubernetes.io)1
 [![Kind](img/kind.webp "Kind")](https://kind.sigs.k8s.io)0
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
-
-
-
-## PRACTICE #6 - MICROK8S - UBUNTU 24
 
 ```bash
 $ kubectl api-resources --no-headers | fgrep deployments
@@ -30,7 +25,7 @@ VERSION:    v1
 
 DESCRIPTION:
     Deployment enables declarative updates for Pods and ReplicaSets.
-...
+|...|
 
 $ kubectl create deployment nginx --dry-run=client --output=yaml --image=nginx:alpine --replicas=3 | kubectl-neat | tee deployment.yaml
 apiVersion: apps/v1
@@ -63,13 +58,18 @@ nginx   3/3     3            3           31s
 
 $ kubectl get pods --selector=app=nginx
 NAME                     READY   STATUS    RESTARTS   AGE
-nginx-6b66fbbd46-95hxb   1/1     Running   0          46s
-nginx-6b66fbbd46-r7kw8   1/1     Running   0          46s
-nginx-6b66fbbd46-zs5pr   1/1     Running   0          46s
+nginx-7977cdf8f5-9n7p6   1/1     Running   0          39s
+nginx-7977cdf8f5-bjnt6   1/1     Running   0          39s
+nginx-7977cdf8f5-mczcq   1/1     Running   0          39s
 
 $ kubectl get replicasets.apps --selector=app=nginx
 NAME               DESIRED   CURRENT   READY   AGE
-nginx-6b66fbbd46   3         3         3       2m22s
+nginx-7977cdf8f5   3         3         3       70s
+
+$ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
+cluster-worker-red
+cluster-worker-yellow
+cluster-worker-green
 
 $ kubectl describe replicasets.apps --selector=app=nginx | fgrep Controlled
 Controlled By:  Deployment/nginx
@@ -90,7 +90,18 @@ deployment.apps/nginx scaled
 
 $ kubectl get deployments.apps nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
-nginx   9/9     9            9           7m46s
+nginx   9/9     9            9           2m8s
+
+$ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
+cluster-worker-yellow
+cluster-worker-red
+cluster-worker-red
+cluster-worker-yellow
+cluster-worker-yellow
+cluster-worker-red
+cluster-worker-green
+cluster-worker-green
+cluster-worker-green
 
 $ kubectl rollout history deployment nginx
 deployment.apps/nginx
@@ -105,7 +116,7 @@ deployment.apps/nginx paused
 
 $ kubectl get deployments.apps nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
-nginx   12/9    5            12          10m
+nginx   7/9     5            7           3m11s
 
 $ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.containers[].image
 nginx:bookworm
@@ -159,7 +170,7 @@ deployment.apps/nginx rolled back
 
 $ kubectl get deployments.apps nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
-nginx   7/9     5            7           11m
+nginx   8/9     5            8           6m1s
 
 $ kubectl rollout history deployment nginx
 deployment.apps/nginx
@@ -172,13 +183,7 @@ deployment.apps "nginx" deleted
 
 $ rm --verbose deployment.yaml
 removed 'deployment.yaml'
-
 ```
-
-
-
-
-
 
 &nbsp;
 
