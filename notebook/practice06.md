@@ -97,11 +97,11 @@ $ kubectl get endpointslices.discovery.k8s.io nginx-vx2nd
 NAME          ADDRESSTYPE   PORTS   ENDPOINTS     AGE
 nginx-vx2nd   IPv4          80      10.244.1.12   6m10s
 
-$ kubectl delete deployments.apps nginx
-deployment.apps "nginx" deleted
-
 $ kubectl delete services nginx
 service "nginx" deleted
+
+$ kubectl delete deployments.apps nginx
+deployment.apps "nginx" deleted
 ```
 
 ---
