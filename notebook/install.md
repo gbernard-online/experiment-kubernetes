@@ -452,12 +452,25 @@ patches:
     - op: add
       path: /spec/template/spec/containers/0/args/-
       value: --kubelet-insecure-tls
+    - op: add
+      path: "/spec/template/spec/tolerations"
+      value: 
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Equal
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Equal
+    - op: add
+      path: "/spec/template/spec/nodeSelector/kubernetes.io~1hostname"
+      value: cluster-control-plane
   target:
     kind: Deployment
     name: metrics-server
     namespace: kube-system
 resources:
 - https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
 EOF
 
 $ kubectl apply --kustomize=.
