@@ -2,6 +2,8 @@
 
 ## REFERENCES
 
+https://kubernetes.io/docs/concepts/configuration/configmap
+
 https://www.youtube.com/watch?v=5b3kkJ0pUjA&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap&index=27
 
 ## PRACTICE #9 - KUBERNETES - KIND - UBUNTU 24
