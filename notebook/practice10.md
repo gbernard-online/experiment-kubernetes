@@ -4,9 +4,9 @@
 
 https://kubernetes.io/docs/concepts/configuration/secret
 
-https://www.youtube.com/watch?v=5b3kkJ0pUjA&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap&index=27
+https://www.youtube.com/watch?v=5b3kkJ0pUjA&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
-## PRACTICE #9 - KUBERNETES - KIND - UBUNTU 24
+## PRACTICE #10 - KUBERNETES - KIND - UBUNTU 24
 
 [![Kubernetes](img/kubernetes.webp "Kubernetes")](https://kubernetes.io)1
 [![Kind](img/kind.webp "Kind")](https://kind.sigs.k8s.io)0
