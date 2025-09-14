@@ -23,18 +23,6 @@ nginx-7977cdf8f5-445s7   1/1     Running   0          24s
 nginx-7977cdf8f5-s5xqr   1/1     Running   0          24s
 nginx-7977cdf8f5-vpksn   1/1     Running   0          24s
 
-$ kubectl get pods --output=yaml --selector=app=nginx |
-yq '.items | map({"name":.metadata.name,"ip":.status.podIP,"node":.spec.nodeName})'
-- name: nginx-7977cdf8f5-445s7
-  ip: 10.244.2.11
-  node: cluster-worker-yellow
-- name: nginx-7977cdf8f5-s5xqr
-  ip: 10.244.1.12
-  node: cluster-worker-red
-- name: nginx-7977cdf8f5-vpksn
-  ip: 10.244.3.14
-  node: cluster-worker-green
-
 $ kubectl expose deployment nginx --port=80
 service/nginx exposed
 
@@ -42,7 +30,7 @@ $ kubectl get services nginx --output=wide
 NAME    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE   SELECTOR
 nginx   ClusterIP   10.96.57.201   <none>        80/TCP    21s   app=nginx
 
-$ curl --connect-timeout 5 --fail --show-error --silent 10.96.57.201 
+$ curl --connect-timeout 5 --fail --show-error --silent 10.96.57.201
 curl: (28) Failed to connect to 10.152.183.244 port 80 after 5001 ms: Timeout was reached
 
 $ docker exec cluster-control-plane \
@@ -82,7 +70,7 @@ wget -qO- nginx
 <title>Welcome to nginx!</title>
 |...|
 
-$ kubectl get endpointslices.discovery.k8s.io nginx-vx2nd 
+$ kubectl get endpointslices.discovery.k8s.io nginx-vx2nd
 NAME          ADDRESSTYPE   PORTS   ENDPOINTS                             AGE
 nginx-vx2nd   IPv4          80      10.244.2.11,10.244.3.14,10.244.1.12   4m1s
 
@@ -93,7 +81,7 @@ $ kubectl get pods --selector=app=nginx
 NAME                     READY   STATUS    RESTARTS   AGE
 nginx-7977cdf8f5-s5xqr   1/1     Running   0          52m
 
-$ kubectl get endpointslices.discovery.k8s.io nginx-vx2nd 
+$ kubectl get endpointslices.discovery.k8s.io nginx-vx2nd
 NAME          ADDRESSTYPE   PORTS   ENDPOINTS     AGE
 nginx-vx2nd   IPv4          80      10.244.1.12   6m10s
 
