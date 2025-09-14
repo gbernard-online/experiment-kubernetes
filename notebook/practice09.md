@@ -250,15 +250,9 @@ spec:
 $ kubectl apply --filename=pod.yaml
 pod/nginx created
 
-$ kubectl get pods --output=json |
-jq '[.items[] | {"name":.metadata.name,"ip":.status.podIP,"node":.spec.nodeName}]'
-[
-  {
-    "name": "nginx",
-    "ip": "10.244.1.3",
-    "node": "cluster-worker-yellow"
-  }
-]
+$ kubectl get pods --output=yaml | yq '.items | map({"name":.metadata.name,"ip":.status.podIP})'
+- name: alpine
+  ip: 10.244.1.3
 
 $ docker exec cluster-control-plane \
 curl --connect-timeout 5 --fail --show-error --silent 10.244.1.3
