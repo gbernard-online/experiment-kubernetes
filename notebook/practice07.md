@@ -11,12 +11,65 @@ https://www.youtube.com/watch?v=tF28iwTco9A&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Kind](img/kind.webp "Kind")](https://kind.sigs.k8s.io)0
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
-#2 TODO : NODEPORT
+```bash
+$ kubectl create deployment nginx --image=nginx:alpine --replicas=3
+deployment.apps/nginx created
+
+$ kubectl get pods --selector=app=nginx
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-7977cdf8f5-dx8tg   1/1     Running   0          8s
+nginx-7977cdf8f5-v4nhl   1/1     Running   0          8s
+nginx-7977cdf8f5-vhzjp   1/1     Running   0          8s
+
+$ kubectl expose deployment nginx --port=80 --type=NodePort
+service/nginx exposed
+
+$ kubectl get services nginx --output=wide
+NAME    TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE   SELECTOR
+nginx   NodePort   10.96.130.30   <none>        80:31674/TCP   14s   app=nginx
+
+$ docker exec cluster-control-plane \
+curl --connect-timeout 5 --fail --show-error --silent 10.96.130.30
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+|...|
+
+$ docker exec cluster-control-plane \
+curl --connect-timeout 5 --fail --show-error --silent 127.0.0.1:31674
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+|...|
+
+$ docker inspect cluster-control-plane --format='{{.NetworkSettings.Networks.kind.IPAddress}}'
+172.17.1.3
+
+$ curl --connect-timeout 5 --fail --show-error --silent 172.17.1.3:31674
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+|...|
+
+$ kubectl get endpointslices.discovery.k8s.io nginx-vx2nd
+NAME          ADDRESSTYPE   PORTS   ENDPOINTS     AGE
+nginx-vx2nd   IPv4          80      10.244.1.12   6m10s
+
+$ kubectl delete services nginx
+service "nginx" deleted
+
+$ kubectl delete deployments.apps nginx
+deployment.apps "nginx" deleted
+```
 
 #3 EXTERNAL
 
 ```bash
-$ kubectl create service externalname ipinfo --dry-run=client --external-name=ipinfo.io --output=yaml |  yq 'del(.metadata.labels) | del(.spec.selector)' | kubectl-neat | tee service.yaml
+$ kubectl create service externalname ipinfo --dry-run=client --external-name=ipinfo.io --output=yaml |  
+yq 'del(.metadata.labels) | del(.spec.selector)' | kubectl-neat | tee service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -30,66 +83,31 @@ service/ipinfo created
 
 $ kubectl get services ipinfo --output=wide
 NAME     TYPE           CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE   SELECTOR
-ipinfo   ExternalName   <none>       ipinfo.io    <none>    19s   <none>
+ipinfo   ExternalName   <none>       ipinfo.io     <none>    6s    <none>
 
-$ kubectl run alpine --image=alpine:latest --rm --restart=Never --stdin --tty -- wget -qO- ipinfo.io
-{
-  "ip": "82.64.133.21",
-  "hostname": "82-64-133-21.subs.proxad.net",
-  "city": "Montrichard",
-  "region": "Centre",
-  "country": "FR",
-  "loc": "47.3431,1.1865",
-  "org": "AS12322 Free SAS",
-  "postal": "41400",
-  "timezone": "Europe/Paris",
-  "readme": "https://ipinfo.io/missingauth"
-}pod "alpine" deleted
+$ $ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
+wget -qO- ipinfo.io | jq .org
+"AS12322 Free SAS"
 
-$ kubectl run alpine --image=alpine:latest --rm --restart=Never --stdin --tty -- nslookup ipinfo.default.svc.cluster.local
-Server:		10.152.183.10
-Address:	10.152.183.10:53
-
-ipinfo.default.svc.cluster.local	canonical name = ipinfo.io
+$ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
+nslookup ipinfo.default.svc.cluster.local
+Server:		10.96.0.10
+Address:	10.96.0.10:53
 
 ipinfo.default.svc.cluster.local	canonical name = ipinfo.io
 Name:	ipinfo.io
 Address: 34.117.59.81
 
-pod "alpine" deleted
+ipinfo.default.svc.cluster.local	canonical name = ipinfo.io
 
-$ kubectl run alpine --image=alpine:latest --rm --restart=Never --stdin --tty -- wget -qO- ipinfo.default.svc.cluster.local
+$ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
+wget -qO- ipinfo.default.svc.cluster.local
 wget: server returned error: HTTP/1.1 404 Not Found
-pod "alpine" deleted
 pod default/alpine terminated (Error)
 
-$ kubectl run alpine --image=alpine:latest --rm --restart=Never --stdin --tty -- wget --header 'Host: ipinfo.io' -qO- ipinfo.default.svc.cluster.local
-{
-  "ip": "82.64.133.21",
-  "hostname": "82-64-133-21.subs.proxad.net",
-  "city": "Montrichard",
-  "region": "Centre",
-  "country": "FR",
-  "loc": "47.3431,1.1865",
-  "org": "AS12322 Free SAS",
-  "postal": "41400",
-  "timezone": "Europe/Paris",
-  "readme": "https://ipinfo.io/missingauth"
-}pod "alpine" deleted
-
-$ kubectl run alpine --image=alpine:latest --rm --restart=Never --stdin --tty -- wget --header 'Host: ipinfo.io' -qO- ipinfo
-{
-  "ip": "82.64.133.21",
-  "hostname": "82-64-133-21.subs.proxad.net",
-  "city": "Montrichard",
-  "region": "Centre",
-  "country": "FR",
-  "loc": "47.3431,1.1865",
-  "org": "AS12322 Free SAS",
-  "postal": "41400",
-  "timezone": "Europe/Paris",
-  "readme": "https://ipinfo.io/missingauth"
-}pod "alpine" deleted
+$ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
+wget --header 'Host: ipinfo.io' -qO- ipinfo.default.svc.cluster.local | jq .org
+"AS12322 Free SAS"
 
 $ kubectl delete --filename=service.yaml
 deployment.apps "ipinfo" deleted
