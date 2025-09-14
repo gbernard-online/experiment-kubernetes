@@ -1,390 +1,4 @@
-[![Gmail](avatar.webp "ghislain.bernard@gmail.com")](mailto:ghislain.bernard@gmail.com) [![Github](github.webp "ghislain-bernard")](https://github.com/ghislain-bernard) [![LinkedIN](linkedin.webp "ghislain-bernard")](https://www.linkedin.com/in/ghislain-bernard)
 
-## PRACTICE #10 - MICROK8S - UBUNTU 24
-
-```bash
-$ kubectl api-resources --no-headers | fgrep configmaps
-configmaps                          cm         v1                                true    ConfigMap
-
-$ kubectl get configmaps
-NAME               DATA   AGE
-kube-root-ca.crt   1      3h11m
-
-$ kubectl explain configmaps
-KIND:       ConfigMap
-VERSION:    v1
-
-DESCRIPTION:
-    ConfigMap holds configuration data for pods to consume.
-
-
-FIELDS:
-...
-
-```
-
-```bash
-$ kubectl create configmap alpine --dry-run=client --from-literal=DEFAULT_DELAY=30 --output=yaml | kubectl neat | tee configmap.yaml
-apiVersion: v1
-data:
-  DEFAULT_DELAY: "30"
-kind: ConfigMap
-metadata:
-  name: alpine
-
-$ kubectl apply --filename=configmap.yaml
-configmap/alpine created
-
-$ kubectl get configmaps alpine
-NAME     DATA   AGE
-alpine   1      2m28s
-
-$ kubectl describe configmaps alpine
-Name:         alpine
-Namespace:    default
-Labels:       <none>
-Annotations:  <none>
-
-Data
-====
-DEFAULT_DELAY:
-----
-30
-
-
-BinaryData
-====
-
-Events:  <none>
-
-$ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --overrides='[
-{
-  "op": "add",
-  "path": "/spec/containers/0/env",
-  "value": [
-    {
-      "name": "DELAY",
-      "value": "60"
-    }
-  ]
-},
-{
-  "op": "add",
-  "path": "/spec/containers/0/envFrom",
-  "value": [
-    {
-      "configMapRef": {
-        "name": "alpine"
-      }
-    }
-  ]
-}
-]' --override-type=json --restart=OnFailure -- ash -c 'sleep ${DELAY:-$DEFAULT_DELAY}' | kubectl neat | tee pod.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    run: alpine
-  name: alpine
-spec:
-  containers:
-  - args:
-    - ash
-    - -c
-    - sleep ${DELAY:-$DEFAULT_DELAY}
-    env:
-    - name: DELAY
-      value: "60"
-    envFrom:
-    - configMapRef:
-        name: alpine
-    image: alpine:latest
-    name: alpine
-  restartPolicy: OnFailure
-
-$ kubectl apply --filename=pod.yaml
-pod/alpine created
-
-$ kubectl get pods alpine
-NAME     READY   STATUS    RESTARTS   AGE
-alpine   1/1     Running   0          19s
-
-$ kubectl exec alpine -- env | fgrep DELAY
-DEFAULT_DELAY=30
-DELAY=60
-
-$ kubectl get pods alpine
-NAME     READY   STATUS      RESTARTS   AGE
-alpine   0/1     Completed   0          72s
-
-$ kubectl delete --filename=pod.yaml
-pod "alpine" deleted
-
-$ kubectl delete --filename=configmap.yaml
-configmap "alpine" deleted
-
-$ rm --verbose configmap.yaml pod.yaml
-removed 'configmap.yaml'
-removed 'pod.yaml'
-
-```
-
-```bash
-$ kubectl create configmap nginx --dry-run=client --from-file=nginx.conf=<(cat <<EOF
-events{}
-http {
-  server {
-    listen 80;
-    location / {
-      return 200 'OK\n';
-      add_header Content-Type text/plain;
-    }
-  }
-}
-EOF
-) --output=yaml | kubectl neat | tee configmap.yaml
-apiVersion: v1
-data:
-  nginx.conf: |
-    events{}
-    http {
-      server {
-        listen 80;
-        location / {
-          return 200 'OK\n';
-          add_header Content-Type text/plain;
-        }
-      }
-    }
-kind: ConfigMap
-metadata:
-  name: nginx
-
-$ kubectl apply --filename=configmap.yaml
-configmap/nginx created
-
-$ kubectl describe configmaps nginx
-Name:         nginx
-Namespace:    default
-Labels:       <none>
-Annotations:  <none>
-
-Data
-====
-nginx.conf:
-----
-events{}
-http {
-  server {
-    listen 80;
-    location / {
-      return 200 'OK\n';
-      add-header Content-Type text/plain;
-    }
-  }
-}
-
-
-
-BinaryData
-====
-
-Events:  <none>
-
-$ kubectl run nginx --dry-run=client --image=nginx:alpine --output=yaml --overrides='[
-{
-  "op": "add",
-  "path": "/spec/containers/0/volumeMounts",
-  "value": [
-    {
-      "name": "nginx",
-      "mountPath": "/etc/nginx/nginx.conf",
-      "subPath": "nginx.conf"
-    }
-  ]
-},
-{
-  "op": "add",
-  "path": "/spec/volumes",
-  "value": [
-    {
-      "configMap": {
-        "items": [
-          {
-            "key": "nginx.conf",
-            "path": "nginx.conf"
-          }
-        ],
-        "name": "nginx"
-      },
-      "name": "nginx"
-    }
-  ]
-}
-]' --override-type=json | kubectl neat | tee pod.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    run: nginx
-  name: nginx
-spec:
-  containers:
-  - image: nginx:alpine
-    name: nginx
-    volumeMounts:
-    - mountPath: /etc/nginx/nginx.conf
-      name: nginx
-      subPath: nginx.conf
-  volumes:
-  - configMap:
-      items:
-      - key: nginx.conf
-        path: nginx.conf
-      name: nginx
-    name: nginx
-
-$ kubectl apply --filename=pod.yaml
-pod/nginx created
-
-$ kubectl get pods nginx --output=wide
-NAME    READY   STATUS    RESTARTS   AGE   IP             NODE     NOMINATED NODE   READINESS GATES
-nginx   1/1     Running   0          43s   10.1.243.214   ubuntu   <none>           <none>
-
-$ curl --connect-timeout 5 --fail --show-error --silent http://10.1.243.214
-OK
-
-$ kubectl delete --filename=pod.yaml
-pod "nginx" deleted
-
-$ kubectl delete --filename=configmap.yaml
-configmap "nginx" deleted
-
-$ rm --verbose configmap.yaml pod.yaml
-removed 'configmap.yaml'
-removed 'pod.yaml'
-
-```
-
-## PRACTICE #11 - MICROK8S - UBUNTU 24
-
-```bash
-$ kubectl api-resources --no-headers | fgrep secrets
-secrets                                        v1                                true    Secret
-
-$ kubectl get secrets
-No resources found in default namespace.
-
-$ kubectl explain secrets
-KIND:       Secret
-VERSION:    v1
-
-DESCRIPTION:
-    Secret holds secret data of a certain type. The total bytes of the values in
-    the Data field must be less than MaxSecretSize bytes.
-
-FIELDS:
-...
-
-$ kubectl create secret generic alpine --from-literal=password='~=*SECRET*=~'
-secret/alpine created
-
-$ kubectl create secret generic alpine --dry-run=client --from-literal=password='~=*SECRET*=~' --output=yaml | yq '.type="Opaque"' | kubectl neat | tee secret.yaml
-apiVersion: v1
-data:
-  password: fj0qU0VDUkVUKj1+
-kind: Secret
-metadata:
-  name: alpine
-type: Opaque
-
-$ kubectl apply --filename=secret.yaml
-secret/alpine created
-
-$ kubectl get secrets alpine
-NAME     TYPE     DATA   AGE
-alpine   Opaque   1      4m50s
-
-$ kubectl describe secrets alpine
-Name:         alpine
-Namespace:    default
-Labels:       <none>
-Annotations:  <none>
-
-Type:  Opaque
-
-Data
-====
-password:  12 bytes
-
-$ kubectl get secrets alpine --output=jsonpath='{ .data.password }' && echo
-fj0qU0VDUkVUKj1+
-
-$ kubectl get secrets alpine --output=jsonpath='{ .data.password }' | base64 --decode && echo
-~=*SECRET*=~
-
-$ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --overrides='[
-{
-  "op": "add",
-  "path": "/spec/containers/0/env",
-  "value": [
-    {
-      "name": "PASSWORD",
-      "valueFrom": {
-        "secretKeyRef": {
-          "key": "password",
-          "name": "alpine"
-        }
-      }
-    }
-  ]
-}
-]' --override-type=json --restart=OnFailure -- sleep 60 | kubectl neat | tee pod.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    run: alpine
-  name: alpine
-spec:
-  containers:
-  - args:
-    - sleep
-    - "60"
-    env:
-    - name: PASSWORD
-      valueFrom:
-        secretKeyRef:
-          key: password
-          name: alpine
-    image: alpine:latest
-    name: alpine
-  restartPolicy: OnFailure
-
-$ kubectl apply --filename=pod.yaml
-pod/alpine created
-
-$ kubectl get pods alpine
-NAME     READY   STATUS    RESTARTS   AGE
-alpine   1/1     Running   0          7s
-
-$ kubectl exec alpine -- env | fgrep PASSWORD
-PASSWORD=~=*SECRET*=~
-
-$ kubectl get pods alpine
-NAME     READY   STATUS      RESTARTS   AGE
-alpine   0/1     Completed   0          65s
-
-$ kubectl delete --filename=pod.yaml
-pod "alpine" deleted
-
-$ kubectl delete --filename=secret.yaml
-secret "alpine" deleted
-
-$ rm --verbose pod.yaml secret.yaml
-removed 'pod.yaml secret.yaml'
-
-```
 
 ## PRACTICE #12 - MICROK8S - UBUNTU 24
 
@@ -400,7 +14,7 @@ $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --over
     }
   ]
 }
-]' --override-type=json --restart=OnFailure -- sleep 60 | yq 'with(.spec.containers; .[1]=.[0] | (.[0].name,.[0].env[0].value)="alpine-1" | (.[1].name,.[1].env[0].value)="alpine-2")' | kubectl neat | tee pod.yaml
+]' --override-type=json --restart=OnFailure -- sleep 60 | yq 'with(.spec.containers; .[1]=.[0] | (.[0].name,.[0].env[0].value)="alpine-1" | (.[1].name,.[1].env[0].value)="alpine-2")' | kubectl-neat | tee pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -479,7 +93,7 @@ $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --over
     }
   ]
 }
-]' --override-type=json --restart=OnFailure -- sleep 120 | yq 'with(.spec.containers; .[1]=.[0] | .[0].name="alpine-1" | .[1].name="alpine-2")' | kubectl neat | tee pod.yaml
+]' --override-type=json --restart=OnFailure -- sleep 120 | yq 'with(.spec.containers; .[1]=.[0] | .[0].name="alpine-1" | .[1].name="alpine-2")' | kubectl-neat | tee pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -589,7 +203,7 @@ $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --over
     }
   ]
 }
-]' --override-type=json --restart=OnFailure -- sleep 120 | yq 'with(.spec.containers; .[1]=.[0] | .[0].name="alpine-1" | .[1].name="alpine-2")' | kubectl neat | tee pod.yaml
+]' --override-type=json --restart=OnFailure -- sleep 120 | yq 'with(.spec.containers; .[1]=.[0] | .[0].name="alpine-1" | .[1].name="alpine-2")' | kubectl-neat | tee pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -697,7 +311,7 @@ $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --over
     }
   ]
 }
-]' --override-type=json --restart=OnFailure -- sleep 60 | kubectl neat | tee pod.yaml
+]' --override-type=json --restart=OnFailure -- sleep 60 | kubectl-neat | tee pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -807,7 +421,7 @@ $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --over
     "kubernetes.io/hostname": "ubuntu"
   }
 }
-]' --override-type=json --restart=OnFailure -- sleep 60 | kubectl neat | tee pod.yaml
+]' --override-type=json --restart=OnFailure -- sleep 60 | kubectl-neat | tee pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -879,7 +493,7 @@ $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --over
     "kubernetes.io/os": "linux"
   }
 }
-]' --override-type=json --restart=OnFailure -- sleep 60 | kubectl neat | tee pod.yaml
+]' --override-type=json --restart=OnFailure -- sleep 60 | kubectl-neat | tee pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -972,7 +586,7 @@ $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --patc
     "color": "red"
   }
 }
-]' --type=json --restart=OnFailure -- sleep 60 | kubectl neat | tee pod.yaml
+]' --type=json --restart=OnFailure -- sleep 60 | kubectl-neat | tee pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -1138,7 +752,7 @@ $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --over
     }
   ]
 }
-]' --override-type=json --restart=OnFailure -- sleep 120 | yq 'with(.spec.containers; .[1]=.[0] | .[0].name="alpine-1" | .[1].name="alpine-2")' | kubectl neat | tee pod.yaml
+]' --override-type=json --restart=OnFailure -- sleep 120 | yq 'with(.spec.containers; .[1]=.[0] | .[0].name="alpine-1" | .[1].name="alpine-2")' | kubectl-neat | tee pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:

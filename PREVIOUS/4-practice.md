@@ -118,7 +118,7 @@ $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --over
     }
   ]
 }
-]' --override-type=json --restart=OnFailure -- sleep 60 | kubectl neat | tee pod.yaml
+]' --override-type=json --restart=OnFailure -- sleep 60 | kubectl-neat | tee pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:
