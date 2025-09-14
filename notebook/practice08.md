@@ -2,9 +2,11 @@
 
 ## REFERENCES
 
-https://www.youtube.com/watch?v=5b3kkJ0pUjA&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap&index=27
+https://kubernetes.io/docs/reference/kubectl/generated/kubectl_label
 
-## PRACTICE #7 - KUBERNETES - KIND - UBUNTU 24
+https://www.youtube.com/watch?v=cMzEl3I9qsc&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
+
+## PRACTICE #8 - KUBERNETES - KIND - UBUNTU 24
 
 [![Kubernetes](img/kubernetes.webp "Kubernetes")](https://kubernetes.io)1
 [![Kind](img/kind.webp "Kind")](https://kind.sigs.k8s.io)0
