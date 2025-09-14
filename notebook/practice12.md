@@ -2,6 +2,8 @@
 
 ## REFERENCES
 
+https://kubernetes.io/docs/concepts/storage/volumes
+
 https://www.youtube.com/watch?v=0KSOqB4nea0&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
 ## PRACTICE #12 - KUBERNETES - KIND - UBUNTU 24
@@ -76,9 +78,8 @@ $ kubectl get pods alpine --output=jsonpath='{.spec.volumes[0]}' && echo
 {"emptyDir":{},"name":"alpine"}
 
 $ kubectl get pods --output=yaml |
-yq '.items | map({"name":.metadata.name,"ip":.status.podIP,"node":.spec.nodeName})'
+yq '.items | map({"name":.metadata.name,"node":.spec.nodeName})'
 - name: alpine
-  ip: 10.244.2.3
   node: cluster-worker-green
 
 $ docker exec cluster-worker find /var/lib/kubelet/pods -name 'alpine-*'
@@ -199,10 +200,6 @@ $ kubectl get pods alpine
 NAME     READY   STATUS    RESTARTS   AGE
 alpine   2/2     Running   0          7s
 
-$ docker exec cluster-worker mount | fgrep empty-dir
-tmpfs on /var/lib/kubelet/pods/a1ecea4e-f795-4787-95be-ed2f40b5b9ac/volumes/kubernetes.io~empty-dir/alpine type
-tmpfs (rw,relatime,size=1024k,inode64,noswap)
-
 $ kubectl exec alpine --container=alpine-1 -- fallocate -l 256K /cache/alpine-1
 
 $ kubectl exec alpine --container=alpine-2 -- fallocate -l 256K /cache/alpine-2
@@ -222,6 +219,14 @@ tmpfs                     1.0M    512.0K    512.0K  50% /cache
 $ kubectl exec alpine --container=alpine-2 -- df -h /cache
 Filesystem                Size      Used Available Use% Mounted on
 tmpfs                     1.0M    512.0K    512.0K  50% /cache
+
+$ kubectl get pods --output=yaml | yq '.items | map({"name":.metadata.name,"node":.spec.nodeName})'
+- name: alpine
+  node: cluster-worker-green
+
+$ docker exec cluster-worker mount | fgrep empty-dir
+tmpfs on /var/lib/kubelet/pods/a1ecea4e-f795-4787-95be-ed2f40b5b9ac/volumes/kubernetes.io~empty-dir/alpine type
+tmpfs (rw,relatime,size=1024k,inode64,noswap)
 
 $ docker exec cluster-worker ls \
 /var/lib/kubelet/pods/2d3a9737-3747-40ed-b4d7-bfb67fa94292/volumes/kubernetes.io~empty-dir/alpine
