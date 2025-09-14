@@ -65,10 +65,8 @@ $ kubectl delete deployments.apps nginx
 deployment.apps "nginx" deleted
 ```
 
-#3 EXTERNAL
-
 ```bash
-$ kubectl create service externalname ipinfo --dry-run=client --external-name=ipinfo.io --output=yaml |  
+$ kubectl create service externalname ipinfo --dry-run=client --external-name=ipinfo.io --output=yaml |
 yq 'del(.metadata.labels) | del(.spec.selector)' | kubectl-neat | tee service.yaml
 apiVersion: v1
 kind: Service
@@ -85,9 +83,9 @@ $ kubectl get services ipinfo --output=wide
 NAME     TYPE           CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE   SELECTOR
 ipinfo   ExternalName   <none>       ipinfo.io     <none>    6s    <none>
 
-$ $ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
-wget -qO- ipinfo.io | jq .org
-"AS12322 Free SAS"
+$ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
+wget -qO- ipinfo.io/org
+AS12322 Free SAS
 
 $ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
 nslookup ipinfo.default.svc.cluster.local
@@ -101,13 +99,13 @@ Address: 34.117.59.81
 ipinfo.default.svc.cluster.local	canonical name = ipinfo.io
 
 $ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
-wget -qO- ipinfo.default.svc.cluster.local
+wget -qO- ipinfo.default.svc.cluster.local/org
 wget: server returned error: HTTP/1.1 404 Not Found
 pod default/alpine terminated (Error)
 
 $ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
-wget --header 'Host: ipinfo.io' -qO- ipinfo.default.svc.cluster.local | jq .org
-"AS12322 Free SAS"
+wget --header 'Host: ipinfo.io' -qO- ipinfo.default.svc.cluster.local/org | jq .org
+AS12322 Free SAS
 
 $ kubectl delete --filename=service.yaml
 deployment.apps "ipinfo" deleted
