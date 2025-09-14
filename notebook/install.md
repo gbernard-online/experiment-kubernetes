@@ -432,6 +432,24 @@ cluster-worker-green    Ready    <none>          2m9s    v1.34.0
 cluster-worker-red      Ready    <none>          2m9s    v1.34.0
 cluster-worker-yellow   Ready    <none>          2m9s    v1.34.0
 
+$ docker container ls --format='{{ .Names }} {{ .Ports }}'
+cluster-control-plane 127.0.0.1:80->80/tcp, 127.0.0.1:443->443/tcp, 127.0.0.1:42207->6443/tcp
+cluster-worker3
+cluster-worker
+cluster-worker2
+
+$ docker container rename cluster-worker cluster-worker-green
+
+$ docker container rename cluster-worker2 cluster-worker-red
+
+$ docker container rename cluster-worker3 cluster-worker-yellow
+
+$ docker container ls --format='{{ .Names }}' | sort
+cluster-control-plane
+cluster-worker-green
+cluster-worker-red
+cluster-worker-yellow
+
 $ kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   2m34s
