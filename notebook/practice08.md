@@ -26,25 +26,25 @@ $ kubectl get deployments.apps nginx --show-labels
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE   LABELS
 nginx   3/3     3            3           21s   app=nginx
 
-$ kubectl label deployments.apps nginx color=green
+$ kubectl label deployments.apps nginx priority=medium
 deployment.apps/nginx labeled
 
-$ kubectl get deployments.apps nginx --label-columns=color
-NAME    READY   UP-TO-DATE   AVAILABLE   AGE   COLOR
-nginx   3/3     3            3           31s   green
+$ kubectl get deployments.apps nginx --label-columns=priority
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE   PRIORITY
+nginx   3/3     3            3           65s   medium
 
-$ kubectl label --overwrite deployments.apps nginx color=red
+$ kubectl label --overwrite deployments.apps nginx priority=high
 deployment.apps/nginx labeled
 
-$ kubectl get deployments.apps nginx --label-columns=color
-NAME    READY   UP-TO-DATE   AVAILABLE   AGE   COLOR
-nginx   3/3     3            3           45s   red
+$ kubectl get deployments.apps nginx --label-columns=priority
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE    PRIORITY
+nginx   3/3     3            3           117s   high
 
-$ kubectl label deployments.apps nginx color-
+$ kubectl label deployments.apps nginx priority-
 deployment.apps/nginx unlabeled
 
-$ kubectl get deployments.apps nginx --label-columns=color
-NAME    READY   UP-TO-DATE   AVAILABLE   AGE   COLOR
+$ kubectl get deployments.apps nginx --label-columns=priority
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE   PRIORITY
 nginx   3/3     3            3           60s
 
 $ kubectl delete deployments.apps nginx
