@@ -4,7 +4,7 @@
 
 https://kubernetes.io/docs/concepts/configuration/configmap
 
-https://www.youtube.com/watch?v=5b3kkJ0pUjA&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap&index=27
+https://www.youtube.com/watch?v=5b3kkJ0pUjA&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
 ## PRACTICE #9 - KUBERNETES - KIND - UBUNTU 24
 
@@ -26,7 +26,8 @@ DESCRIPTION:
 ```
 
 ```bash
-$ kubectl create configmap alpine --dry-run=client --from-literal=DEFAULT_DELAY=30 --output=yaml | kubectl-neat | tee configmap.yaml
+$ kubectl create configmap alpine --dry-run=client --from-literal=DEFAULT_DELAY=30 --output=yaml |
+kubectl-neat | tee configmap.yaml
 apiVersion: v1
 data:
   DEFAULT_DELAY: "30"
