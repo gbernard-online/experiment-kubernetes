@@ -470,7 +470,6 @@ patches:
     namespace: kube-system
 resources:
 - https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-
 EOF
 
 $ kubectl apply --kustomize=.
