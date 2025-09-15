@@ -118,8 +118,9 @@ pod "alpine" deleted
 $ kubectl delete --filename=secret.yaml
 secret "alpine" deleted
 
-$ rm --verbose pod.yaml secret.yaml
-removed 'pod.yaml secret.yaml'
+$ rm --verbose secret.yaml pod.yaml
+removed 'secret.yaml'
+removed 'pod.yaml'
 ```
 
 &nbsp;
