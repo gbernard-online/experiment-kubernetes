@@ -175,6 +175,78 @@ $ kubeconform -v
 v0.7.0
 ```
 
+```bash
+$ apt policy nfs-kernel-server
+nfs-kernel-server:
+  Installed: (none)
+  Candidate: 1:2.6.4-3ubuntu5.1
+  Version table:
+     1:2.6.4-3ubuntu5.1 500
+        500 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages
+     1:2.6.4-3ubuntu5 500
+        500 http://archive.ubuntu.com/ubuntu noble/main amd64 Packages
+
+$ apt depends nfs-kernel-server
+nfs-kernel-server
+  Depends: libblkid1 (≥ 2.16)
+  Depends: libc6 (≥ 2.38)
+  Depends: libcap2 (≥ 1:2.10)
+  Depends: libevent-core-2.1-7t64 (≥ 2.1.8-stable)
+  Depends: libsqlite3-0 (≥ 3.7.15)
+  Depends: libtirpc3t64 (≥ 1.0.2)
+  Depends: libuuid1 (≥ 2.31.1)
+  Depends: libwrap0 (≥ 7.6-4~)
+  Depends: libxml2 (≥ 2.7.4)
+  Depends: nfs-common (= 1:2.6.4-3ubuntu5.1)
+  Depends: ucf
+  Depends: netbase
+  Depends: keyutils
+  Conflicts: <knfs>
+  Conflicts: <nfs-server>
+  Recommends: python3
+  Recommends: python3-yaml
+  Suggests: procps
+  Replaces: <knfs>
+    nfs-kernel-server
+  Replaces: <nfs-server>
+    nfs-kernel-server
+
+$ sudo apt install --yes nfs-kernel-server
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  keyutils libnfsidmap1 nfs-common rpcbind
+Suggested packages:
+  watchdog
+The following NEW packages will be installed:
+  keyutils libnfsidmap1 nfs-common nfs-kernel-server rpcbind
+0 upgraded, 5 newly installed, 0 to remove and 0 not upgraded.
+Need to get 569 kB of archives.
+|...|
+
+$ sudo mkdir --verbose /srv/nfs
+mkdir: created directory '/srv/nfs'
+
+$ sudo chmod --verbose g-rx,o-rx /srv/nfs
+mode of '/srv/nfs' changed from 0755 (rwxr-xr-x) to 0700 (rwx------)
+
+$ echo '/srv/nfs *(fsid=root,insecure,no_root_squash,no_subtree_check,rw,sync)' |
+sudo tee --append /etc/exports
+/srv/nfs *(fsid=root,insecure,no_root_squash,no_subtree_check,rw,sync)
+
+$ sudo systemctl restart nfs-server rpcbind
+
+$ sudo exportfs -av
+exporting *:/srv/nfs
+
+$ systemctl is-active nfs-server.service
+active
+
+$ systemctl is-active rpcbind.service
+active
+```
+
 ## INSTALL - KUBERNETES - MICROK8S - UBUNTU 24
 
 [![Kubernetes](img/kubernetes.webp "Kubernetes")](https://kubernetes.io)1
@@ -434,8 +506,8 @@ cluster-worker-yellow   Ready    <none>          2m9s    v1.34.0
 
 $ docker container ls --format='{{ .Names }} {{ .Ports }}'
 cluster-control-plane 127.0.0.1:80->80/tcp, 127.0.0.1:443->443/tcp, 127.0.0.1:42207->6443/tcp
-cluster-worker3
 cluster-worker
+cluster-worker3
 cluster-worker2
 
 $ docker container rename cluster-worker cluster-worker-green
@@ -444,7 +516,7 @@ $ docker container rename cluster-worker2 cluster-worker-red
 
 $ docker container rename cluster-worker3 cluster-worker-yellow
 
-$ docker container ls --format='{{ .Names }}' | sort
+$ docker container ls --format='{{ .Names }}'
 cluster-control-plane
 cluster-worker-green
 cluster-worker-red
