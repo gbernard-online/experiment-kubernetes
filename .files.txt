@@ -22,6 +22,8 @@ notebook/practice11.md
 notebook/practice12.md
 notebook/practice13.md
 notebook/practice14.md
+notebook/practice15.md
+notebook/practice16.md
 kubeadm.webp
 kubernetes.webp
 kind.webp
