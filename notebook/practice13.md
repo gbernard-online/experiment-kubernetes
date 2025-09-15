@@ -6,7 +6,7 @@ https://kubernetes.io/docs/concepts/storage/volumes
 
 https://www.youtube.com/watch?v=0KSOqB4nea0&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
-## PRACTICE #12 - KUBERNETES - KIND - UBUNTU 24
+## PRACTICE #13 - KUBERNETES - KIND - UBUNTU 24
 
 [![Kubernetes](img/kubernetes.webp "Kubernetes")](https://kubernetes.io)1
 [![Kind](img/kind.webp "Kind")](https://kind.sigs.k8s.io)0
