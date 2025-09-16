@@ -13,7 +13,8 @@ https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-version
 
 https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s  
 https://microk8s.io/docs/working-with-kubectl  
-https://microk8s.io/docs/command-reference#heading--microk8s-kubectl
+https://microk8s.io/docs/command-reference#heading--microk8s-kubectl  
+https://microk8s.io/docs/addons
 
 https://kind.sigs.k8s.io/docs/user/configuration  
 https://kind.sigs.k8s.io/docs/user/ingress  
@@ -345,9 +346,6 @@ Server Version: v1.32.8
 ```
 
 ```bash
-$ microk8s status --addon=metrics-server
-disabled
-
 $ microk8s enable metrics-server
 Infer repository core for addon metrics-server
 Enabling Metrics-Server
@@ -372,9 +370,6 @@ enabled
 ```
 
 ```bash
-$ microk8s status --addon=ingress
-disabled
-
 $ sudo microk8s enable ingress
 Infer repository core for addon ingress
 Enabling Ingress
@@ -397,6 +392,28 @@ $ kubectl wait pods --for=condition=ready \
 pod/nginx-ingress-microk8s-controller-8wfnl condition met
 
 $ microk8s status --addon=ingress
+enabled
+```
+
+```bash
+$ microk8s enable hostpath-storage
+Infer repository core for addon hostpath-storage
+Enabling default storage class.
+WARNING: Hostpath storage is not suitable for production environments.
+         A hostpath volume can grow beyond the size limit set in the volume claim manifest.
+
+deployment.apps/hostpath-provisioner created
+storageclass.storage.k8s.io/microk8s-hostpath created
+serviceaccount/microk8s-hostpath created
+clusterrole.rbac.authorization.k8s.io/microk8s-hostpath created
+clusterrolebinding.rbac.authorization.k8s.io/microk8s-hostpath created
+Storage will be available soon.
+
+$ kubectl wait pods --for=condition=ready \
+--namespace=ingress --selector=name=nginx-ingress-microk8s --timeout=60s
+pod/nginx-ingress-microk8s-controller-8wfnl condition met
+
+$ microk8s status --addon=hostpath-storage
 enabled
 ```
 
@@ -544,7 +561,7 @@ patches:
       value: --kubelet-insecure-tls
     - op: add
       path: "/spec/template/spec/tolerations"
-      value: 
+      value:
         - effect: NoSchedule
           key: node-role.kubernetes.io/master
           operator: Equal
