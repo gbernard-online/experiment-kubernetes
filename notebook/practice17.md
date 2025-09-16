@@ -11,6 +11,9 @@ https://www.youtube.com/watch?v=Mz5d8Miphso&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
+$ kubectl get storageclasses --output=name
+storageclass.storage.k8s.io/microk8s-hostpath
+
 $ kubectl get storageclasses microk8s-hostpath --output=yaml | yq .reclaimPolicy,.volumeBindingMode
 Delete
 WaitForFirstConsumer
@@ -179,6 +182,9 @@ removed 'pod.yaml'
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
+$ kubectl get storageclasses --output=name
+storageclass.storage.k8s.io/standard
+
 $ kubectl get storageclasses standard --output=yaml | yq .reclaimPolicy,.volumeBindingMode
 Delete
 WaitForFirstConsumer
