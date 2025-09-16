@@ -77,9 +77,9 @@ yq '.items | map({"name":.metadata.name,"node":.spec.nodeName})'
 - name: alpine
   node: cluster-worker-red
 
-$ docker exec cluster-worker-red find /var/lib/kubelet/pods -name 'alpine-*'
-/var/lib/kubelet/pods/e6239fea-a73d-4a68-8dda-d5777c1f01c8/containers/alpine-1
-/var/lib/kubelet/pods/e6239fea-a73d-4a68-8dda-d5777c1f01c8/containers/alpine-2
+$ docker exec cluster-worker-red find /var/lib/kubelet/pods -name 'alpine-*' -printf '%P\n'
+e6239fea-a73d-4a68-8dda-d5777c1f01c8/containers/alpine-1
+e6239fea-a73d-4a68-8dda-d5777c1f01c8/containers/alpine-2
 
 $ kubectl exec alpine --container=alpine-1 -- touch /cache/alpine-1
 
@@ -101,24 +101,24 @@ $ kubectl exec alpine --container=alpine-2 -- df -h /cache
 Filesystem                Size      Used Available Use% Mounted on
 /dev/vda2                30.3G     13.3G     15.4G  46% /cache
 
-$ docker exec cluster-worker-red find /var/lib/kubelet/pods -name 'alpine-*'
-/var/lib/kubelet/pods/e6239fea-a73d-4a68-8dda-d5777c1f01c8/containers/alpine-1
-/var/lib/kubelet/pods/e6239fea-a73d-4a68-8dda-d5777c1f01c8/containers/alpine-2
-/var/lib/kubelet/pods/e6239fea-a73d-4a68-8dda-d5777c1f01c8/volumes/kubernetes.io~empty-dir/alpine/alpine-1
-/var/lib/kubelet/pods/e6239fea-a73d-4a68-8dda-d5777c1f01c8/volumes/kubernetes.io~empty-dir/alpine/alpine-2
+$ docker exec cluster-worker-red find /var/lib/kubelet/pods -name 'alpine-*' -printf '%P\n'
+e6239fea-a73d-4a68-8dda-d5777c1f01c8/containers/alpine-1
+e6239fea-a73d-4a68-8dda-d5777c1f01c8/containers/alpine-2
+e6239fea-a73d-4a68-8dda-d5777c1f01c8/volumes/kubernetes.io~empty-dir/alpine/alpine-1
+e6239fea-a73d-4a68-8dda-d5777c1f01c8/volumes/kubernetes.io~empty-dir/alpine/alpine-2
 
 $ kubectl get pods alpine
 NAME     READY   STATUS      RESTARTS   AGE
 alpine   0/2     Completed   0          2m6s
 
-$ docker exec cluster-worker-red find /var/lib/kubelet/pods -name 'alpine-*'
-/var/lib/kubelet/pods/e6239fea-a73d-4a68-8dda-d5777c1f01c8/containers/alpine-1
-/var/lib/kubelet/pods/e6239fea-a73d-4a68-8dda-d5777c1f01c8/containers/alpine-2
+$ docker exec cluster-worker-red find /var/lib/kubelet/pods -name 'alpine-*' -printf '%P\n'
+e6239fea-a73d-4a68-8dda-d5777c1f01c8/containers/alpine-1
+e6239fea-a73d-4a68-8dda-d5777c1f01c8/containers/alpine-2
 
 $ kubectl delete --filename=pod.yaml
 pod "alpine" deleted
 
-$ docker exec cluster-worker-red find /var/lib/kubelet/pods -name 'alpine-*'
+$ docker exec cluster-worker-red find /var/lib/kubelet/pods -name 'alpine-*' -printf '%P\n'
 
 $ docker exec cluster-worker-red ls /var/lib/kubelet/pods
 f0338d9b-b37c-4537-888c-d2e5b83a6ebb
