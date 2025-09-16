@@ -339,9 +339,16 @@ kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   7m31s
 
 $ microk8s kubectl config view --raw >$HOME/.kube/config
 
+$ sudo snap alias microk8s.kubectl kubectl
+Added:
+  - microk8s.kubectl as kubectl
+
+$ sudo ln --symbolic --verbose /snap/bin/kubectl /usr/local/bin/kubectl
+'/usr/local/bin/kubectl' -> '/snap/bin/kubectl'
+
 $ kubectl version
-Client Version: v1.33.5
-Kustomize Version: v5.6.0
+Client Version: v1.32.8
+Kustomize Version: v5.5.0
 Server Version: v1.32.8
 ```
 
