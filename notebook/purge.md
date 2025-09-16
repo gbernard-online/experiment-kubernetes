@@ -7,13 +7,16 @@
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
-$ sudo snap remove --purge microk8s
-microk8s removed
+$ sudo rm --verbose /usr/local/bin/kubectl
+removed '/usr/local/bin/kubectl'
 
 $ rm --verbose $HOME/.kube/config
 removed '/home/user/.kube/config'
 
 $ rm --force --recursive $HOME/.kube/cache
+
+$ sudo snap remove --purge microk8s
+microk8s removed
 ```
 
 ## PURGE - KUBERNETES - KIND - UBUNTU 24
