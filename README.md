@@ -27,6 +27,8 @@
 [Practice #16](notebook/practice16.md)  
 [Practice #17](notebook/practice17.md)
 
+[Purge](notebook/purge.md)
+
 ## REFERENCES
 
 https://kubernetes.io/docs/home  
