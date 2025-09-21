@@ -36,11 +36,11 @@ https://www.youtube.com/watch?v=AskMZMtjk2g&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 $ curl --fail --location --show-error --silent https://dl.k8s.io/release/stable.txt && echo
 v1.34.1
 
-$ curl --fail --location --show-error --silent https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key |
+$ curl --fail --location --show-error --silent https://pkgs.k8s.io/core:/stable:/v1.34/deb/Release.key |
 sudo dd of=/etc/apt/trusted.gpg.d/kubernetes.asc status=none
 
 $ sudo dd of=/etc/apt/sources.list.d/kubernetes.list status=none <<EOF
-deb [arch=amd64] https://pkgs.k8s.io/core:/stable:/v1.33/deb/ /
+deb [arch=amd64] https://pkgs.k8s.io/core:/stable:/v1.34/deb/ /
 EOF
 
 $ sudo apt --quiet=2 update
@@ -49,12 +49,8 @@ All packages are up to date.
 
 ```bash
 $ apt-cache madison kubectl
-   kubectl | 1.33.5-1.1 | https://pkgs.k8s.io/core:/stable:/v1.33/deb  Packages
-   kubectl | 1.33.4-1.1 | https://pkgs.k8s.io/core:/stable:/v1.33/deb  Packages
-   kubectl | 1.33.3-1.1 | https://pkgs.k8s.io/core:/stable:/v1.33/deb  Packages
-   kubectl | 1.33.2-1.1 | https://pkgs.k8s.io/core:/stable:/v1.33/deb  Packages
-   kubectl | 1.33.1-1.1 | https://pkgs.k8s.io/core:/stable:/v1.33/deb  Packages
-   kubectl | 1.33.0-1.1 | https://pkgs.k8s.io/core:/stable:/v1.33/deb  Packages
+   kubectl | 1.34.1-1.1 | https://pkgs.k8s.io/core:/stable:/v1.34/deb  Packages
+   kubectl | 1.34.0-1.1 | https://pkgs.k8s.io/core:/stable:/v1.34/deb  Packages
 
 $ apt depends kubectl
 kubectl
@@ -74,31 +70,27 @@ $ whereis kubectl
 kubectl: /usr/bin/kubectl
 
 $ kubectl version --client
-Client Version: v1.33.5
-Kustomize Version: v5.6.0
+Client Version: v1.34.1
+Kustomize Version: v5.7.1
 
 $ kubectl version --client --output=yaml | yq
 clientVersion:
-  buildDate: "2025-09-09T19:52:31Z"
+  buildDate: "2025-09-09T19:44:50Z"
   compiler: gc
-  gitCommit: 03e764d0394bdff662e960c70d25b3c30d731666
+  gitCommit: 93248f9ae092f571eb870b7664c534bfc7d00f03
   gitTreeState: clean
-  gitVersion: v1.33.5
+  gitVersion: v1.34.1
   goVersion: go1.24.6
   major: "1"
-  minor: "33"
+  minor: "34"
   platform: linux/amd64
-kustomizeVersion: v5.6.0
+kustomizeVersion: v5.7.1
 ```
 
 ```bash
 $ apt-cache madison kubeadm
-   kubeadm | 1.33.5-1.1 | https://pkgs.k8s.io/core:/stable:/v1.33/deb  Packages
-   kubeadm | 1.33.4-1.1 | https://pkgs.k8s.io/core:/stable:/v1.33/deb  Packages
-   kubeadm | 1.33.3-1.1 | https://pkgs.k8s.io/core:/stable:/v1.33/deb  Packages
-   kubeadm | 1.33.2-1.1 | https://pkgs.k8s.io/core:/stable:/v1.33/deb  Packages
-   kubeadm | 1.33.1-1.1 | https://pkgs.k8s.io/core:/stable:/v1.33/deb  Packages
-   kubeadm | 1.33.0-1.1 | https://pkgs.k8s.io/core:/stable:/v1.33/deb  Packages
+   kubeadm | 1.34.1-1.1 | https://pkgs.k8s.io/core:/stable:/v1.34/deb  Packages
+   kubeadm | 1.34.0-1.1 | https://pkgs.k8s.io/core:/stable:/v1.34/deb  Packages
 
 $ apt depends kubeadm
 kubeadm
@@ -120,18 +112,18 @@ $ whereis kubeadm
 kubeadm: /usr/bin/kubeadm
 
 $ kubeadm version --output=short
-v1.33.5
+v1.34.1
 
 $ kubeadm version --output=yaml | yq
 clientVersion:
-  buildDate: "2025-09-09T19:50:45Z"
+  buildDate: "2025-09-09T19:43:15Z"
   compiler: gc
-  gitCommit: 03e764d0394bdff662e960c70d25b3c30d731666
+  gitCommit: 93248f9ae092f571eb870b7664c534bfc7d00f03
   gitTreeState: clean
-  gitVersion: v1.33.5
+  gitVersion: v1.34.1
   goVersion: go1.24.6
   major: "1"
-  minor: "33"
+  minor: "34"
   platform: linux/amd64
 ```
 
@@ -236,7 +228,7 @@ $ echo '/srv/nfs *(fsid=root,insecure,no_root_squash,no_subtree_check,rw,sync)' 
 sudo tee --append /etc/exports
 /srv/nfs *(fsid=root,insecure,no_root_squash,no_subtree_check,rw,sync)
 
-$ sudo systemctl restart nfs-server rpcbind
+$ sudo systemctl restart nfs-server.service rpcbind.service
 
 $ sudo exportfs -av
 exporting *:/srv/nfs
@@ -261,6 +253,17 @@ microk8s (1.32/stable) v1.32.8 from Canonical✓ installed
 
 $ sudo microk8s version
 MicroK8s v1.32.8 revision 8355
+
+$ echo '
+if [ -x "$(command -v microk8s)" ]; then
+  alias kubectl=microk8s.kubectl
+  export KUBECONFIG=/var/snap/microk8s/current/credentials/client.config
+fi' | tee --append $HOME/.bashrc
+
+if [ -x "$(command -v microk8s)" ]; then
+  alias kubectl=microk8s.kubectl
+  export KUBECONFIG=/var/snap/microk8s/current/credentials/client.config
+fi
 
 $ sudo usermod --append --groups=microk8s user
 
@@ -301,12 +304,12 @@ addons:
     rook-ceph            # (core) Distributed Ceph storage using Rook
     storage              # (core) Alias to hostpath-storage add-on, deprecated
 
-$ microk8s kubectl version
+$ kubectl version
 Client Version: v1.32.8
 Kustomize Version: v5.5.0
 Server Version: v1.32.8
 
-$ microk8s kubectl version --output=yaml | yq
+$ kubectl version --output=yaml | yq
 clientVersion:
   buildDate: "2025-08-15T16:02:26Z"
   compiler: gc
@@ -329,27 +332,13 @@ serverVersion:
   minor: "32"
   platform: linux/amd64
 
-$ microk8s kubectl get nodes
+$ kubectl get nodes
 NAME     STATUS   ROLES    AGE     VERSION
 ubuntu   Ready    <none>   7m10s   v1.32.8
 
-$ microk8s kubectl get services
+$ kubectl get services
 NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   7m31s
-
-$ microk8s kubectl config view --raw >$HOME/.kube/config
-
-$ sudo snap alias microk8s.kubectl kubectl
-Added:
-  - microk8s.kubectl as kubectl
-
-$ sudo ln --symbolic --verbose /snap/bin/kubectl /usr/local/bin/kubectl
-'/usr/local/bin/kubectl' -> '/snap/bin/kubectl'
-
-$ kubectl version
-Client Version: v1.32.8
-Kustomize Version: v5.5.0
-Server Version: v1.32.8
 ```
 
 ```bash
@@ -457,16 +446,7 @@ apiVersion: kind.x-k8s.io/v1alpha4
 kind: Cluster
 name: cluster
 nodes:
-- extraPortMappings:
-  - containerPort: 80
-    hostPort: 80
-    listenAddress: 127.0.0.1
-    protocol: TCP
-  - containerPort: 443
-    hostPort: 443
-    listenAddress: 127.0.0.1
-    protocol: TCP
-  role: control-plane
+- role: control-plane
 - kubeadmConfigPatches:
   - |
     kind: JoinConfiguration
@@ -513,7 +493,7 @@ CoreDNS is running at https://127.0.0.1:41155/api/v1/namespaces/kube-system/serv
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
-$ kubectl cluster-info dump --context=kind-cluster | jq .
+$ kubectl cluster-info dump --context=kind-cluster | jq
 |...|
 
 $ kubectl version
@@ -529,7 +509,7 @@ cluster-worker-red      Ready    <none>          2m9s    v1.34.0
 cluster-worker-yellow   Ready    <none>          2m9s    v1.34.0
 
 $ docker container ls --format='{{ .Names }} {{ .Ports }}'
-cluster-control-plane 127.0.0.1:80->80/tcp, 127.0.0.1:443->443/tcp, 127.0.0.1:42207->6443/tcp
+cluster-control-plane 127.0.0.1:42207->6443/tcp
 cluster-worker
 cluster-worker3
 cluster-worker2
