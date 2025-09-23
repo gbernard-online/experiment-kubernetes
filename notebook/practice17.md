@@ -2,7 +2,7 @@
 
 ## REFERENCES
 
-https://www.youtube.com/watch?v=Mz5d8Miphso&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap  
+https://www.youtube.com/watch?v=Mz5d8Miphso&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
 ## PRACTICE #17 - KUBERNETES - MICROK8S - UBUNTU 24
 
