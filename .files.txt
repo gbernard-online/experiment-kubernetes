@@ -25,6 +25,7 @@ notebook/practice14.md
 notebook/practice15.md
 notebook/practice16.md
 notebook/practice17.md
+notebook/practice18.md
 notebook/purge.md
 kubeadm.webp
 kubernetes.webp
