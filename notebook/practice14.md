@@ -13,6 +13,34 @@ https://www.youtube.com/watch?v=0KSOqB4nea0&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
+$ kubectl explain pods.spec.nodeName
+KIND:       Pod
+VERSION:    v1
+
+FIELD: nodeName <string>
+
+DESCRIPTION:
+    NodeName indicates in which node this pod is scheduled. If empty, this pod
+    is a candidate for scheduling by the scheduler defined in schedulerName.
+    Once this field is set, the kubelet for this node becomes responsible for
+    the lifecycle of this pod. This field should not be used to express a desire
+    for the pod to be scheduled on a specific node.
+    https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename
+
+$ kubectl explain pods.spec.nodeSelector
+KIND:       Pod
+VERSION:    v1
+
+FIELD: nodeSelector <map[string]string>
+
+DESCRIPTION:
+    NodeSelector is a selector which must be true for the pod to fit on a node.
+    Selector which must match a node's labels for the pod to be scheduled on
+    that node. More info:
+    https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+```
+
+```bash
 $ kubectl get nodes
 NAME                    STATUS   ROLES           AGE   VERSION
 cluster-control-plane   Ready    control-plane   10h   v1.34.0
@@ -57,7 +85,7 @@ $ kubectl get nodes --output=json | jq '.items[].metadata.labels'
 ```
 
 ```bash
-kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --restart=OnFailure -- sleep 60 |
+$ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --restart=OnFailure -- sleep 60 |
 kubectl-neat | yq '.spec.nodeName="cluster-worker-yellow" | sort_keys(.spec)' | tee pod.yaml
 apiVersion: v1
 kind: Pod
@@ -148,7 +176,7 @@ removed 'pod.yaml'
 ```
 
 ```bash
-$ kubectl create deployment nginx --dry-run=client --output=yaml --image=nginx:alpine --replicas=3 |
+$ kubectl create deployment nginx --dry-run=client --image=nginx:alpine --output=yaml --replicas=3 |
 kubectl-neat | tee deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
