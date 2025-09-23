@@ -44,7 +44,6 @@ VERSION:    v1
 DESCRIPTION:
     Pod is a collection of containers that can run on a host. This resource is
     created by clients and scheduled onto hosts.
-
 |...|
 
 $ kubectl explain pods.spec --recursive
@@ -53,12 +52,10 @@ VERSION:    v1
 
 FIELD: spec <PodSpec>
 
-
 DESCRIPTION:
     Specification of the desired behavior of the pod. More info:
     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     PodSpec is a description of a pod.
-
 |...|
 
 $ kubectl run nginx --image=nginx:alpine
