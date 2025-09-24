@@ -1,4 +1,4 @@
-# EXPERIMENT KUBERNETES
+# WIP: EXPERIMENT KUBERNETES
 
 ## REFERENCES
 
@@ -13,7 +13,7 @@ https://www.youtube.com/watch?v=A0Q04eIg1kA&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
-$ kubectl explain pods.spec.affinity
+$ kubectl explain pods.spec.affinity | cat --squeeze-blank
 KIND:       Pod
 VERSION:    v1
 
@@ -22,9 +22,20 @@ FIELD: affinity <Affinity>
 DESCRIPTION:
     If specified, the podʼs scheduling constraints
     Affinity is a group of affinity scheduling rules.
-|...|
 
-$ kubectl explain pods.spec.affinity.nodeAffinity
+FIELDS:
+  nodeAffinity	<NodeAffinity>
+    Describes node affinity scheduling rules for the pod.
+
+  podAffinity	<PodAffinity>
+    Describes pod affinity scheduling rules (e.g. co-locate this pod in the same
+    node, zone, etc. as some other pod(s)).
+
+  podAntiAffinity	<PodAntiAffinity>
+    Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in
+    the same node, zone, etc. as some other pod(s)).
+
+$ kubectl explain pods.spec.affinity.nodeAffinity | cat --squeeze-blank 
 KIND:       Pod
 VERSION:    v1
 
@@ -33,9 +44,27 @@ FIELD: nodeAffinity <NodeAffinity>
 DESCRIPTION:
     Describes node affinity scheduling rules for the pod.
     Node affinity is a group of node affinity scheduling rules.
-|...|
 
-$ kubectl explain pods.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution --recursive
+FIELDS:
+  preferredDuringSchedulingIgnoredDuringExecution	<[]PreferredSchedulingTerm>
+    The scheduler will prefer to schedule pods to nodes that satisfy the
+    affinity expressions specified by this field, but it may choose a node that
+    violates one or more of the expressions. The node that is most preferred is
+    the one with the greatest sum of weights, i.e. for each node that meets all
+    of the scheduling requirements (resource request, requiredDuringScheduling
+    affinity expressions, etc.), compute a sum by iterating through the elements
+    of this field and adding "weight" to the sum if the node matches the
+    corresponding matchExpressions; the node(s) with the highest sum are the
+    most preferred.
+
+  requiredDuringSchedulingIgnoredDuringExecution	<NodeSelector>
+    If the affinity requirements specified by this field are not met at
+    scheduling time, the pod will not be scheduled onto the node. If the
+    affinity requirements specified by this field cease to be met at some point
+    during pod execution (e.g. due to an update), the system may or may not try
+    to eventually evict the pod from its node.
+
+$ kubectl explain pods.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution \
 KIND:       Pod
 VERSION:    v1
 
@@ -50,7 +79,7 @@ DESCRIPTION:
     A node selector represents the union of the results of one or more label
     queries over a set of nodes; that is, it represents the OR of the selectors
     represented by the node selector terms.
-
+    
 FIELDS:
   nodeSelectorTerms	<[]NodeSelectorTerm> -required-
     matchExpressions	<[]NodeSelectorRequirement>
@@ -119,6 +148,14 @@ spec:
 
 $ kubectl apply --filename=deployment.yaml
 deployment.apps/nginx created
+
+$ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine:green:yellow
+deployment.apps/nginx annotated
+
+$ kubectl rollout history deployment nginx 
+deployment.apps/nginx 
+REVISION  CHANGE-CAUSE
+1         nginx:alpine:green:yellow
 
 $ kubectl get deployments nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
@@ -208,6 +245,14 @@ spec:
 $ kubectl apply --filename=deployment.yaml
 deployment.apps/nginx created
 
+$ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine:green:yellow
+deployment.apps/nginx annotated
+
+$ kubectl rollout history deployment nginx 
+deployment.apps/nginx 
+REVISION  CHANGE-CAUSE
+1         nginx:alpine:green:yellow
+
 $ kubectl get deployments nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
 nginx   6/6     6            6           6s
@@ -280,11 +325,10 @@ spec:
 $ kubectl apply --filename=deployment.yaml
 deployment.apps/nginx created
 
-
 $ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine:orange
 deployment.apps/nginx annotated
 
-$ kubectl rollout history deployment nginx 
+$ kubectl rollout history deployment nginx
 deployment.apps/nginx 
 REVISION  CHANGE-CAUSE
 1         nginx:alpine:orange
@@ -304,21 +348,23 @@ Pending
 $ kubectl patch deployments.apps nginx --patch='[
 {
   "op": "replace",
-  "path": "/spec/template/spec/affinity/nodeAffinity/requiredDuringSchedulingIgnoredDuringExecution",
+  "path": "/spec/template/spec/affinity/nodeAffinity",
   "value": {
-    "nodeSelectorTerms": [
-      {
-        "matchExpressions": [
-          {
-            "key": "color",
-            "operator": "In",
-            "values": [
-              "red"
-            ]
-          }
-        ]
-      }
-    ]
+    "requiredDuringSchedulingIgnoredDuringExecution": {
+      "nodeSelectorTerms": [
+        {
+          "matchExpressions": [
+            {
+              "key": "color",
+              "operator": "In",
+              "values": [
+                "red"
+              ]
+            }
+          ]
+        }
+      ]
+    }
   }
 }
 ]' --type=json
@@ -345,7 +391,7 @@ REVISION  CHANGE-CAUSE
 
 $ kubectl get deployments nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
-nginx   6/6     6            6           3m
+nginx   6/6     6            6           95s
 
 $ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].status.phase
 Running
@@ -355,7 +401,7 @@ Running
 Running
 Running
 
-$  kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
+$ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
 cluster-worker-red
 cluster-worker-red
 cluster-worker-red
