@@ -6,10 +6,10 @@ https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using
 
 https://www.youtube.com/watch?v=A0Q04eIg1kA&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
-## PRACTICE #18 - KUBERNETES - MICROK8S - UBUNTU 24
+## PRACTICE #18 - KUBERNETES - KIND - UBUNTU 24
 
 [![Kubernetes](img/kubernetes.webp "Kubernetes")](https://kubernetes.io)1
-[![MicroK8s](img/microk8s.webp "MikroK8s")](https://microk8s.io)1
+[![Kind](img/kind.webp "Kind")](https://kind.sigs.k8s.io)0
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
