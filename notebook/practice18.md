@@ -66,19 +66,27 @@ FIELDS:
 ```
 
 ```bash
-$ kubectl create deployment nginx --dry-run=client --image=nginx:alpine --output=yaml --overrides='[
-{
-  "op": "add",
-  "path": "/spec/containers/0/env",
-  "value": [
-    {
-      "name": "KUBERNETES_CONTAINER_NAME",
-      "value": "alpine"
+$ kubectl create deployment nginx --dry-run=client --image=nginx:alpine --output=json --replicas=6 |
+jq '.spec.template.spec.affinity = input' - <(echo '{
+  "nodeAffinity": {
+    "requiredDuringSchedulingIgnoredDuringExecution": {
+      "nodeSelectorTerms": [
+        {
+          "matchExpressions": [
+            {
+              "key": "color",
+              "operator": "In",
+              "values": [
+                "green",
+                "yellow"
+              ]
+            }
+          ]
+        }
+      ]
     }
-  ]
-}
-]' --override-type=json --replicas=3 |
-kubectl-neat | tee deployment.yaml
+  }
+}') | kubectl-neat --output=yaml  | tee deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -86,23 +94,281 @@ metadata:
     app: nginx
   name: nginx
 spec:
-  replicas: 3
+  replicas: 6
   selector:
     matchLabels:
       app: nginx
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: nginx
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: color
+                operator: In
+                values:
+                - green
+                - yellow
       containers:
       - image: nginx:alpine
         name: nginx
+
+$ kubectl apply --filename=deployment.yaml
+deployment.apps/nginx created
+
+$ kubectl get deployments nginx
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   6/6     6            6           14s
+
+$ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
+cluster-worker-green
+cluster-worker-green
+cluster-worker-yellow
+cluster-worker-green
+cluster-worker-yellow
+cluster-worker-yellow
+
+$ kubectl delete --filename=deployment.yaml
+deployment.apps "nginx" deleted
+
+$ rm --verbose deployment.yaml
+removed 'deployment.yaml'
 ```
 
+```bash
+$ kubectl create deployment nginx --dry-run=client --image=nginx:alpine --output=json --replicas=6 |
+jq '.spec.template.spec.affinity = input' - <(echo '{
+  "nodeAffinity": {
+    "requiredDuringSchedulingIgnoredDuringExecution": {
+      "nodeSelectorTerms": [
+        {
+          "matchExpressions": [
+            {
+              "key": "color",
+              "operator": "In",
+              "values": [
+                "green"
+              ]
+            }
+          ]
+        },
+        {
+          "matchFields": [
+            {
+              "key": "metadata.name",
+              "operator": "In",
+              "values": [
+                "cluster-worker-yellow"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}') | kubectl-neat --output=yaml  | tee deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: color
+                operator: In
+                values:
+                - green
+            - matchFields:
+              - key: metadata.name
+                operator: In
+                values:
+                - cluster-worker-yellow
+      containers:
+      - image: nginx:alpine
+        name: nginx
+
+$ kubectl apply --filename=deployment.yaml
+deployment.apps/nginx created
+
+$ kubectl get deployments nginx
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   6/6     6            6           6s
+
+$ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
+cluster-worker-green
+cluster-worker-green
+cluster-worker-yellow
+cluster-worker-yellow
+cluster-worker-yellow
+cluster-worker-green
+
+$ kubectl delete --filename=deployment.yaml
+deployment.apps "nginx" deleted
+
+$ rm --verbose deployment.yaml
+removed 'deployment.yaml'
+```
+
+```bash
+$ kubectl create deployment nginx --dry-run=client --image=nginx:alpine --output=json --replicas=6 |
+jq '.spec.template.spec.affinity = input' - <(echo '{
+  "nodeAffinity": {
+    "requiredDuringSchedulingIgnoredDuringExecution": {
+      "nodeSelectorTerms": [
+        {
+          "matchExpressions": [
+            {
+              "key": "color",
+              "operator": "In",
+              "values": [
+                "orange"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}') | kubectl-neat --output=yaml  | tee deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: color
+                operator: In
+                values:
+                - orange
+      containers:
+      - image: nginx:alpine
+        name: nginx
+
+$ kubectl apply --filename=deployment.yaml
+deployment.apps/nginx created
 
 
+$ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine:orange
+deployment.apps/nginx annotated
+
+$ kubectl rollout history deployment nginx 
+deployment.apps/nginx 
+REVISION  CHANGE-CAUSE
+1         nginx:alpine:orange
+
+$ kubectl get deployments nginx
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   0/6     6            0           16s
+
+$ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].status.phase
+Pending
+Pending
+Pending
+Pending
+Pending
+Pending
+
+$ kubectl patch deployments.apps nginx --patch='[
+{
+  "op": "replace",
+  "path": "/spec/template/spec/affinity/nodeAffinity/requiredDuringSchedulingIgnoredDuringExecution",
+  "value": {
+    "nodeSelectorTerms": [
+      {
+        "matchExpressions": [
+          {
+            "key": "color",
+            "operator": "In",
+            "values": [
+              "red"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+]' --type=json
+deployment.apps/nginx patched
+
+$ kubectl get deployments nginx --output=yaml | yq .spec.template.spec.affinity
+nodeAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+    nodeSelectorTerms:
+      - matchExpressions:
+          - key: color
+            operator: In
+            values:
+              - red
+
+$ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine:red
+deployment.apps/nginx annotated
+
+$ kubectl rollout history deployment nginx 
+deployment.apps/nginx 
+REVISION  CHANGE-CAUSE
+1         nginx:alpine:orange
+2         nginx:alpine:red
+
+$ kubectl get deployments nginx
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   6/6     6            6           3m
+
+$ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].status.phase
+Running
+Running
+Running
+Running
+Running
+Running
+
+$  kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
+cluster-worker-red
+cluster-worker-red
+cluster-worker-red
+cluster-worker-red
+cluster-worker-red
+cluster-worker-red
+
+$ kubectl delete --filename=deployment.yaml
+deployment.apps "nginx" deleted
+
+$ rm --verbose deployment.yaml
+removed 'deployment.yaml'
+```
 
 &nbsp;
 
