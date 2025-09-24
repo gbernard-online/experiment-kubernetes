@@ -1,4 +1,4 @@
-# WIP: EXPERIMENT KUBERNETES
+# EXPERIMENT KUBERNETES
 
 ## REFERENCES
 
@@ -157,7 +157,7 @@ deployment.apps/nginx
 REVISION  CHANGE-CAUSE
 1         nginx:alpine:green:yellow
 
-$ kubectl get deployments nginx
+$ kubectl get deployments.apps nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
 nginx   6/6     6            6           14s
 
@@ -253,7 +253,7 @@ deployment.apps/nginx
 REVISION  CHANGE-CAUSE
 1         nginx:alpine:green:yellow
 
-$ kubectl get deployments nginx
+$ kubectl get deployments.apps nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
 nginx   6/6     6            6           6s
 
@@ -333,7 +333,7 @@ deployment.apps/nginx
 REVISION  CHANGE-CAUSE
 1         nginx:alpine:orange
 
-$ kubectl get deployments nginx
+$ kubectl get deployments.apps nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
 nginx   0/6     6            0           16s
 
@@ -370,7 +370,7 @@ $ kubectl patch deployments.apps nginx --patch='[
 ]' --type=json
 deployment.apps/nginx patched
 
-$ kubectl get deployments nginx --output=yaml | yq .spec.template.spec.affinity
+$ kubectl get deployments.apps nginx --output=yaml | yq .spec.template.spec.affinity
 nodeAffinity:
   requiredDuringSchedulingIgnoredDuringExecution:
     nodeSelectorTerms:
@@ -389,7 +389,7 @@ REVISION  CHANGE-CAUSE
 1         nginx:alpine:orange
 2         nginx:alpine:red
 
-$ kubectl get deployments nginx
+$ kubectl get deployments.apps nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
 nginx   6/6     6            6           95s
 
