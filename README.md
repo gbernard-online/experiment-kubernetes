@@ -26,7 +26,9 @@
 [Practice #15](notebook/practice15.md)  
 [Practice #16](notebook/practice16.md)  
 [Practice #17](notebook/practice17.md)  
-[Practice #18](notebook/practice18.md)
+[Practice #18](notebook/practice18.md)  
+[Practice #18](notebook/practice19.md)  
+[Practice #18](notebook/practice20.md)
 
 [Purge](notebook/purge.md)
 
