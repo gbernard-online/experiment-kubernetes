@@ -281,14 +281,12 @@ curl --connect-timeout 5 --fail --show-error --silent 10.96.179.10:8080
 $ kubectl delete --filename=service.yaml
 service "nginx" deleted
 
-$ rm --verbose service.yaml
-removed 'service.yaml'
-
 $ kubectl delete --filename=deployment.yaml
 deployment.apps "nginx" deleted
 
-$ rm --verbose deployment.yaml
+$ rm --verbose deployment.yaml service.yaml
 removed 'deployment.yaml'
+removed 'service.yaml'
 ```
 
 ---
