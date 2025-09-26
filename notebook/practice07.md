@@ -12,14 +12,36 @@ https://www.youtube.com/watch?v=tF28iwTco9A&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
-$ kubectl create deployment nginx --image=nginx:alpine --replicas=3
+$ kubectl create deployment nginx --dry-run=client --image=nginx:alpine --output=yaml --replicas=3 |
+kubectl-neat | tee deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: nginx
+
+$ kubectl apply --filename=deployment.yaml
 deployment.apps/nginx created
 
 $ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine
 deployment.apps/nginx annotated
 
 $ kubectl rollout history deployment nginx
-deployment.apps/nginx 
+deployment.apps/nginx
 REVISION  CHANGE-CAUSE
 1         nginx:alpine
 
@@ -29,8 +51,25 @@ nginx-7977cdf8f5-88cs4   1/1     Running   0          22s
 nginx-7977cdf8f5-cb29x   1/1     Running   0          22s
 nginx-7977cdf8f5-rxg88   1/1     Running   0          22s
 
-$ kubectl expose deployment nginx --port=8080 --target-port=80 --type=NodePort
-service/nginx exposed
+$ kubectl create service nodeport nginx --dry-run=client --output=yaml --tcp=8080:80 |
+kubectl-neat | tee service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  ports:
+  - name: 8080-80
+    port: 8080
+    targetPort: 80
+  selector:
+    app: nginx
+  type: NodePort
+
+$ kubectl apply --filename=service.yaml
+service/nginx created
 
 $ kubectl get services nginx --output=wide
 NAME    TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE   SELECTOR
@@ -87,15 +126,21 @@ $ curl --connect-timeout 5 --fail --show-error --silent 172.17.1.5:30611
 <title>Welcome to nginx!</title>
 |...|
 
-$ kubectl get endpointslices.discovery.k8s.io nginx-kkx8s 
+$ kubectl get endpointslices.discovery.k8s.io nginx-kkx8s
 NAME          ADDRESSTYPE   PORTS   ENDPOINTS                             AGE
 nginx-kkx8s   IPv4          80      10.244.3.27,10.244.2.33,10.244.1.29   2m55s
 
-$ kubectl delete services nginx
+$ kubectl delete --filename=service.yaml
 service "nginx" deleted
 
-$ kubectl delete deployments.apps nginx
+$ rm --verbose service.yaml
+removed 'service.yaml'
+
+$ kubectl delete --filename=deployment.yaml
 deployment.apps "nginx" deleted
+
+$ rm --verbose deployment.yaml
+removed 'deployment.yaml'
 ```
 
 ```bash
@@ -134,7 +179,7 @@ wget -O - -q -T 5 ipinfo.io/org
 AS12322 Free SAS
 
 $ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
-nslookup ipinfo.default.svc.cluster.local
+nslookup ipinfo.default.svc.cluster.local | cat --squeeze
 Server:		10.96.0.10
 Address:	10.96.0.10:53
 
@@ -150,7 +195,7 @@ wget: server returned error: HTTP/1.1 404 Not Found
 pod default/alpine terminated (Error)
 
 $ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
-wget --header 'Host: ipinfo.io' -O - -q -T 5 ipinfo.default.svc.cluster.local/org | jq .org
+wget --header 'Host: ipinfo.io' -O - -q -T 5 ipinfo.default.svc.cluster.local/org
 AS12322 Free SAS
 
 $ kubectl delete --filename=service.yaml
