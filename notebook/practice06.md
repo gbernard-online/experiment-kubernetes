@@ -264,7 +264,7 @@ spec:
     app: nginx
 
 $ kubectl apply --filename=service.yaml
-service/ipinfo created
+service/nginx created
 
 $ kubectl get services nginx --output=wide
 NAME    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE   SELECTOR
