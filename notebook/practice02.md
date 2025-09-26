@@ -4,6 +4,11 @@
 
 https://kubernetes.io/docs/concepts/workloads/pods  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_explain  
+https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md  
+https://kubernetes.io/docs/concepts/overview/working-with-objects/labels  
+https://kubernetes.io/docs/concepts/overview/working-with-objects/names  
+https://kubernetes.io/docs/concepts/configuration/manage-resources-containers  
+https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_top
 
