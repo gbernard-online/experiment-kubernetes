@@ -145,7 +145,6 @@ FIELDS:
   ports	<[]ServicePort>
     The list of ports that are exposed by this service. More info:
     https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
-
 |...|
 
   selector	<map[string]string>
