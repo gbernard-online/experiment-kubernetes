@@ -143,6 +143,38 @@ FIELDS:
      - `"OnFailure"`
 |...|
 
+$ kubectl explain pods.spec.containers | cat --squeeze-blank
+KIND:       Pod
+VERSION:    v1
+
+FIELD: containers <[]Container>
+
+DESCRIPTION:
+    List of containers belonging to the pod. Containers cannot currently be
+    added or removed. There must be at least one container in a Pod. Cannot be
+    updated.
+    A single application container that you want to run within a pod.
+    
+FIELDS:
+|...|
+
+  image	<string>
+    Container image name. More info:
+    https://kubernetes.io/docs/concepts/containers/images This field is optional
+    to allow higher level config management to default or override container
+    images in workload controllers like Deployments and StatefulSets.
+|...|
+
+  name	<string> -required-
+    Name of the container specified as a DNS_LABEL. Each container in a pod must
+    have a unique name (DNS_LABEL). Cannot be updated.
+|...|
+
+  resources	<ResourceRequirements>
+    Compute Resources required by this container. Cannot be updated. More info:
+    https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+|...|
+
 $ kubectl explain pods.status | cat --squeeze-blank
 KIND:       Pod
 VERSION:    v1
