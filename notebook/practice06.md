@@ -21,7 +21,7 @@ $ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpin
 deployment.apps/nginx annotated
 
 $ kubectl rollout history deployment nginx
-deployment.apps/nginx 
+deployment.apps/nginx
 REVISION  CHANGE-CAUSE
 1         nginx:alpine
 
@@ -50,7 +50,7 @@ curl --connect-timeout 5 --fail --show-error --silent 10.96.46.237:8080
 |...|
 
 $ kubectl run alpine --image=alpine:latest --quiet --restart=Never --rm --stdin --tty -- \
-ash -c 'nslookup nginx.default.svc.cluster.local && cat /etc/resolv.conf' | cat --squeeze-blank 
+ash -c 'nslookup nginx.default.svc.cluster.local && cat /etc/resolv.conf' | cat --squeeze-blank
 Server:		10.96.0.10
 Address:	10.96.0.10:53
 
@@ -77,7 +77,7 @@ wget -O - -q -T 5 nginx:8080
 <title>Welcome to nginx!</title>
 |...|
 
-$ kubectl get endpointslices.discovery.k8s.io nginx-p6jj5 
+$ kubectl get endpointslices.discovery.k8s.io nginx-p6jj5
 NAME          ADDRESSTYPE   PORTS   ENDPOINTS                             AGE
 nginx-p6jj5   IPv4          80      10.244.1.28,10.244.2.29,10.244.3.26   95s
 
@@ -88,7 +88,7 @@ $ kubectl get pods --selector=app=nginx
 NAME                     READY   STATUS    RESTARTS   AGE
 nginx-7977cdf8f5-kg2l7   1/1     Running   0          2m39s
 
-$ kubectl get endpointslices.discovery.k8s.io nginx-p6jj5 
+$ kubectl get endpointslices.discovery.k8s.io nginx-p6jj5
 NAME          ADDRESSTYPE   PORTS   ENDPOINTS     AGE
 nginx-p6jj5   IPv4          80      10.244.3.26   2m10s
 
@@ -131,7 +131,7 @@ DESCRIPTION:
     Spec defines the behavior of a service.
     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     ServiceSpec describes the attributes that a user creates on a service.
-    
+
 FIELDS:
 |...|
   ports	<[]ServicePort>
@@ -165,7 +165,7 @@ FIELDS:
     the specified externalName. Several other fields do not apply to
     ExternalName services. More info:
     https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-    
+
     Possible enum values:
      - `"ClusterIP"` means a service will only be accessible inside the cluster,
     via the cluster IP.
@@ -188,7 +188,7 @@ DESCRIPTION:
     The list of ports that are exposed by this service. More info:
     https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
     ServicePort contains information on serviceʼs port.
-    
+
 FIELDS:
 |...|
   name	<string>
@@ -241,11 +241,11 @@ $ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpin
 deployment.apps/nginx annotated
 
 $ kubectl rollout history deployment nginx
-deployment.apps/nginx 
+deployment.apps/nginx
 REVISION  CHANGE-CAUSE
 1         nginx:alpine
 
-$ kubectl create service clusterip nginx --dry-run=client --output=yaml --tcp=8080:80 | 
+$ kubectl create service clusterip nginx --dry-run=client --output=yaml --tcp=8080:80 |
 kubectl-neat | tee service.yaml
 apiVersion: v1
 kind: Service
