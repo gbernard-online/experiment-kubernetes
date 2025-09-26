@@ -133,14 +133,12 @@ nginx-kkx8s   IPv4          80      10.244.3.27,10.244.2.33,10.244.1.29   2m55s
 $ kubectl delete --filename=service.yaml
 service "nginx" deleted
 
-$ rm --verbose service.yaml
-removed 'service.yaml'
-
 $ kubectl delete --filename=deployment.yaml
 deployment.apps "nginx" deleted
 
-$ rm --verbose deployment.yaml
+$ rm --verbose deployment.yaml service.yaml
 removed 'deployment.yaml'
+removed 'service.yaml'
 ```
 
 ```bash
