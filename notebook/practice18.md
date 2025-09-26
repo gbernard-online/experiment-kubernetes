@@ -35,7 +35,7 @@ FIELDS:
     Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in
     the same node, zone, etc. as some other pod(s)).
 
-$ kubectl explain pods.spec.affinity.nodeAffinity | cat --squeeze-blank 
+$ kubectl explain pods.spec.affinity.nodeAffinity | cat --squeeze-blank
 KIND:       Pod
 VERSION:    v1
 
@@ -79,7 +79,7 @@ DESCRIPTION:
     A node selector represents the union of the results of one or more label
     queries over a set of nodes; that is, it represents the OR of the selectors
     represented by the node selector terms.
-    
+
 FIELDS:
   nodeSelectorTerms	<[]NodeSelectorTerm> -required-
     matchExpressions	<[]NodeSelectorRequirement>
@@ -152,8 +152,8 @@ deployment.apps/nginx created
 $ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine:green:yellow
 deployment.apps/nginx annotated
 
-$ kubectl rollout history deployment nginx 
-deployment.apps/nginx 
+$ kubectl rollout history deployment nginx
+deployment.apps/nginx
 REVISION  CHANGE-CAUSE
 1         nginx:alpine:green:yellow
 
@@ -248,8 +248,8 @@ deployment.apps/nginx created
 $ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine:green:yellow
 deployment.apps/nginx annotated
 
-$ kubectl rollout history deployment nginx 
-deployment.apps/nginx 
+$ kubectl rollout history deployment nginx
+deployment.apps/nginx
 REVISION  CHANGE-CAUSE
 1         nginx:alpine:green:yellow
 
@@ -329,7 +329,7 @@ $ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpin
 deployment.apps/nginx annotated
 
 $ kubectl rollout history deployment nginx
-deployment.apps/nginx 
+deployment.apps/nginx
 REVISION  CHANGE-CAUSE
 1         nginx:alpine:orange
 
@@ -383,8 +383,8 @@ nodeAffinity:
 $ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine:red
 deployment.apps/nginx annotated
 
-$ kubectl rollout history deployment nginx 
-deployment.apps/nginx 
+$ kubectl rollout history deployment nginx
+deployment.apps/nginx
 REVISION  CHANGE-CAUSE
 1         nginx:alpine:orange
 2         nginx:alpine:red
