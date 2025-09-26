@@ -18,7 +18,7 @@ https://www.youtube.com/watch?v=1HrHv_HBxwI&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 $ kubectl api-resources --no-headers | fgrep storageclass
 storageclasses                      sc         storage.k8s.io/v1                 false   StorageClass
 
-$ kubectl explain storageclasses | cat --squeeze-blank 
+$ kubectl explain storageclasses | cat --squeeze-blank
 GROUP:      storage.k8s.io
 KIND:       StorageClass
 VERSION:    v1
@@ -77,7 +77,7 @@ DESCRIPTION:
     PersistentVolume (PV) is a storage resource provisioned by an administrator.
     It is analogous to a node. More info:
     https://kubernetes.io/docs/concepts/storage/persistent-volumes
-    
+
 FIELDS:
 |...|
 
