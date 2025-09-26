@@ -1,4 +1,4 @@
-# DRAFT: EXPERIMENT KUBERNETES
+# EXPERIMENT KUBERNETES
 
 ## REFERENCES
 
@@ -18,7 +18,6 @@ https://www.youtube.com/watch?v=naLtWR6uEWY&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![MicroK8s](img/microk8s.webp "MikroK8s")](https://microk8s.io)1
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
-
 ```bash
 $ kubectl run nginx --dry-run=client --image=nginx:alpine --output=yaml
 apiVersion: v1
@@ -37,16 +36,81 @@ spec:
   restartPolicy: Always
 status: {}
 
-$ kubectl explain pods
+$ kubectl explain pods | cat --squeeze-blank
 KIND:       Pod
 VERSION:    v1
 
 DESCRIPTION:
     Pod is a collection of containers that can run on a host. This resource is
     created by clients and scheduled onto hosts.
+
+FIELDS:
+  apiVersion	<string>
+    APIVersion defines the versioned schema of this representation of an object.
+    Servers should convert recognized schemas to the latest internal value, and
+    may reject unrecognized values. More info:
+    https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+
+  kind	<string>
+    Kind is a string value representing the REST resource this object
+    represents. Servers may infer this from the endpoint the client submits
+    requests to. Cannot be updated. In CamelCase. More info:
+    https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+
+  metadata	<ObjectMeta>
+    Standard objectʼs metadata. More info:
+    https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+
+  spec	<PodSpec>
+    Specification of the desired behavior of the pod. More info:
+    https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
+  status	<PodStatus>
+    Most recently observed status of the pod. This data may not be up to date.
+    Populated by the system. Read-only. More info:
+    https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
+$ kubectl explain pods.metadata | cat --squeeze-blank
+KIND:       Pod
+VERSION:    v1
+
+FIELD: metadata <ObjectMeta>
+
+DESCRIPTION:
+    Standard objectʼs metadata. More info:
+    https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+    ObjectMeta is metadata that all persisted resources must have, which
+    includes all objects users must create.
+
+FIELDS:
 |...|
 
-$ kubectl explain pods.spec --recursive
+  creationTimestamp	<string>
+    CreationTimestamp is a timestamp representing the server time when this
+    object was created. It is not guaranteed to be set in happens-before order
+    across separate operations. Clients may not set this value. It is
+    represented in RFC3339 form and is in UTC.
+
+    Populated by the system. Read-only. Null for lists. More info:
+    https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+|...|
+
+  labels	<map[string]string>
+    Map of string keys and values that can be used to organize and categorize
+    (scope and select) objects. May match selectors of replication controllers
+    and services. More info:
+    https://kubernetes.io/docs/concepts/overview/working-with-objects/labels
+|...|
+
+  name	<string>
+    Name must be unique within a namespace. Is required when creating resources,
+    although some resources may allow a client to request the generation of an
+    appropriate name automatically. Name is primarily intended for creation
+    idempotence and configuration definition. Cannot be updated. More info:
+    https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names
+|...|
+
+$ kubectl explain pods.spec | cat --squeeze-blank
 KIND:       Pod
 VERSION:    v1
 
@@ -56,8 +120,31 @@ DESCRIPTION:
     Specification of the desired behavior of the pod. More info:
     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
     PodSpec is a description of a pod.
+
+FIELDS:
 |...|
 
+  containers	<[]Container> -required-
+    List of containers belonging to the pod. Containers cannot currently be
+    added or removed. There must be at least one container in a Pod. Cannot be
+    updated.
+|...|
+
+  restartPolicy	<string>
+  enum: Always, Never, OnFailure
+    Restart policy for all containers within the pod. One of Always, OnFailure,
+    Never. In some contexts, only a subset of those values may be permitted.
+    Default to Always. More info:
+    https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
+
+    Possible enum values:
+     - `"Always"`
+     - `"Never"`
+     - `"OnFailure"`
+|...|
+```
+
+```bash
 $ kubectl run nginx --image=nginx:alpine
 nginx
 
