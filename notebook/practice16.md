@@ -143,7 +143,6 @@ FIELDS:
 ```
 
 ```bash
-
 $ kubectl api-resources --no-headers | fgrep persistentvolumeclaims
 persistentvolumeclaims              pvc        v1                                true    PersistentVolumeClaim
 
