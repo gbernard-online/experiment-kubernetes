@@ -1,4 +1,4 @@
-# DRAFT: EXPERIMENT KUBERNETES
+# EXPERIMENT KUBERNETES
 
 ## REFERENCES
 
@@ -14,6 +14,14 @@ https://www.youtube.com/watch?v=tF28iwTco9A&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 ```bash
 $ kubectl create deployment nginx --image=nginx:alpine --replicas=3
 deployment.apps/nginx created
+
+$ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine
+deployment.apps/nginx annotated
+
+$ kubectl rollout history deployment nginx
+deployment.apps/nginx 
+REVISION  CHANGE-CAUSE
+1         nginx:alpine
 
 $ kubectl get pods --selector=app=nginx
 NAME                     READY   STATUS    RESTARTS   AGE
@@ -84,7 +92,7 @@ NAME     TYPE           CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE   SELECTOR
 ipinfo   ExternalName   <none>       ipinfo.io     <none>    6s    <none>
 
 $ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
-wget -qO- ipinfo.io/org
+wget -O - -q -T 5 ipinfo.io/org
 AS12322 Free SAS
 
 $ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
@@ -99,12 +107,12 @@ Address: 34.117.59.81
 ipinfo.default.svc.cluster.local	canonical name = ipinfo.io
 
 $ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
-wget -qO- ipinfo.default.svc.cluster.local/org
+wget -O - -q -T 5 ipinfo.default.svc.cluster.local/org
 wget: server returned error: HTTP/1.1 404 Not Found
 pod default/alpine terminated (Error)
 
 $ kubectl run alpine --image=alpine:latest --quiet --rm --restart=Never --stdin --tty -- \
-wget --header 'Host: ipinfo.io' -qO- ipinfo.default.svc.cluster.local/org | jq .org
+wget --header 'Host: ipinfo.io' -O - -q -T 5 ipinfo.default.svc.cluster.local/org | jq .org
 AS12322 Free SAS
 
 $ kubectl delete --filename=service.yaml
