@@ -1,4 +1,4 @@
-# DRAFT: EXPERIMENT KUBERNETES
+# EXPERIMENT KUBERNETES
 
 ## REFERENCES
 
@@ -19,15 +19,55 @@ https://www.youtube.com/watch?v=WSfB7Ae4SPg&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 $ kubectl api-resources --no-headers | fgrep deployments
 deployments                         deploy     apps/v1                           true    Deployment
 
-$ kubectl explain deployments
+$ kubectl explain deployments | cat --squeeze-blank
 GROUP:      apps
 KIND:       Deployment
 VERSION:    v1
 
 DESCRIPTION:
     Deployment enables declarative updates for Pods and ReplicaSets.
+
+FIELDS:
 |...|
 
+  spec	<DeploymentSpec>
+    Specification of the desired behavior of the Deployment.
+|...|
+
+$ kubectl explain deployments.spec | cat --squeeze-blank
+GROUP:      apps
+KIND:       Deployment
+VERSION:    v1
+
+FIELD: spec <DeploymentSpec>
+
+DESCRIPTION:
+    Specification of the desired behavior of the Deployment.
+    DeploymentSpec is the specification of the desired behavior of the
+    Deployment.
+
+FIELDS:
+|...|
+
+  replicas	<integer>
+    Number of desired pods. This is a pointer to distinguish between explicit
+    zero and not specified. Defaults to 1.
+|...|
+
+  selector	<LabelSelector> -required-
+    Label selector for pods. Existing ReplicaSets whose pods are selected by
+    this will be the ones affected by this deployment. It must match the pod
+    templateʼs labels.
+
+  strategy	<DeploymentStrategy>
+    The deployment strategy to use to replace existing pods with new ones.
+
+  template	<PodTemplateSpec> -required-
+    Template describes the pods that will be created. The only allowed
+    template.spec.restartPolicy value is "Always".
+```
+
+```bash
 $ kubectl create deployment nginx --dry-run=client --image=nginx:alpine --output=yaml --replicas=3 |
 kubectl-neat | tee deployment.yaml
 apiVersion: apps/v1
@@ -43,7 +83,6 @@ spec:
       app: nginx
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: nginx
     spec:
@@ -76,8 +115,16 @@ cluster-worker-green
 $ kubectl describe replicasets.apps --selector=app=nginx | fgrep Controlled
 Controlled By:  Deployment/nginx
 
-$ kubectl describe deployments.apps nginx | fgrep RollingUpdateStrategy
-RollingUpdateStrategy:  25% max unavailable, 25% max surge
+$ kubectl get deployments.apps nginx --output=yaml | yq .spec.strategy
+rollingUpdate:
+  maxSurge: 25%
+  maxUnavailable: 25%
+type: RollingUpdate
+
+$ kubectl rollout history deployment nginx
+deployment.apps/nginx
+REVISION  CHANGE-CAUSE
+1         <none>
 
 $ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine
 deployment.apps/nginx annotated
