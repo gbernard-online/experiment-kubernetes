@@ -154,7 +154,7 @@ DESCRIPTION:
     added or removed. There must be at least one container in a Pod. Cannot be
     updated.
     A single application container that you want to run within a pod.
-    
+
 FIELDS:
 |...|
 
