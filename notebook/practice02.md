@@ -344,6 +344,9 @@ kind: Pod
 metadata:
 |...|
 
+$ kubectl get pods alpine --output=yaml | yq .status.phase
+Succeeded
+
 $ kubectl delete --filename=pod.yaml
 pod "alpine" deleted
 
