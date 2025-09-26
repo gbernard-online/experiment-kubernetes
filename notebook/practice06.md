@@ -134,6 +134,7 @@ DESCRIPTION:
 
 FIELDS:
 |...|
+
   externalName	<string>
     externalName is the external reference that discovery mechanisms will return
     as an alias for this service (e.g. a DNS CNAME record). No proxying will be
