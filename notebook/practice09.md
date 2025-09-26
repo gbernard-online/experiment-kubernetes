@@ -1,4 +1,4 @@
-# DRAFT: EXPERIMENT KUBERNETES
+# EXPERIMENT KUBERNETES
 
 ## REFERENCES
 
@@ -16,12 +16,21 @@ https://www.youtube.com/watch?v=5b3kkJ0pUjA&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 $ kubectl api-resources --no-headers | fgrep configmaps
 configmaps                          cm         v1                                true    ConfigMap
 
-$ kubectl explain configmaps
+$ kubectl explain configmaps | cat --squeeze-blank
 KIND:       ConfigMap
 VERSION:    v1
 
 DESCRIPTION:
     ConfigMap holds configuration data for pods to consume.
+
+FIELDS:
+|...|
+
+  data	<map[string]string>
+    Data contains the configuration data. Each key must consist of alphanumeric
+    characters, '-', '_' or '.'. Values with non-UTF-8 byte sequences must use
+    the BinaryData field. The keys stored in Data must not overlap with the keys
+    in the BinaryData field, this is enforced during validation process.
 |...|
 ```
 
@@ -42,7 +51,7 @@ $ kubectl get configmaps alpine
 NAME     DATA   AGE
 alpine   1      22s
 
-$ kubectl describe configmaps alpine
+$ kubectl describe configmaps alpine | cat --squeeze-blank
 Name:         alpine
 Namespace:    default
 Labels:       <none>
@@ -53,7 +62,6 @@ Data
 DEFAULT_DELAY:
 ----
 30
-
 
 BinaryData
 ====
@@ -166,7 +174,7 @@ metadata:
 $ kubectl apply --filename=configmap.yaml
 configmap/nginx created
 
-$ kubectl describe configmaps nginx
+$ kubectl describe configmaps nginx | cat --squeeze-blank
 Name:         nginx
 Namespace:    default
 Labels:       <none>
@@ -186,8 +194,6 @@ http {
     }
   }
 }
-
-
 
 BinaryData
 ====
