@@ -1,4 +1,4 @@
-# WIP: EXPERIMENT KUBERNETES
+# DRAFT: EXPERIMENT KUBERNETES
 
 ## REFERENCES
 
@@ -257,12 +257,16 @@ MicroK8s v1.32.8 revision 8355
 $ echo '
 if [ -x "$(command -v microk8s)" ]; then
   alias kubectl=microk8s.kubectl
-  export KUBECONFIG=/var/snap/microk8s/current/credentials/client.config
+  if [ -r /var/snap/microk8s/current/credentials/client.config ]; then
+    export KUBECONFIG=/var/snap/microk8s/current/credentials/client.config
+  fi
 fi' | tee --append $HOME/.bashrc
 
 if [ -x "$(command -v microk8s)" ]; then
   alias kubectl=microk8s.kubectl
-  export KUBECONFIG=/var/snap/microk8s/current/credentials/client.config
+  if [ -r /var/snap/microk8s/current/credentials/client.config ]; then
+    export KUBECONFIG=/var/snap/microk8s/current/credentials/client.config
+  fi
 fi
 
 $ sudo usermod --append --groups=microk8s user
