@@ -134,6 +134,14 @@ DESCRIPTION:
 
 FIELDS:
 |...|
+  externalName	<string>
+    externalName is the external reference that discovery mechanisms will return
+    as an alias for this service (e.g. a DNS CNAME record). No proxying will be
+    involved.  Must be a lowercase RFC-1123 hostname
+    (https://tools.ietf.org/html/rfc1123) and requires `type` to be
+    "ExternalName".
+|...|
+
   ports	<[]ServicePort>
     The list of ports that are exposed by this service. More info:
     https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
