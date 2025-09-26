@@ -12,6 +12,27 @@ https://www.youtube.com/watch?v=e4dpaiIEltk&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
+$ kubectl explain pods.spec.affinity | cat --squeeze-blank
+KIND:       Pod
+VERSION:    v1
+
+FIELD: affinity <Affinity>
+
+DESCRIPTION:
+    If specified, the podʼs scheduling constraints
+    Affinity is a group of affinity scheduling rules.
+
+FIELDS:
+|...|
+
+  podAffinity	<PodAffinity>
+    Describes pod affinity scheduling rules (e.g. co-locate this pod in the same
+    node, zone, etc. as some other pod(s)).
+
+  podAntiAffinity	<PodAntiAffinity>
+    Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in
+    the same node, zone, etc. as some other pod(s)).
+
 $ kubectl explain pods.spec.affinity.podAffinity | cat --squeeze-blank
 KIND:       Pod
 VERSION:    v1
