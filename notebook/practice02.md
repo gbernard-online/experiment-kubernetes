@@ -244,7 +244,10 @@ FIELDS:
 $ kubectl run nginx --image=nginx:alpine
 nginx
 
-$ kubectl logs pods/nginx
+$ kubectl get pods --output=name
+pod/nginx
+
+$ kubectl logs pod/nginx
 /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
 /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
 /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
@@ -256,12 +259,20 @@ $ kubectl logs pods/nginx
 /docker-entrypoint.sh: Configuration complete; ready for start up
 |...|
 
-$ kubectl get events --field-selector=involvedObject.name=nginx
+$ kubectl get events --for=pod/nginx
 LAST SEEN   TYPE     REASON      OBJECT      MESSAGE
 48s         Normal   Scheduled   pod/nginx   Successfully assigned default/nginx to ubuntu
 47s         Normal   Pulled      pod/nginx   Container image "nginx:alpine" already present on machine
 47s         Normal   Created     pod/nginx   Created container: nginx
 46s         Normal   Started     pod/nginx   Started container nginx
+
+$ kubectl get events --for=pod/nginx --watch
+LAST SEEN   TYPE     REASON      OBJECT      MESSAGE
+48s         Normal   Scheduled   pod/nginx   Successfully assigned default/nginx to ubuntu
+47s         Normal   Pulled      pod/nginx   Container image "nginx:alpine" already present on machine
+47s         Normal   Created     pod/nginx   Created container: nginx
+46s         Normal   Started     pod/nginx   Started container nginx
+^C
 
 $ kubectl top node
 NAME     CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)
@@ -271,12 +282,12 @@ $ kubectl top pod
 NAME    CPU(cores)   MEMORY(bytes)
 nginx   0m           4Mi
 
-$ kubectl delete pods nginx
-pod "nginx" deleted
+$ kubectl delete pod/nginx
+pod "nginx" deleted from default namespace
 ```
 
 ```bash
-$ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --restart=OnFailure  -- sleep 10
+$ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --restart=OnFailure -- sleep 10
 apiVersion: v1
 kind: Pod
 metadata:
