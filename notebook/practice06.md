@@ -199,6 +199,7 @@ DESCRIPTION:
 
 FIELDS:
 |...|
+
   name	<string>
     The name of this port within the service. This must be a DNS_LABEL. All
     ports within a ServiceSpec must have unique names. When considering the
@@ -208,6 +209,7 @@ FIELDS:
   port	<integer> -required-
     The port that will be exposed by this service.
 |...|
+
   targetPort	<IntOrString>
     Number or name of the port to access on the pods targeted by the service.
     Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If
