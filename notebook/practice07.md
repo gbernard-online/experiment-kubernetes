@@ -25,19 +25,19 @@ REVISION  CHANGE-CAUSE
 
 $ kubectl get pods --selector=app=nginx
 NAME                     READY   STATUS    RESTARTS   AGE
-nginx-7977cdf8f5-dx8tg   1/1     Running   0          8s
-nginx-7977cdf8f5-v4nhl   1/1     Running   0          8s
-nginx-7977cdf8f5-vhzjp   1/1     Running   0          8s
+nginx-7977cdf8f5-88cs4   1/1     Running   0          22s
+nginx-7977cdf8f5-cb29x   1/1     Running   0          22s
+nginx-7977cdf8f5-rxg88   1/1     Running   0          22s
 
-$ kubectl expose deployment nginx --port=80 --type=NodePort
+$ kubectl expose deployment nginx --port=8080 --target-port=80 --type=NodePort
 service/nginx exposed
 
 $ kubectl get services nginx --output=wide
-NAME    TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE   SELECTOR
-nginx   NodePort   10.96.130.30   <none>        80:31674/TCP   14s   app=nginx
+NAME    TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE   SELECTOR
+nginx   NodePort   10.96.161.131   <none>        8080:30611/TCP   7s    app=nginx
 
 $ docker exec cluster-control-plane \
-curl --connect-timeout 5 --fail --show-error --silent 10.96.130.30
+curl --connect-timeout 5 --fail --show-error --silent 10.96.161.131:8080
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,26 +45,51 @@ curl --connect-timeout 5 --fail --show-error --silent 10.96.130.30
 |...|
 
 $ docker exec cluster-control-plane \
-curl --connect-timeout 5 --fail --show-error --silent 127.0.0.1:31674
+curl --connect-timeout 5 --fail --show-error --silent 127.0.0.1:30611
 <!DOCTYPE html>
 <html>
 <head>
 <title>Welcome to nginx!</title>
 |...|
 
-$ docker inspect cluster-control-plane --format='{{.NetworkSettings.Networks.kind.IPAddress}}'
+$ docker inspect --format='{{.NetworkSettings.Networks.kind.IPAddress}}' \
+cluster-control-plane cluster-worker-green cluster-worker-red cluster-worker-yellow
+172.17.1.2
 172.17.1.3
+172.17.1.4
+172.17.1.5
 
-$ curl --connect-timeout 5 --fail --show-error --silent 172.17.1.3:31674
+$ curl --connect-timeout 5 --fail --show-error --silent 172.17.1.2:30611
 <!DOCTYPE html>
 <html>
 <head>
 <title>Welcome to nginx!</title>
 |...|
 
-$ kubectl get endpointslices.discovery.k8s.io nginx-vx2nd
-NAME          ADDRESSTYPE   PORTS   ENDPOINTS     AGE
-nginx-vx2nd   IPv4          80      10.244.1.12   6m10s
+$ curl --connect-timeout 5 --fail --show-error --silent 172.17.1.3:30611
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+|...|
+
+$ curl --connect-timeout 5 --fail --show-error --silent 172.17.1.4:30611
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+|...|
+
+$ curl --connect-timeout 5 --fail --show-error --silent 172.17.1.5:30611
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+|...|
+
+$ kubectl get endpointslices.discovery.k8s.io nginx-kkx8s 
+NAME          ADDRESSTYPE   PORTS   ENDPOINTS                             AGE
+nginx-kkx8s   IPv4          80      10.244.3.27,10.244.2.33,10.244.1.29   2m55s
 
 $ kubectl delete services nginx
 service "nginx" deleted
