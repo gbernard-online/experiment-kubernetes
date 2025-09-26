@@ -1,4 +1,4 @@
-# WIP-CURRENT: EXPERIMENT KUBERNETES
+# EXPERIMENT KUBERNETES
 
 ## REFERENCES
 
@@ -98,7 +98,7 @@ DESCRIPTION:
     Provisioned by an administrator. More info:
     https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistent-volumes
     PersistentVolumeSpec is the specification of a persistent volume.
-    
+
 FIELDS:
 |...|
 
@@ -152,8 +152,16 @@ KIND:       PersistentVolumeClaim
 VERSION:    v1
 
 DESCRIPTION:
-    PersistentVolumeClaim is a user's request for and claim to a persistent
+    PersistentVolumeClaim is a userʼs request for and claim to a persistent
     volume
+
+FIELDS:
+|...|
+
+  spec  <PersistentVolumeClaimSpec>
+    spec defines the desired characteristics of a volume requested by a pod
+    author. More info:
+    https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
 |...|
 
 $ kubectl explain persistentvolumeclaims.spec | cat --squeeze-blank
