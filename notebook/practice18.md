@@ -26,14 +26,7 @@ DESCRIPTION:
 FIELDS:
   nodeAffinity	<NodeAffinity>
     Describes node affinity scheduling rules for the pod.
-
-  podAffinity	<PodAffinity>
-    Describes pod affinity scheduling rules (e.g. co-locate this pod in the same
-    node, zone, etc. as some other pod(s)).
-
-  podAntiAffinity	<PodAntiAffinity>
-    Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in
-    the same node, zone, etc. as some other pod(s)).
+|...|
 
 $ kubectl explain pods.spec.affinity.nodeAffinity | cat --squeeze-blank
 KIND:       Pod
@@ -46,16 +39,7 @@ DESCRIPTION:
     Node affinity is a group of node affinity scheduling rules.
 
 FIELDS:
-  preferredDuringSchedulingIgnoredDuringExecution	<[]PreferredSchedulingTerm>
-    The scheduler will prefer to schedule pods to nodes that satisfy the
-    affinity expressions specified by this field, but it may choose a node that
-    violates one or more of the expressions. The node that is most preferred is
-    the one with the greatest sum of weights, i.e. for each node that meets all
-    of the scheduling requirements (resource request, requiredDuringScheduling
-    affinity expressions, etc.), compute a sum by iterating through the elements
-    of this field and adding "weight" to the sum if the node matches the
-    corresponding matchExpressions; the node(s) with the highest sum are the
-    most preferred.
+|...|
 
   requiredDuringSchedulingIgnoredDuringExecution	<NodeSelector>
     If the affinity requirements specified by this field are not met at
