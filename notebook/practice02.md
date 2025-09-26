@@ -283,7 +283,7 @@ NAME    CPU(cores)   MEMORY(bytes)
 nginx   0m           4Mi
 
 $ kubectl delete pod/nginx
-pod "nginx" deleted from default namespace
+pod "nginx" deleted
 ```
 
 ```bash
