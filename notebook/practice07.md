@@ -142,18 +142,18 @@ removed 'service.yaml'
 ```
 
 ```bash
-$ kubectl explain services.spec.externalName | cat --squeeze-blank
-KIND:       Service
-VERSION:    v1
+$ kubectl explain services.spec.externalName --output=plaintext-openapiv2
+KIND:     Service
+VERSION:  v1
 
-FIELD: externalName <string>
+FIELD:    externalName <string>
 
 DESCRIPTION:
-    externalName is the external reference that discovery mechanisms will return
-    as an alias for this service (e.g. a DNS CNAME record). No proxying will be
-    involved.  Must be a lowercase RFC-1123 hostname
-    (https://tools.ietf.org/html/rfc1123) and requires `type` to be
-    "ExternalName".
+     externalName is the external reference that discovery mechanisms will
+     return as an alias for this service (e.g. a DNS CNAME record). No proxying
+     will be involved. Must be a lowercase RFC-1123 hostname
+     (https://tools.ietf.org/html/rfc1123) and requires `type` to be
+     "ExternalName".
 
 $ kubectl create service externalname ipinfo --dry-run=client --external-name=ipinfo.io --output=yaml |
 yq 'del(.metadata.labels) | del(.spec.selector)' | kubectl-neat | tee service.yaml
