@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=7gxiNW3nSW8&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 $ kubectl api-resources --no-headers | fgrep replicasets
 replicasets                         rs         apps/v1                           true    ReplicaSet
 
-$ $ kubectl explain replicasets --output=plaintext-openapiv2
+$ kubectl explain replicasets --output=plaintext-openapiv2
 KIND:     ReplicaSet
 VERSION:  apps/v1
 
