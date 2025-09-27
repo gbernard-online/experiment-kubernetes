@@ -23,7 +23,7 @@ VERSION:    v1
 DESCRIPTION:
     Secret holds secret data of a certain type. The total bytes of the values in
     the Data field must be less than MaxSecretSize bytes.
-    
+
 FIELDS:
 |...|
 
