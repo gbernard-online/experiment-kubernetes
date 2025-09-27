@@ -1,4 +1,4 @@
-# DRAFT: EXPERIMENT KUBERNETES
+# EXPERIMENT KUBERNETES
 
 ## REFERENCES
 
@@ -13,31 +13,31 @@ https://www.youtube.com/watch?v=0KSOqB4nea0&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
-$ kubectl explain pods.spec.nodeName | cat --squeeze
-KIND:       Pod
-VERSION:    v1
+$ kubectl explain pods.spec.nodeName --output=plaintext-openapiv2
+KIND:     Pod
+VERSION:  v1
 
-FIELD: nodeName <string>
-
-DESCRIPTION:
-    NodeName indicates in which node this pod is scheduled. If empty, this pod
-    is a candidate for scheduling by the scheduler defined in schedulerName.
-    Once this field is set, the kubelet for this node becomes responsible for
-    the lifecycle of this pod. This field should not be used to express a desire
-    for the pod to be scheduled on a specific node.
-    https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename
-
-$ kubectl explain pods.spec.nodeSelector | cat --squeeze
-KIND:       Pod
-VERSION:    v1
-
-FIELD: nodeSelector <map[string]string>
+FIELD:    nodeName <string>
 
 DESCRIPTION:
-    NodeSelector is a selector which must be true for the pod to fit on a node.
-    Selector which must match a node's labels for the pod to be scheduled on
-    that node. More info:
-    https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+     NodeName indicates in which node this pod is scheduled. If empty, this pod
+     is a candidate for scheduling by the scheduler defined in schedulerName.
+     Once this field is set, the kubelet for this node becomes responsible for
+     the lifecycle of this pod. This field should not be used to express a
+     desire for the pod to be scheduled on a specific node.
+     https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename
+
+$ kubectl explain pods.spec.nodeSelector --output=plaintext-openapiv2
+KIND:     Pod
+VERSION:  v1
+
+FIELD:    nodeSelector <map[string]string>
+
+DESCRIPTION:
+     NodeSelector is a selector which must be true for the pod to fit on a node.
+     Selector which must match a nodeʼs labels for the pod to be scheduled on
+     that node. More info:
+     https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
 ```
 
 ```bash
