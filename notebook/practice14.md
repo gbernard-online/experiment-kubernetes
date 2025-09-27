@@ -13,7 +13,7 @@ https://www.youtube.com/watch?v=0KSOqB4nea0&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
-$ kubectl explain pods.spec.nodeName
+$ kubectl explain pods.spec.nodeName | cat --squeeze
 KIND:       Pod
 VERSION:    v1
 
@@ -27,7 +27,7 @@ DESCRIPTION:
     for the pod to be scheduled on a specific node.
     https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename
 
-$ kubectl explain pods.spec.nodeSelector
+$ kubectl explain pods.spec.nodeSelector | cat --squeeze
 KIND:       Pod
 VERSION:    v1
 
