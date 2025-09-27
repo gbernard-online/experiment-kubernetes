@@ -63,7 +63,7 @@ FIELDS:
      https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 
    metadata	<Object>
-     Standard object's metadata. More info:
+     Standard objectʼs metadata. More info:
      https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
    spec	<Object>
@@ -82,7 +82,7 @@ VERSION:  v1
 RESOURCE: metadata <Object>
 
 DESCRIPTION:
-     Standard object's metadata. More info:
+     Standard objectʼs metadata. More info:
      https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 
      ObjectMeta is metadata that all persisted resources must have, which
@@ -204,7 +204,7 @@ FIELDS:
    phase	<string>
      The phase of a Pod is a simple, high-level summary of where the Pod is in
      its lifecycle. The conditions array, the reason and message fields, and the
-     individual container status arrays contain more detail about the pod's
+     individual container status arrays contain more detail about the podʼs
      status. There are five possible phase values:
 
      Pending: The pod has been accepted by the Kubernetes system, but one or
