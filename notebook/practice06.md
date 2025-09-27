@@ -103,114 +103,116 @@ deployment.apps "nginx" deleted
 $ kubectl api-resources --no-headers | fgrep services | fgrep svc
 services                            svc        v1                                true    Service
 
-$ kubectl explain services | cat --squeeze-blank
-KIND:       Service
-VERSION:    v1
+$ kubectl explain services --output=plaintext-openapiv2
+KIND:     Service
+VERSION:  v1
 
 DESCRIPTION:
-    Service is a named abstraction of software service (for example, mysql)
-    consisting of local port (for example 3306) that the proxy listens on, and
-    the selector that determines which pods will answer requests sent through
-    the proxy.
+     Service is a named abstraction of software service (for example, mysql)
+     consisting of local port (for example 3306) that the proxy listens on, and
+     the selector that determines which pods will answer requests sent through
+     the proxy.
 
 FIELDS:
 |...|
 
-  spec	<ServiceSpec>
-    Spec defines the behavior of a service.
-    https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+   spec	<Object>
+     Spec defines the behavior of a service.
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 |...|
 
-$ kubectl explain services.spec | cat --squeeze-blank
-KIND:       Service
-VERSION:    v1
+$ kubectl explain services.spec --output=plaintext-openapiv2
+KIND:     Service
+VERSION:  v1
 
-FIELD: spec <ServiceSpec>
+RESOURCE: spec <Object>
 
 DESCRIPTION:
-    Spec defines the behavior of a service.
-    https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-    ServiceSpec describes the attributes that a user creates on a service.
+     Spec defines the behavior of a service.
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
+     ServiceSpec describes the attributes that a user creates on a service.
 
 FIELDS:
 |...|
 
-  ports	<[]ServicePort>
-    The list of ports that are exposed by this service. More info:
-    https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+   ports	<[]Object>
+     The list of ports that are exposed by this service. More info:
+     https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
 |...|
 
-  selector	<map[string]string>
-    Route service traffic to pods with label keys and values matching this
-    selector. If empty or not present, the service is assumed to have an
-    external process managing its endpoints, which Kubernetes will not modify.
-    Only applies to types ClusterIP, NodePort, and LoadBalancer. Ignored if type
-    is ExternalName. More info:
-    https://kubernetes.io/docs/concepts/services-networking/service/
+   selector	<map[string]string>
+     Route service traffic to pods with label keys and values matching this
+     selector. If empty or not present, the service is assumed to have an
+     external process managing its endpoints, which Kubernetes will not modify.
+     Only applies to types ClusterIP, NodePort, and LoadBalancer. Ignored if
+     type is ExternalName. More info:
+     https://kubernetes.io/docs/concepts/services-networking/service/
 |...|
 
-  type	<string>
-  enum: ClusterIP, ExternalName, LoadBalancer, NodePort
-    type determines how the Service is exposed. Defaults to ClusterIP. Valid
-    options are ExternalName, ClusterIP, NodePort, and LoadBalancer. "ClusterIP"
-    allocates a cluster-internal IP address for load-balancing to endpoints.
-    Endpoints are determined by the selector or if that is not specified, by
-    manual construction of an Endpoints object or EndpointSlice objects. If
-    clusterIP is "None", no virtual IP is allocated and the endpoints are
-    published as a set of endpoints rather than a virtual IP. "NodePort" builds
-    on ClusterIP and allocates a port on every node which routes to the same
-    endpoints as the clusterIP. "LoadBalancer" builds on NodePort and creates an
-    external load-balancer (if supported in the current cloud) which routes to
-    the same endpoints as the clusterIP. "ExternalName" aliases this service to
-    the specified externalName. Several other fields do not apply to
-    ExternalName services. More info:
-    https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+   type	<string>
+     type determines how the Service is exposed. Defaults to ClusterIP. Valid
+     options are ExternalName, ClusterIP, NodePort, and LoadBalancer.
+     "ClusterIP" allocates a cluster-internal IP address for load-balancing to
+     endpoints. Endpoints are determined by the selector or if that is not
+     specified, by manual construction of an Endpoints object or EndpointSlice
+     objects. If clusterIP is "None", no virtual IP is allocated and the
+     endpoints are published as a set of endpoints rather than a virtual IP.
+     "NodePort" builds on ClusterIP and allocates a port on every node which
+     routes to the same endpoints as the clusterIP. "LoadBalancer" builds on
+     NodePort and creates an external load-balancer (if supported in the current
+     cloud) which routes to the same endpoints as the clusterIP. "ExternalName"
+     aliases this service to the specified externalName. Several other fields do
+     not apply to ExternalName services. More info:
+     https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
 
-    Possible enum values:
+     Possible enum values:
      - `"ClusterIP"` means a service will only be accessible inside the cluster,
-    via the cluster IP.
+     via the cluster IP.
      - `"ExternalName"` means a service consists of only a reference to an
-    external name that kubedns or equivalent will return as a CNAME record, with
-    no exposing or proxying of any pods involved.
+     external name that kubedns or equivalent will return as a CNAME record,
+     with no exposing or proxying of any pods involved.
      - `"LoadBalancer"` means a service will be exposed via an external load
-    balancer (if the cloud provider supports it), in addition to 'NodePort'
-    type.
+     balancer (if the cloud provider supports it), in addition to 'NodePort'
+     type.
      - `"NodePort"` means a service will be exposed on one port of every node,
-    in addition to 'ClusterIP' type.
+     in addition to 'ClusterIP' type.
 
-$ kubectl explain services.spec.ports | cat --squeeze-blank
-KIND:       Service
-VERSION:    v1
+$ kubectl explain services.spec.ports --output=plaintext-openapiv2
+KIND:     Service
+VERSION:  v1
 
-FIELD: ports <[]ServicePort>
+RESOURCE: ports <[]Object>
 
 DESCRIPTION:
-    The list of ports that are exposed by this service. More info:
-    https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
-    ServicePort contains information on serviceʼs port.
+     The list of ports that are exposed by this service. More info:
+     https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+
+     ServicePort contains information on serviceʼs port.
 
 FIELDS:
 |...|
 
-  name	<string>
-    The name of this port within the service. This must be a DNS_LABEL. All
-    ports within a ServiceSpec must have unique names. When considering the
-    endpoints for a Service, this must match the 'name' field in the
-    EndpointPort. Optional if only one ServicePort is defined on this service.
-
-  port	<integer> -required-
-    The port that will be exposed by this service.
+   name	<string>
+     The name of this port within the service. This must be a DNS_LABEL. All
+     ports within a ServiceSpec must have unique names. When considering the
+     endpoints for a Service, this must match the 'name' field in the
+     EndpointPort. Optional if only one ServicePort is defined on this service.
 |...|
 
-  targetPort	<IntOrString>
-    Number or name of the port to access on the pods targeted by the service.
-    Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If
-    this is a string, it will be looked up as a named port in the target Podʼs
-    container ports. If this is not specified, the value of the 'port' field is
-    used (an identity map). This field is ignored for services with
-    clusterIP=None, and should be omitted or set equal to the 'port' field. More
-    info:
-    https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service
+   port	<integer> -required-
+     The port that will be exposed by this service.
+|...|
+
+   targetPort	<string>
+     Number or name of the port to access on the pods targeted by the service.
+     Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If
+     this is a string, it will be looked up as a named port in the target Podʼs
+     container ports. If this is not specified, the value of the 'port' field is
+     used (an identity map). This field is ignored for services with
+     clusterIP=None, and should be omitted or set equal to the 'port' field.
+     More info:
+     https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service
 ```
 
 ```bash
