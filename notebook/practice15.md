@@ -1,4 +1,4 @@
-# DRAFT: EXPERIMENT KUBERNETES
+# EXPERIMENT KUBERNETES
 
 ## REFERENCES
 
@@ -11,6 +11,29 @@ https://www.youtube.com/watch?v=kfk9deenCpE&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
+$ kubectl explain pods.spec.volumes.nfs --output=plaintext-openapiv2
+KIND:     Pod
+VERSION:  v1
+
+RESOURCE: nfs <Object>
+
+DESCRIPTION:
+     nfs represents an NFS mount on the host that shares a podʼs lifetime More
+     info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
+
+     Represents an NFS mount that lasts the lifetime of a pod. NFS volumes do
+     not support ownership management or SELinux relabeling.
+
+FIELDS:
+   path	<string> -required-
+     path that is exported by the NFS server. More info:
+     https://kubernetes.io/docs/concepts/storage/volumes#nfs
+|...|
+
+   server	<string> -required-
+     server is the hostname or IP address of the NFS server. More info:
+     https://kubernetes.io/docs/concepts/storage/volumes#nfs
+
 $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --overrides='[
 {
   "op": "add",
