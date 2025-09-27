@@ -1,8 +1,6 @@
-# DRAFT: EXPERIMENT KUBERNETES
+# EXPERIMENT KUBERNETES
 
 ## REFERENCES
-
-https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle
 
 https://www.youtube.com/watch?v=33HwfEGifyc&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
