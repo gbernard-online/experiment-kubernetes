@@ -13,69 +13,64 @@ https://www.youtube.com/watch?v=A0Q04eIg1kA&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
-$ kubectl explain pods.spec.affinity | cat --squeeze-blank
-KIND:       Pod
-VERSION:    v1
+$ kubectl explain pods.spec.affinity --output=plaintext-openapiv2
+KIND:     Pod
+VERSION:  v1
 
-FIELD: affinity <Affinity>
-
-DESCRIPTION:
-    If specified, the podʼs scheduling constraints
-    Affinity is a group of affinity scheduling rules.
-
-FIELDS:
-  nodeAffinity	<NodeAffinity>
-    Describes node affinity scheduling rules for the pod.
-|...|
-
-$ kubectl explain pods.spec.affinity.nodeAffinity | cat --squeeze-blank
-KIND:       Pod
-VERSION:    v1
-
-FIELD: nodeAffinity <NodeAffinity>
+RESOURCE: affinity <Object>
 
 DESCRIPTION:
-    Describes node affinity scheduling rules for the pod.
-    Node affinity is a group of node affinity scheduling rules.
+     If specified, the podʼs scheduling constraints
+
+     Affinity is a group of affinity scheduling rules.
+
+FIELDS:
+   nodeAffinity	<Object>
+     Describes node affinity scheduling rules for the pod.
+|...|
+
+$ kubectl explain pods.spec.affinity.nodeAffinity --output=plaintext-openapiv2
+KIND:     Pod
+VERSION:  v1
+
+RESOURCE: nodeAffinity <Object>
+
+DESCRIPTION:
+     Describes node affinity scheduling rules for the pod.
+
+     Node affinity is a group of node affinity scheduling rules.
 
 FIELDS:
 |...|
 
-  requiredDuringSchedulingIgnoredDuringExecution	<NodeSelector>
-    If the affinity requirements specified by this field are not met at
-    scheduling time, the pod will not be scheduled onto the node. If the
-    affinity requirements specified by this field cease to be met at some point
-    during pod execution (e.g. due to an update), the system may or may not try
-    to eventually evict the pod from its node.
+   requiredDuringSchedulingIgnoredDuringExecution	<Object>
+     If the affinity requirements specified by this field are not met at
+     scheduling time, the pod will not be scheduled onto the node. If the
+     affinity requirements specified by this field cease to be met at some point
+     during pod execution (e.g. due to an update), the system may or may not try
+     to eventually evict the pod from its node.
 
 $ kubectl explain pods.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution \
-KIND:       Pod
-VERSION:    v1
+--output=plaintext-openapiv2
+KIND:     Pod
+VERSION:  v1
 
-FIELD: requiredDuringSchedulingIgnoredDuringExecution <NodeSelector>
+RESOURCE: requiredDuringSchedulingIgnoredDuringExecution <Object>
 
 DESCRIPTION:
-    If the affinity requirements specified by this field are not met at
-    scheduling time, the pod will not be scheduled onto the node. If the
-    affinity requirements specified by this field cease to be met at some point
-    during pod execution (e.g. due to an update), the system may or may not try
-    to eventually evict the pod from its node.
-    A node selector represents the union of the results of one or more label
-    queries over a set of nodes; that is, it represents the OR of the selectors
-    represented by the node selector terms.
+     If the affinity requirements specified by this field are not met at
+     scheduling time, the pod will not be scheduled onto the node. If the
+     affinity requirements specified by this field cease to be met at some point
+     during pod execution (e.g. due to an update), the system may or may not try
+     to eventually evict the pod from its node.
+
+     A node selector represents the union of the results of one or more label
+     queries over a set of nodes; that is, it represents the OR of the selectors
+     represented by the node selector terms.
 
 FIELDS:
-  nodeSelectorTerms	<[]NodeSelectorTerm> -required-
-    matchExpressions	<[]NodeSelectorRequirement>
-      key	<string> -required-
-      operator	<string> -required-
-      enum: DoesNotExist, Exists, Gt, In, ....
-      values	<[]string>
-    matchFields	<[]NodeSelectorRequirement>
-      key	<string> -required-
-      operator	<string> -required-
-      enum: DoesNotExist, Exists, Gt, In, ....
-      values	<[]string>
+   nodeSelectorTerms	<[]Object> -required-
+     Required. A list of node selector terms. The terms are ORed.
 ```
 
 ```bash
