@@ -65,7 +65,8 @@ FIELDS:
      Weight associated with matching the corresponding nodeSelectorTerm, in the
      range 1-100.
 
-$ kubectl explain pods.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution.preference \
+$ kubectl explain \
+pods.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution.preference \
 --output=plaintext-openapiv2
 KIND:     Pod
 VERSION:  v1
