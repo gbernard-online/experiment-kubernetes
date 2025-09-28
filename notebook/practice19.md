@@ -105,7 +105,7 @@ jq '.spec.template.spec.affinity = input' - <(echo '{
             }
           ]
         },
-        "weight": 50
+        "weight": 80
       }
     ]
   }
@@ -135,10 +135,13 @@ spec:
                 operator: In
                 values:
                 - green
-            weight: 50
+            weight: 80
       containers:
       - image: nginx:alpine
         name: nginx
+
+$ kubeconform -verbose deployment.yaml
+deployment.yaml - Deployment nginx is valid
 
 $ kubectl apply --filename=deployment.yaml
 deployment.apps/nginx created
@@ -232,7 +235,7 @@ $ kubectl patch deployments.apps nginx --patch='[
         }
       ]
     },
-    "weight": 25
+    "weight": 40
   }
 }
 ]' --type=json
@@ -247,20 +250,20 @@ nodeAffinity:
             operator: In
             values:
               - green
-      weight: 50
+      weight: 80
     - preference:
         matchFields:
           - key: metadata.name
             operator: In
             values:
               - cluster-worker-yellow
-      weight: 25
+      weight: 40
 
 $ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine:green:yellow
 deployment.apps/nginx annotated
 
 $ kubectl rollout history deployment nginx
-deployment.apps/nginx 
+deployment.apps/nginx
 REVISION  CHANGE-CAUSE
 1         nginx:alpine:green
 2         nginx:alpine:green:yellow
@@ -318,7 +321,7 @@ jq '.spec.template.spec.affinity = input' - <(echo '{
             }
           ]
         },
-        "weight": 50
+        "weight": 80
       }
     ]
   }
@@ -348,10 +351,13 @@ spec:
                 operator: In
                 values:
                 - orange
-            weight: 50
+            weight: 80
       containers:
       - image: nginx:alpine
         name: nginx
+
+$ kubeconform -verbose deployment.yaml
+deployment.yaml - Deployment nginx is valid
 
 $ kubectl apply --filename=deployment.yaml
 deployment.apps/nginx created
