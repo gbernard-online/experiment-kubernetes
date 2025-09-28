@@ -71,6 +71,28 @@ DESCRIPTION:
 FIELDS:
    nodeSelectorTerms	<[]Object> -required-
      Required. A list of node selector terms. The terms are ORed.
+
+$ kubectl explain \
+pods.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms \
+--output=plaintext-openapiv2
+KIND:     Pod
+VERSION:  v1
+
+RESOURCE: nodeSelectorTerms <[]Object>
+
+DESCRIPTION:
+     Required. A list of node selector terms. The terms are ORed.
+
+     A null or empty node selector term matches no objects. The requirements of
+     them are ANDed. The TopologySelectorTerm type implements a subset of the
+     NodeSelectorTerm.
+
+FIELDS:
+   matchExpressions	<[]Object>
+     A list of node selector requirements by nodeʼs labels.
+
+   matchFields	<[]Object>
+     A list of node selector requirements by nodeʼs fields.
 ```
 
 ```bash
