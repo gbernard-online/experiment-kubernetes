@@ -158,6 +158,9 @@ spec:
       - image: nginx:alpine
         name: nginx
 
+$ kubeconform -verbose deployment.yaml
+deployment.yaml - Deployment nginx is valid
+
 $ kubectl apply --filename=deployment.yaml
 deployment.apps/nginx created
 
@@ -181,7 +184,7 @@ Pending
 $ kubectl run redis --image=redis:alpine
 pod/redis created
 
-$ kubectl get pods redis --show-labels 
+$ kubectl get pods redis --show-labels
 NAME    READY   STATUS    RESTARTS   AGE   LABELS
 redis   1/1     Running   0          15s   run=redis
 
@@ -206,7 +209,7 @@ $ kubectl delete --filename=deployment.yaml
 deployment.apps "nginx" deleted
 
 $ kubectl delete pods/redis
-pod "redis" deleted 
+pod "redis" deleted
 
 $ rm --verbose deployment.yaml
 removed 'deployment.yaml'
