@@ -53,9 +53,7 @@ FIELDS:
      may not try to eventually evict the pod from its node. When there are
      multiple elements, the lists of nodes corresponding to each podAffinityTerm
      are intersected, i.e. all terms must be satisfied.
-```
 
-```bash
 $ kubectl explain pods.spec.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution \
 --output=plaintext-openapiv2
 KIND:     Pod
@@ -80,7 +78,7 @@ DESCRIPTION:
 
 FIELDS:
    labelSelector	<Object>
-     A label query over a set of resources, in this case pods. If it's null,
+     A label query over a set of resources, in this case pods. If itʼs null,
      this PodAffinityTerm matches with no Pods.
 |...|
 
@@ -90,4 +88,29 @@ FIELDS:
      co-located is defined as running on a node whose value of the label with
      key topologyKey matches that of any node on which any of the selected pods
      is running. Empty topologyKey is not allowed.
+
+$ kubectl explain \
+pods.spec.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution.labelSelector \
+--output=plaintext-openapiv2
+KIND:     Pod
+VERSION:  v1
+
+RESOURCE: labelSelector <Object>
+
+DESCRIPTION:
+     A label query over a set of resources, in this case pods. If itʼs null,
+     this PodAffinityTerm matches with no Pods.
+
+     A label selector is a label query over a set of resources. The result of
+     matchLabels and matchExpressions are ANDed. An empty label selector matches
+     all objects. A null label selector matches no objects.
+
+FIELDS:
+|...|
+
+   matchLabels	<map[string]string>
+     matchLabels is a map of {key,value} pairs. A single {key,value} in the
+     matchLabels map is equivalent to an element of matchExpressions, whose key
+     field is "key", the operator is "In", and the values array contains only
+     "value". The requirements are ANDed.
 ```
