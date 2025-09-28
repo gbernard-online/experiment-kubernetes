@@ -243,6 +243,9 @@ spec:
       - image: nginx:alpine
         name: nginx
 
+$ kubeconform -verbose deployment.yaml
+deployment.yaml - Deployment nginx is valid
+
 $ kubectl apply --filename=deployment.yaml
 deployment.apps/nginx created
 
@@ -322,6 +325,9 @@ spec:
       containers:
       - image: nginx:alpine
         name: nginx
+
+$ kubeconform -verbose deployment.yaml
+deployment.yaml - Deployment nginx is valid
 
 $ kubectl apply --filename=deployment.yaml
 deployment.apps/nginx created
