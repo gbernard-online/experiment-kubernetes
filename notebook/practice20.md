@@ -2,8 +2,7 @@
 
 ## REFERENCES
 
-https://www.youtube.com/watch?v=zXCFyKc1_H4&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap  
-https://www.youtube.com/watch?v=e4dpaiIEltk&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
+https://www.youtube.com/watch?v=A0Q04eIg1kA&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
 ## PRACTICE #20 - KUBERNETES - KIND - UBUNTU 24
 
@@ -12,88 +11,83 @@ https://www.youtube.com/watch?v=e4dpaiIEltk&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
-$ kubectl explain pods.spec.affinity | cat --squeeze-blank
-KIND:       Pod
-VERSION:    v1
+$ kubectl explain podʼs.spec.affinity --output=plaintext-openapiv2
+KIND:     Pod
+VERSION:  v1
 
-FIELD: affinity <Affinity>
+RESOURCE: affinity <Object>
 
 DESCRIPTION:
-    If specified, the podʼs scheduling constraints
-    Affinity is a group of affinity scheduling rules.
+     If specified, the pods scheduling constraints
+
+     Affinity is a group of affinity scheduling rules.
 
 FIELDS:
 |...|
 
-  podAffinity	<PodAffinity>
-    Describes pod affinity scheduling rules (e.g. co-locate this pod in the same
-    node, zone, etc. as some other pod(s)).
+   podAffinity	<Object>
+     Describes pod affinity scheduling rules (e.g. co-locate this pod in the
+     same node, zone, etc. as some other pod(s)).
+|...|
 
-  podAntiAffinity	<PodAntiAffinity>
-    Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in
-    the same node, zone, etc. as some other pod(s)).
+$ kubectl explain pods.spec.affinity.podAffinity --output=plaintext-openapiv2
+KIND:     Pod
+VERSION:  v1
 
-$ kubectl explain pods.spec.affinity.podAffinity | cat --squeeze-blank
-KIND:       Pod
-VERSION:    v1
-
-FIELD: podAffinity <PodAffinity>
+RESOURCE: podAffinity <Object>
 
 DESCRIPTION:
-    Describes pod affinity scheduling rules (e.g. co-locate this pod in the same
-    node, zone, etc. as some other pod(s)).
-    Pod affinity is a group of inter pod affinity scheduling rules.
+     Describes pod affinity scheduling rules (e.g. co-locate this pod in the
+     same node, zone, etc. as some other pod(s)).
+
+     Pod affinity is a group of inter pod affinity scheduling rules.
 
 FIELDS:
-  preferredDuringSchedulingIgnoredDuringExecution	<[]WeightedPodAffinityTerm>
-    The scheduler will prefer to schedule pods to nodes that satisfy the
-    affinity expressions specified by this field, but it may choose a node that
-    violates one or more of the expressions. The node that is most preferred is
-    the one with the greatest sum of weights, i.e. for each node that meets all
-    of the scheduling requirements (resource request, requiredDuringScheduling
-    affinity expressions, etc.), compute a sum by iterating through the elements
-    of this field and adding "weight" to the sum if the node has pods which
-    matches the corresponding podAffinityTerm; the node(s) with the highest sum
-    are the most preferred.
+|...|
 
-  requiredDuringSchedulingIgnoredDuringExecution	<[]PodAffinityTerm>
-    If the affinity requirements specified by this field are not met at
-    scheduling time, the pod will not be scheduled onto the node. If the
-    affinity requirements specified by this field cease to be met at some point
-    during pod execution (e.g. due to a pod label update), the system may or may
-    not try to eventually evict the pod from its node. When there are multiple
-    elements, the lists of nodes corresponding to each podAffinityTerm are
-    intersected, i.e. all terms must be satisfied.
+   requiredDuringSchedulingIgnoredDuringExecution	<[]Object>
+     If the affinity requirements specified by this field are not met at
+     scheduling time, the pod will not be scheduled onto the node. If the
+     affinity requirements specified by this field cease to be met at some point
+     during pod execution (e.g. due to a pod label update), the system may or
+     may not try to eventually evict the pod from its node. When there are
+     multiple elements, the lists of nodes corresponding to each podAffinityTerm
+     are intersected, i.e. all terms must be satisfied.
+```
 
-$ kubectl explain pods.spec.affinity.podAntiAffinity | cat --squeeze-blank
-KIND:       Pod
-VERSION:    v1
+```bash
+$ kubectl explain pods.spec.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution \
+--output=plaintext-openapiv2
+KIND:     Pod
+VERSION:  v1
 
-FIELD: podAntiAffinity <PodAntiAffinity>
+RESOURCE: requiredDuringSchedulingIgnoredDuringExecution <[]Object>
 
 DESCRIPTION:
-    Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in
-    the same node, zone, etc. as some other pod(s)).
-    Pod anti affinity is a group of inter pod anti affinity scheduling rules.
+     If the anti-affinity requirements specified by this field are not met at
+     scheduling time, the pod will not be scheduled onto the node. If the
+     anti-affinity requirements specified by this field cease to be met at some
+     point during pod execution (e.g. due to a pod label update), the system may
+     or may not try to eventually evict the pod from its node. When there are
+     multiple elements, the lists of nodes corresponding to each podAffinityTerm
+     are intersected, i.e. all terms must be satisfied.
+
+     Defines a set of pods (namely those matching the labelSelector relative to
+     the given namespace(s)) that this pod should be co-located (affinity) or
+     not co-located (anti-affinity) with, where co-located is defined as running
+     on a node whose value of the label with key <topologyKey> matches that of
+     any node on which a pod of the set of pods is running
 
 FIELDS:
-  preferredDuringSchedulingIgnoredDuringExecution	<[]WeightedPodAffinityTerm>
-    The scheduler will prefer to schedule pods to nodes that satisfy the
-    anti-affinity expressions specified by this field, but it may choose a node
-    that violates one or more of the expressions. The node that is most
-    preferred is the one with the greatest sum of weights, i.e. for each node
-    that meets all of the scheduling requirements (resource request,
-    requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by
-    iterating through the elements of this field and subtracting "weight" from
-    the sum if the node has pods which matches the corresponding
-    podAffinityTerm; the node(s) with the highest sum are the most preferred.
+   labelSelector	<Object>
+     A label query over a set of resources, in this case pods. If it's null,
+     this PodAffinityTerm matches with no Pods.
+|...|
 
-  requiredDuringSchedulingIgnoredDuringExecution	<[]PodAffinityTerm>
-    If the anti-affinity requirements specified by this field are not met at
-    scheduling time, the pod will not be scheduled onto the node. If the
-    anti-affinity requirements specified by this field cease to be met at some
-    point during pod execution (e.g. due to a pod label update), the system may
-    or may not try to eventually evict the pod from its node. When there are
-    multiple elements, the lists of nodes corresponding to each podAffinityTerm
-    are intersected, i.e. all terms must be satisfied.
+   topologyKey	<string> -required-
+     This pod should be co-located (affinity) or not co-located (anti-affinity)
+     with the pods matching the labelSelector in the specified namespaces, where
+     co-located is defined as running on a node whose value of the label with
+     key topologyKey matches that of any node on which any of the selected pods
+     is running. Empty topologyKey is not allowed.
 ```
