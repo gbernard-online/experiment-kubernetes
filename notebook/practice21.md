@@ -84,7 +84,7 @@ DESCRIPTION:
 
 FIELDS:
    labelSelector	<Object>
-     A label query over a set of resources, in this case pods. If it's null,
+     A label query over a set of resources, in this case pods. If itʼs null,
      this PodAffinityTerm matches with no Pods.
 |...|
 
