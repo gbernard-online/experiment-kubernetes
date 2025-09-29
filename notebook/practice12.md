@@ -2,6 +2,8 @@
 
 ## REFERENCES
 
+https://kubernetes.io/docs/tasks/access-application-cluster/communicate-containers-same-pod-shared-volume
+
 https://www.youtube.com/watch?v=0KSOqB4nea0&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
 ## PRACTICE #12 - KUBERNETES - KIND - UBUNTU 24
