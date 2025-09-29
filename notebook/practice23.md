@@ -129,13 +129,13 @@ deployment.yaml - Deployment nginx is valid
 $ kubectl apply --filename=deployment.yaml
 deployment.apps/nginx created
 
-$ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine
+$ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine:skew1
 deployment.apps/nginx annotated
 
 $ kubectl rollout history deployment nginx
 deployment.apps/nginx
 REVISION  CHANGE-CAUSE
-1         nginx:alpine:redis
+1         nginx:alpine:redis:skew1
 
 $ kubectl get deployments.apps nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
@@ -222,11 +222,14 @@ $ kubectl get deployments.apps nginx --output=yaml | yq .spec.template.spec.topo
   topologyKey: color
   whenUnsatisfiable: DoNotSchedule
 
+$ kubectl annotate deployments.apps nginx kubernetes.io/change-cause=nginx:alpine:skew6
+deployment.apps/nginx annotated
+
 $ kubectl rollout history deployment nginx
 deployment.apps/nginx
 REVISION  CHANGE-CAUSE
-1         nginx:alpine
-2         nginx:alpine
+1         nginx:alpine:skew1
+2         nginx:alpine:skew6
 
 $ kubectl get deployments.apps nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
