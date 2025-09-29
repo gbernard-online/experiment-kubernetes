@@ -260,11 +260,11 @@ $ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeNam
 $ kubectl get pods --output=yaml --selector=app=nginx |
 yq '.items[] | select(.spec.nodeName=="cluster-worker-red").metadata.name' |
 xargs --no-run-if-empty kubectl delete pods
-pod "nginx-56d479d685-mc2hk" deleted from default namespace
-pod "nginx-56d479d685-mwvfh" deleted from default namespace
-pod "nginx-56d479d685-ng5xq" deleted from default namespace
-pod "nginx-56d479d685-sk4hn" deleted from default namespace
-pod "nginx-56d479d685-z57r5" deleted from default namespace
+pod "nginx-56d479d685-mc2hk" deleted
+pod "nginx-56d479d685-mwvfh" deleted
+pod "nginx-56d479d685-ng5xq" deleted
+pod "nginx-56d479d685-sk4hn" deleted
+pod "nginx-56d479d685-z57r5" deleted
 
 $ kubectl get deployments.apps nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
