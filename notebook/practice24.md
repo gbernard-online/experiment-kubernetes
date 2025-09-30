@@ -14,7 +14,7 @@ https://www.youtube.com/watch?v=UTfdoXmRevU&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
-$ kubectl explain persistentvolumes.spec --output=plaintext-openapiv2
+$ kubectl explain persistentvolumes.spec.hostPath --output=plaintext-openapiv2
 |...|
 
 $ kubectl explain persistentvolumes.spec.nodeAffinity --output=plaintext-openapiv2
