@@ -8,9 +8,6 @@ https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_cluster-info  
 https://kubernetes.io/docs/reference/kubectl/generated/kubectl_wait
 
-https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm  
-https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-version
-
 https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s  
 https://microk8s.io/docs/working-with-kubectl  
 https://microk8s.io/docs/command-reference#heading--microk8s-kubectl  
@@ -26,10 +23,9 @@ https://www.youtube.com/watch?v=23MhuIVYMHE&list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1
 https://www.youtube.com/watch?v=buRvk-Atyes&list=PLn6POgpklwWo4TTIjWOnYGmw2MHDN1HAL  
 https://www.youtube.com/watch?v=AskMZMtjk2g&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
-## INSTALL - KUBERNETES - KUBEADM - UBUNTU 24
+## INSTALL - KUBERNETES - UBUNTU 24
 
 [![Kubernetes](img/kubernetes.webp "Kubernetes")](https://kubernetes.io)1
-[![Kubeadm](img/kubeadm.webp "Kubeadm")](https://kubernetes.io/docs/reference/setup-tools/kubeadm)1
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
@@ -85,46 +81,6 @@ clientVersion:
   minor: "34"
   platform: linux/amd64
 kustomizeVersion: v5.7.1
-```
-
-```bash
-$ apt-cache madison kubeadm
-   kubeadm | 1.34.1-1.1 | https://pkgs.k8s.io/core:/stable:/v1.34/deb  Packages
-   kubeadm | 1.34.0-1.1 | https://pkgs.k8s.io/core:/stable:/v1.34/deb  Packages
-
-$ apt depends kubeadm
-kubeadm
-  Depends: cri-tools (>= 1.30.0)
-
-The following additional packages will be installed:
-  cri-tools
-The following NEW packages will be installed:
-  cri-tools kubeadm
-0 upgraded, 2 newly installed, 0 to remove and 1 not upgraded.
-Need to get 30.0 MB of archives.
-|...|
-
-$ ls --width=1 /usr/share/doc/kubeadm
-LICENSE
-README.md
-
-$ whereis kubeadm
-kubeadm: /usr/bin/kubeadm
-
-$ kubeadm version --output=short
-v1.34.1
-
-$ kubeadm version --output=yaml | yq
-clientVersion:
-  buildDate: "2025-09-09T19:43:15Z"
-  compiler: gc
-  gitCommit: 93248f9ae092f571eb870b7664c534bfc7d00f03
-  gitTreeState: clean
-  gitVersion: v1.34.1
-  goVersion: go1.24.6
-  major: "1"
-  minor: "34"
-  platform: linux/amd64
 ```
 
 ```bash
