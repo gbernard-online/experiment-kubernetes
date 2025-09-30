@@ -14,44 +14,7 @@ https://www.youtube.com/watch?v=0KSOqB4nea0&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 
 ```bash
 $ kubectl explain pods.spec.volumes.hostPath --output=plaintext-openapiv2
-KIND:     Pod
-VERSION:  v1
-
-RESOURCE: hostPath <Object>
-
-DESCRIPTION:
-     hostPath represents a pre-existing file or directory on the host machine
-     that is directly exposed to the container. This is generally used for
-     system agents or other privileged things that are allowed to see the host
-     machine. Most containers will NOT need this. More info:
-     https://kubernetes.io/docs/concepts/storage/volumes#hostpath
-
-     Represents a host path mapped into a pod. Host path volumes do not support
-     ownership management or SELinux relabeling.
-
-FIELDS:
-   path	<string> -required-
-     path of the directory on the host. If the path is a symlink, it will follow
-     the link to the real path. More info:
-     https://kubernetes.io/docs/concepts/storage/volumes#hostpath
-
-   type	<string>
-     type for HostPath Volume Defaults to "" More info:
-     https://kubernetes.io/docs/concepts/storage/volumes#hostpath
-
-     Possible enum values:
-     - `""` For backwards compatible, leave it empty if unset
-     - `"BlockDevice"` A block device must exist at the given path
-     - `"CharDevice"` A character device must exist at the given path
-     - `"Directory"` A directory must exist at the given path
-     - `"DirectoryOrCreate"` If nothing exists at the given path, an empty
-     directory will be created there as needed with file mode 0755, having the
-     same group and ownership with Kubelet.
-     - `"File"` A file must exist at the given path
-     - `"FileOrCreate"` If nothing exists at the given path, an empty file will
-     be created there as needed with file mode 0644, having the same group and
-     ownership with Kubelet.
-     - `"Socket"` A UNIX socket must exist at the given path
+|...|
 
 $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --overrides='[
 {
