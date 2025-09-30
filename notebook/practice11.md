@@ -10,8 +10,6 @@ https://www.youtube.com/watch?v=33HwfEGifyc&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Kind](img/kind.webp "Kind")](https://kind.sigs.k8s.io)0
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
-## PRACTICE #12 - MICROK8S - UBUNTU 24
-
 ```bash
 $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --overrides='[
 {
