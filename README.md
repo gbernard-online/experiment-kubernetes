@@ -32,7 +32,9 @@
 [Practice #22](notebook/practice22.md) AntiPodAffinity  
 [Practice #23](notebook/practice23.md) SpreadConstraint  
 [Practice #24](notebook/practice24.md) PersistentVolume NodeAffinity  
-[Practice #25](notebook/practice25.md) Pod InitContainer
+[Practice #25](notebook/practice25.md) Pod InitContainer  
+[Practice #26](notebook/practice26.md) StatefulSet  
+[Practice #27](notebook/practice27.md) DaemonSet
 
 [Purge](notebook/purge.md)
 
