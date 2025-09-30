@@ -42,204 +42,21 @@ spec:
 status: {}
 
 $ kubectl explain pods --output=plaintext-openapiv2
-KIND:     Pod
-VERSION:  v1
+|...|
 
-DESCRIPTION:
-     Pod is a collection of containers that can run on a host. This resource is
-     created by clients and scheduled onto hosts.
-
-FIELDS:
-   apiVersion	<string>
-     APIVersion defines the versioned schema of this representation of an
-     object. Servers should convert recognized schemas to the latest internal
-     value, and may reject unrecognized values. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-
-   kind	<string>
-     Kind is a string value representing the REST resource this object
-     represents. Servers may infer this from the endpoint the client submits
-     requests to. Cannot be updated. In CamelCase. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-
-   metadata	<Object>
-     Standard objectʼs metadata. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-
-   spec	<Object>
-     Specification of the desired behavior of the pod. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-
-   status	<Object>
-     Most recently observed status of the pod. This data may not be up to date.
-     Populated by the system. Read-only. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+$ kubectl explain pods --recursive
+|...|
 
 $ kubectl explain pods.metadata --output=plaintext-openapiv2
-KIND:     Pod
-VERSION:  v1
-
-RESOURCE: metadata <Object>
-
-DESCRIPTION:
-     Standard objectʼs metadata. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-
-     ObjectMeta is metadata that all persisted resources must have, which
-     includes all objects users must create.
-
-FIELDS:
-|...|
-
-   creationTimestamp	<string>
-     CreationTimestamp is a timestamp representing the server time when this
-     object was created. It is not guaranteed to be set in happens-before order
-     across separate operations. Clients may not set this value. It is
-     represented in RFC3339 form and is in UTC.
-
-     Populated by the system. Read-only. Null for lists. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-|...|
-
-   labels	<map[string]string>
-     Map of string keys and values that can be used to organize and categorize
-     (scope and select) objects. May match selectors of replication controllers
-     and services. More info:
-     https://kubernetes.io/docs/concepts/overview/working-with-objects/labels
-|...|
-
-   name	<string>
-     Name must be unique within a namespace. Is required when creating
-     resources, although some resources may allow a client to request the
-     generation of an appropriate name automatically. Name is primarily intended
-     for creation idempotence and configuration definition. Cannot be updated.
-     More info:
-     https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names
 |...|
 
 $ kubectl explain pods.spec --output=plaintext-openapiv2
-KIND:     Pod
-VERSION:  v1
-
-RESOURCE: spec <Object>
-
-DESCRIPTION:
-     Specification of the desired behavior of the pod. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-
-     PodSpec is a description of a pod.
-
-FIELDS:
-|...|
-
-   containers	<[]Object> -required-
-     List of containers belonging to the pod. Containers cannot currently be
-     added or removed. There must be at least one container in a Pod. Cannot be
-     updated.
-|...|
-
-   restartPolicy	<string>
-     Restart policy for all containers within the pod. One of Always, OnFailure,
-     Never. In some contexts, only a subset of those values may be permitted.
-     Default to Always. More info:
-     https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
-
-     Possible enum values:
-     - `"Always"`
-     - `"Never"`
-     - `"OnFailure"`
 |...|
 
 $ kubectl explain pods.spec.containers --output=plaintext-openapiv2
-KIND:     Pod
-VERSION:  v1
-
-RESOURCE: containers <[]Object>
-
-DESCRIPTION:
-     List of containers belonging to the pod. Containers cannot currently be
-     added or removed. There must be at least one container in a Pod. Cannot be
-     updated.
-
-     A single application container that you want to run within a pod.
-
-FIELDS:
-|...|
-
-   image	<string>
-     Container image name. More info:
-     https://kubernetes.io/docs/concepts/containers/images This field is
-     optional to allow higher level config management to default or override
-     container images in workload controllers like Deployments and StatefulSets.
-|...|
-
-   name	<string> -required-
-     Name of the container specified as a DNS_LABEL. Each container in a pod
-     must have a unique name (DNS_LABEL). Cannot be updated.
-|...|
-
-   resources	<Object>
-     Compute Resources required by this container. Cannot be updated. More info:
-     https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 |...|
 
 $ kubectl explain pods.status --output=plaintext-openapiv2
-KIND:     Pod
-VERSION:  v1
-
-RESOURCE: status <Object>
-
-DESCRIPTION:
-     Most recently observed status of the pod. This data may not be up to date.
-     Populated by the system. Read-only. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-
-     PodStatus represents information about the status of a pod. Status may
-     trail the actual state of a system, especially if the node that hosts the
-     pod cannot contact the control plane.
-
-FIELDS:
-|...|
-
-   phase	<string>
-     The phase of a Pod is a simple, high-level summary of where the Pod is in
-     its lifecycle. The conditions array, the reason and message fields, and the
-     individual container status arrays contain more detail about the podʼs
-     status. There are five possible phase values:
-
-     Pending: The pod has been accepted by the Kubernetes system, but one or
-     more of the container images has not been created. This includes time
-     before being scheduled as well as time spent downloading images over the
-     network, which could take a while. Running: The pod has been bound to a
-     node, and all of the containers have been created. At least one container
-     is still running, or is in the process of starting or restarting.
-     Succeeded: All containers in the pod have terminated in success, and will
-     not be restarted. Failed: All containers in the pod have terminated, and at
-     least one container has terminated in failure. The container either exited
-     with non-zero status or was terminated by the system. Unknown: For some
-     reason the state of the pod could not be obtained, typically due to an
-     error in communicating with the host of the pod.
-
-     More info:
-     https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase
-
-     Possible enum values:
-     - `"Failed"` means that all containers in the pod have terminated, and at
-     least one container has terminated in a failure (exited with a non-zero
-     exit code or was stopped by the system).
-     - `"Pending"` means the pod has been accepted by the system, but one or
-     more of the containers has not been started. This includes time before
-     being bound to a node, as well as time spent pulling images onto the host.
-     - `"Running"` means the pod has been bound to a node and all of the
-     containers have been started. At least one container is still running or is
-     in the process of being restarted.
-     - `"Succeeded"` means that all containers in the pod have voluntarily
-     terminated with a container exit code of 0, and the system is not going to
-     restart any of these containers.
-     - `"Unknown"` means that for some reason the state of the pod could not be
-     obtained, typically due to an error in communicating with the host of the
-     pod. Deprecated: It isn't being set since 2015
-     (74da3b14b0c0f658b3bb8d2def5094686d0e9095)
 |...|
 ```
 
