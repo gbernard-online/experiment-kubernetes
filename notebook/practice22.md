@@ -13,6 +13,9 @@ https://www.youtube.com/watch?v=e4dpaiIEltk&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 ```bash
 $ kubectl explain pods.spec.affinity.podAntiAffinity --output=plaintext-openapiv2
 |...|
+
+$ kubectl explain pods.spec.affinity.podAntiAffinity --output=plaintext-openapiv2 --recursive
+|...|
 ```
 
 ```bash
