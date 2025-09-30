@@ -28,6 +28,11 @@ $ kubectl explain \
 pods.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms \
 --output=plaintext-openapiv2
 |...|
+
+$ kubectl explain \
+pods.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms \
+--output=plaintext-openapiv2 --recursive
+|...|
 ```
 
 ```bash
