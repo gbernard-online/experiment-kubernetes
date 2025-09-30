@@ -114,11 +114,10 @@ FIELDS:
      info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
 |...|
 
-   storageos	<Object>
-     storageOS represents a StorageOS volume that is attached to the kubeletʼs
-     host machine and mounted into the pod. Deprecated: StorageOS is deprecated
-     and the in-tree storageos type is no longer supported. More info:
-     https://examples.k8s.io/volumes/storageos/README.md
+   storageClassName	<string>
+     storageClassName is the name of StorageClass to which this persistent
+     volume belongs. Empty value means that this volume does not belong to any
+     StorageClass.
 |...|
 
 $ kubectl explain persistentvolumes.spec.nfs --output=plaintext-openapiv2
