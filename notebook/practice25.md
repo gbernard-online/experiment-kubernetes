@@ -4,7 +4,7 @@
 
 https://kubernetes.io/docs/concepts/workloads/pods/init-containers
 
-## PRACTICE #24 - KUBERNETES - KIND - UBUNTU 24
+## PRACTICE #25 - KUBERNETES - KIND - UBUNTU 24
 
 [![Kubernetes](img/kubernetes.webp "Kubernetes")](https://kubernetes.io)1
 [![Kind](img/kind.webp "Kind")](https://kind.sigs.k8s.io)0
