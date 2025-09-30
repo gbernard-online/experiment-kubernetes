@@ -19,6 +19,10 @@ pods.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution 
 $ kubectl explain \
 pods.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution.preference \
 --output=plaintext-openapiv2
+
+$ kubectl explain \
+pods.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution.preference \
+--output=plaintext-openapiv2 --recursive
 |...|
 ```
 
