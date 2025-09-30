@@ -2,9 +2,6 @@
 
 ## REFERENCES
 
-https://kubernetes.io/docs/concepts/storage/storage-classes  
-https://kubernetes.io/docs/concepts/storage/persistent-volumes
-
 https://www.youtube.com/watch?v=UTfdoXmRevU&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
 ## PRACTICE #24 - KUBERNETES - KIND - UBUNTU 24
