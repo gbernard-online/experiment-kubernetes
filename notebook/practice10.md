@@ -17,26 +17,7 @@ $ kubectl api-resources --no-headers | fgrep secrets
 secrets                                        v1                                true    Secret
 
 $ kubectl explain secrets --output=plaintext-openapiv2
-KIND:     Secret
-VERSION:  v1
-
-DESCRIPTION:
-     Secret holds secret data of a certain type. The total bytes of the values
-     in the Data field must be less than MaxSecretSize bytes.
-
-FIELDS:
 |...|
-
-   data	<map[string]string>
-     Data contains the secret data. Each key must consist of alphanumeric
-     characters, '-', '_' or '.'. The serialized form of the secret data is a
-     base64 encoded string, representing the arbitrary (possibly non-string)
-     data value here. Described in https://tools.ietf.org/html/rfc4648#section-4
-|...|
-
-   type	<string>
-     Used to facilitate programmatic handling of secret data. More info:
-     https://kubernetes.io/docs/concepts/configuration/secret/#secret-types
 ```
 
 ```bash
