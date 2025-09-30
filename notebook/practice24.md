@@ -17,8 +17,13 @@ $ kubectl explain persistentvolumes.spec.hostPath --output=plaintext-openapiv2
 $ kubectl explain persistentvolumes.spec.nodeAffinity --output=plaintext-openapiv2
 |...|
 
-$ kubectl explain persistentvolumes.spec.nodeAffinity.required.nodeSelectorTerms --output=plaintext-openapiv2
+$ kubectl explain persistentvolumes.spec.nodeAffinity.required.nodeSelectorTerms \
+--output=plaintext-openapiv2
 |...|
+
+$ kubectl explain persistentvolumes.spec.nodeAffinity.required.nodeSelectorTerms \
+--output=plaintext-openapiv2 --recursive
+}...}
 ```
 
 ```bash
