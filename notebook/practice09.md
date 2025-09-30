@@ -17,27 +17,6 @@ $ kubectl api-resources --no-headers | fgrep configmaps
 configmaps                          cm         v1                                true    ConfigMap
 
 $ kubectl explain configmaps --output=plaintext-openapiv2
-KIND:     ConfigMap
-VERSION:  v1
-
-DESCRIPTION:
-     ConfigMap holds configuration data for pods to consume.
-
-FIELDS:
-|...|
-
-   binaryData	<map[string]string>
-     BinaryData contains the binary data. Each key must consist of alphanumeric
-     characters, '-', '_' or '.'. BinaryData can contain byte sequences that are
-     not in the UTF-8 range. The keys stored in BinaryData must not overlap with
-     the ones in the Data field, this is enforced during validation process.
-     Using this field will require 1.10+ apiserver and kubelet.
-
-   data	<map[string]string>
-     Data contains the configuration data. Each key must consist of alphanumeric
-     characters, '-', '_' or '.'. Values with non-UTF-8 byte sequences must use
-     the BinaryData field. The keys stored in Data must not overlap with the
-     keys in the BinaryData field, this is enforced during validation process.
 |...|
 ```
 
