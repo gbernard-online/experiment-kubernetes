@@ -21,101 +21,16 @@ $ kubectl api-resources --no-headers | fgrep replicasets
 replicasets                         rs         apps/v1                           true    ReplicaSet
 
 $ kubectl explain replicasets --output=plaintext-openapiv2
-KIND:     ReplicaSet
-VERSION:  apps/v1
-
-DESCRIPTION:
-     ReplicaSet ensures that a specified number of pod replicas are running at
-     any given time.
-
-FIELDS:
-|...|
-
-   spec	<Object>
-     Spec defines the specification of the desired behavior of the ReplicaSet.
-     More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 |...|
 
 $ kubectl explain replicasets.spec --output=plaintext-openapiv2
-KIND:     ReplicaSet
-VERSION:  apps/v1
-
-RESOURCE: spec <Object>
-
-DESCRIPTION:
-     Spec defines the specification of the desired behavior of the ReplicaSet.
-     More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-
-     ReplicaSetSpec is the specification of a ReplicaSet.
-
-FIELDS:
 |...|
-
-   replicas	<integer>
-     Replicas is the number of desired pods. This is a pointer to distinguish
-     between explicit zero and unspecified. Defaults to 1. More info:
-     https://kubernetes.io/docs/concepts/workloads/controllers/replicaset
-
-   selector	<Object> -required-
-     Selector is a label query over pods that should match the replica count.
-     Label keys and values that must match in order to be controlled by this
-     replica set. It must match the pod templateʼs labels. More info:
-     https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-
-   template	<Object>
-     Template is the object that describes the pod that will be created if
-     insufficient replicas are detected. More info:
-     https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/#pod-template
 
 $ kubectl explain replicasets.spec.selector --output=plaintext-openapiv2
-KIND:     ReplicaSet
-VERSION:  apps/v1
-
-RESOURCE: selector <Object>
-
-DESCRIPTION:
-     Selector is a label query over pods that should match the replica count.
-     Label keys and values that must match in order to be controlled by this
-     replica set. It must match the pod templateʼs labels. More info:
-     https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-
-     A label selector is a label query over a set of resources. The result of
-     matchLabels and matchExpressions are ANDed. An empty label selector matches
-     all objects. A null label selector matches no objects.
-
-FIELDS:
 |...|
 
-   matchLabels	<map[string]string>
-     matchLabels is a map of {key,value} pairs. A single {key,value} in the
-     matchLabels map is equivalent to an element of matchExpressions, whose key
-     field is "key", the operator is "In", and the values array contains only
-     "value". The requirements are ANDed.
-
 $ kubectl explain replicasets.spec.template --output=plaintext-openapiv2
-KIND:     ReplicaSet
-VERSION:  apps/v1
-
-RESOURCE: template <Object>
-
-DESCRIPTION:
-     Template is the object that describes the pod that will be created if
-     insufficient replicas are detected. More info:
-     https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/#pod-template
-
-     PodTemplateSpec describes the data a pod should have when created from a
-     template
-
-FIELDS:
-   metadata	<Object>
-     Standard objectʼs metadata. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-
-   spec	<Object>
-     Specification of the desired behavior of the pod. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+|...|
 ```
 
 ```bash
