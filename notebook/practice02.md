@@ -44,7 +44,7 @@ status: {}
 $ kubectl explain pods --output=plaintext-openapiv2
 |...|
 
-$ kubectl explain pods --recursive
+$ kubectl explain pods --output=plaintext-openapiv2 --recursive
 |...|
 
 $ kubectl explain pods.metadata --output=plaintext-openapiv2
