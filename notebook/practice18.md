@@ -14,85 +14,20 @@ https://www.youtube.com/watch?v=A0Q04eIg1kA&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 
 ```bash
 $ kubectl explain pods.spec.affinity --output=plaintext-openapiv2
-KIND:     Pod
-VERSION:  v1
-
-RESOURCE: affinity <Object>
-
-DESCRIPTION:
-     If specified, the podʼs scheduling constraints
-
-     Affinity is a group of affinity scheduling rules.
-
-FIELDS:
-   nodeAffinity	<Object>
-     Describes node affinity scheduling rules for the pod.
 |...|
 
 $ kubectl explain pods.spec.affinity.nodeAffinity --output=plaintext-openapiv2
-KIND:     Pod
-VERSION:  v1
-
-RESOURCE: nodeAffinity <Object>
-
-DESCRIPTION:
-     Describes node affinity scheduling rules for the pod.
-
-     Node affinity is a group of node affinity scheduling rules.
-
-FIELDS:
 |...|
 
-   requiredDuringSchedulingIgnoredDuringExecution	<Object>
-     If the affinity requirements specified by this field are not met at
-     scheduling time, the pod will not be scheduled onto the node. If the
-     affinity requirements specified by this field cease to be met at some point
-     during pod execution (e.g. due to an update), the system may or may not try
-     to eventually evict the pod from its node.
-
-$ kubectl explain pods.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution \
+$ kubectl explain \
+pods.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution \
 --output=plaintext-openapiv2
-KIND:     Pod
-VERSION:  v1
-
-RESOURCE: requiredDuringSchedulingIgnoredDuringExecution <Object>
-
-DESCRIPTION:
-     If the affinity requirements specified by this field are not met at
-     scheduling time, the pod will not be scheduled onto the node. If the
-     affinity requirements specified by this field cease to be met at some point
-     during pod execution (e.g. due to an update), the system may or may not try
-     to eventually evict the pod from its node.
-
-     A node selector represents the union of the results of one or more label
-     queries over a set of nodes; that is, it represents the OR of the selectors
-     represented by the node selector terms.
-
-FIELDS:
-   nodeSelectorTerms	<[]Object> -required-
-     Required. A list of node selector terms. The terms are ORed.
+|...|
 
 $ kubectl explain \
 pods.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms \
 --output=plaintext-openapiv2
-KIND:     Pod
-VERSION:  v1
-
-RESOURCE: nodeSelectorTerms <[]Object>
-
-DESCRIPTION:
-     Required. A list of node selector terms. The terms are ORed.
-
-     A null or empty node selector term matches no objects. The requirements of
-     them are ANDed. The TopologySelectorTerm type implements a subset of the
-     NodeSelectorTerm.
-
-FIELDS:
-   matchExpressions	<[]Object>
-     A list of node selector requirements by nodeʼs labels.
-
-   matchFields	<[]Object>
-     A list of node selector requirements by nodeʼs fields.
+|...|
 ```
 
 ```bash
