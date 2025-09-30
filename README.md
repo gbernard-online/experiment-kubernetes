@@ -32,7 +32,8 @@
 [Practice #21](notebook/practice21.md) PodAffinity  
 [Practice #22](notebook/practice22.md) AntiPodAffinity  
 [Practice #23](notebook/practice23.md) SpreadConstraint  
-[Practice #24](notebook/practice24.md) PersistentVolume NodeAffinity
+[Practice #24](notebook/practice24.md) PersistentVolume NodeAffinity  
+[Practice #25](notebook/practice25.md) Pod InitContainer
 
 [Purge](notebook/purge.md)
 
