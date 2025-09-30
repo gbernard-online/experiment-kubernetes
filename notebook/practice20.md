@@ -20,8 +20,8 @@ pods.spec.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecutio
 |...|
 
 $ kubectl explain \
-pods.spec.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution.labelSelector \
---output=plaintext-openapiv2
+pods.spec.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution \
+--output=plaintext-openapiv2 --recursive
 |...|
 ```
 
