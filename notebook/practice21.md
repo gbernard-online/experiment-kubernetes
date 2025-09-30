@@ -17,8 +17,8 @@ pods.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecuti
 |...|
 
 $ kubectl explain \
-pods.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution.podAffinityTerm \
---output=plaintext-openapiv2
+pods.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution \
+--output=plaintext-openapiv2 --recursive
 |...|
 ```
 
