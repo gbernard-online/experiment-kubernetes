@@ -14,51 +14,9 @@ https://www.youtube.com/watch?v=0KSOqB4nea0&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 
 ```bash
 $ kubectl explain pods.spec.containers.volumeMounts --output=plaintext-openapiv2
-KIND:     Pod
-VERSION:  v1
-
-RESOURCE: volumeMounts <[]Object>
-
-DESCRIPTION:
-     Pod volumes to mount into the containerʼs filesystem. Cannot be updated.
-
-     VolumeMount describes a mounting of a Volume within a container.
-
-FIELDS:
-   mountPath	<string> -required-
-     Path within the container at which the volume should be mounted. Must not
-     contain ':'.
-|...|
-
-   name	<string> -required-
-     This must match the Name of a Volume.
 |...|
 
 $ kubectl explain pods.spec.volumes --output=plaintext-openapiv2
-KIND:     Pod
-VERSION:  v1
-
-RESOURCE: volumes <[]Object>
-
-DESCRIPTION:
-     List of volumes that can be mounted by containers belonging to the pod.
-     More info: https://kubernetes.io/docs/concepts/storage/volumes
-
-     Volume represents a named volume in a pod that may be accessed by any
-     container in the pod.
-
-FIELDS:
-|...|
-
-   emptyDir	<Object>
-     emptyDir represents a temporary directory that shares a podʼs lifetime.
-     More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
-|...|
-
-   name	<string> -required-
-     name of the volume. Must be a DNS_LABEL and unique within the pod. More
-     info:
-     https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 |...|
 ```
 
