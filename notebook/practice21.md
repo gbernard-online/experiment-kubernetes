@@ -11,9 +11,6 @@ https://www.youtube.com/watch?v=zXCFyKc1_H4&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
-$ kubectl explain pods.spec.affinity.podAffinity --output=plaintext-openapiv2
-|...
-
 $ kubectl explain \
 pods.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution \
 --output=plaintext-openapiv2
