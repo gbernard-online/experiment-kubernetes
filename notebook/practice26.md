@@ -14,56 +14,29 @@ https://www.youtube.com/watch?v=q7qEDZYxHzg&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 [![Ubuntu](img/ubuntu.webp "Ubuntu")](https://ubuntu.com)24
 
 ```bash
-$ kubectl explain statefulset --output=plaintext-openapiv2
+$ kubectl api-resources --no-headers | fgrep statefulsets
+statefulsets                        sts        apps/v1                           true    StatefulSet
 
-$ kubectl explain statefulset.spec --output=plaintext-openapiv2
+$ kubectl explain statefulsets --output=plaintext-openapiv2
+|...|
 
-$ kubectl explain statefulset.spec.ordinals --output=plaintext-openapiv2
+$ kubectl explain statefulsets.spec --output=plaintext-openapiv2
+|...|
 
-$ kubectl explain statefulset.spec.volumeClaimTemplates --output=plaintext-openapiv2
-KIND:     StatefulSet
-VERSION:  apps/v1
+$ kubectl explain statefulsets.spec.ordinals --output=plaintext-openapiv2
+|...|
 
-RESOURCE: volumeClaimTemplates <[]Object>
+$ kubectl explain statefulsets.spec.volumeClaimTemplates --output=plaintext-openapiv2
+|...|
 
-DESCRIPTION:
-     volumeClaimTemplates is a list of claims that pods are allowed to
-     reference. The StatefulSet controller is responsible for mapping network
-     identities to claims in a way that maintains the identity of a pod. Every
-     claim in this list must have at least one matching (by name) volumeMount in
-     one container in the template. A claim in this list takes precedence over
-     any volumes in the template, with the same name.
+$ kubectl explain statefulsets.spec.volumeClaimTemplates.spec --output=plaintext-openapiv2
+|...|
 
-     PersistentVolumeClaim is a user's request for and claim to a persistent
-     volume
+$ kubectl explain statefulsets.spec.volumeClaimTemplates.spec --output=plaintext-openapiv2 --recursive
+|...|
+```
 
-FIELDS:
-   apiVersion	<string>
-     APIVersion defines the versioned schema of this representation of an
-     object. Servers should convert recognized schemas to the latest internal
-     value, and may reject unrecognized values. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-
-   kind	<string>
-     Kind is a string value representing the REST resource this object
-     represents. Servers may infer this from the endpoint the client submits
-     requests to. Cannot be updated. In CamelCase. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-
-   metadata	<Object>
-     Standard object's metadata. More info:
-     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-
-   spec	<Object>
-     spec defines the desired characteristics of a volume requested by a pod
-     author. More info:
-     https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
-
-   status	<Object>
-     status represents the current information/status of a persistent volume
-     claim. Read-only. More info:
-     https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
-
+```bash
 $ kubectl create service clusterip nginx --clusterip=None --dry-run=client --output=yaml --tcp=80 |
 kubectl-neat | tee service.yaml
 apiVersion: v1
