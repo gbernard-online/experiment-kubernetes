@@ -245,10 +245,12 @@ $ kubectl run alpine --image=alpine:latest --quiet --restart=Never --rm --stdin 
 wget -O - -q -T 5 nginx.default.svc.cluster.local
 nginx-1
 
-$ kubectl run alpine --image=alpine:latest --quiet --restart=Never --rm --stdin --tty -- wget -O - -q -T 5 nginx.default.svc.cluster.local
+$ kubectl run alpine --image=alpine:latest --quiet --restart=Never --rm --stdin --tty -- \
+wget -O - -q -T 5 nginx.default.svc.cluster.local
 nginx-2
 
-$ kubectl run alpine --image=alpine:latest --quiet --restart=Never --rm --stdin --tty -- wget -O - -q -T 5 nginx.default.svc.cluster.local
+$ kubectl run alpine --image=alpine:latest --quiet --restart=Never --rm --stdin --tty -- \
+wget -O - -q -T 5 nginx.default.svc.cluster.local
 nginx-3
 
 $ kubectl scale statefulset nginx --replicas=6
@@ -268,7 +270,7 @@ nginx   5/6     10m
 
 $ kubectl get statefulsets.apps nginx
 NAME    READY   AGE
-nginx   5/6     11m
+nginx   6/6     11m
 
 $ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
 cluster-worker-red
