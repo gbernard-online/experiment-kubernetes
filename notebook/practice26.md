@@ -322,6 +322,19 @@ pod/nginx-1
 pod/nginx-2
 pod/nginx-3
 
+$ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
+cluster-worker-red
+cluster-worker-yellow
+cluster-worker-green
+
+$ kubectl get persistentvolumeclaims --output=name --selector=app=nginx
+persistentvolumeclaim/nginx-nginx-1
+persistentvolumeclaim/nginx-nginx-2
+persistentvolumeclaim/nginx-nginx-3
+persistentvolumeclaim/nginx-nginx-4
+persistentvolumeclaim/nginx-nginx-5
+persistentvolumeclaim/nginx-nginx-6
+
 $ kubectl delete --filename=service.yaml
 service "nginx" deleted
 
