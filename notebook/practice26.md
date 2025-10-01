@@ -84,8 +84,6 @@ spec:
       containers:
       - image: nginx:alpine
         name: nginx
-        ports:
-        - containerPort: 80
         volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: nginx
@@ -133,8 +131,6 @@ spec:
       containers:
       - image: nginx:alpine
         name: nginx
-        ports:
-        - containerPort: 80
         volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: nginx
