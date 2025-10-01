@@ -205,10 +205,6 @@ $ kubectl get statefulsets.apps nginx
 NAME    READY   AGE
 nginx   3/3     3m18s
 
-$ kubectl get endpointslices.discovery.k8s.io nginx-x4x2f
-NAME          ADDRESSTYPE   PORTS   ENDPOINTS                             AGE
-nginx-x4x2f   IPv4          80      10.244.1.14,10.244.3.13,10.244.2.14   4m
-
 $ kubectl get pods --output=yaml --selector=app=nginx | yq .items[].spec.nodeName
 cluster-worker-red
 cluster-worker-yellow
@@ -218,6 +214,10 @@ $ kubectl get persistentvolumeclaims --output=name --selector=app=nginx
 persistentvolumeclaim/nginx-nginx-1
 persistentvolumeclaim/nginx-nginx-2
 persistentvolumeclaim/nginx-nginx-3
+
+$ kubectl get endpointslices.discovery.k8s.io nginx-x4x2f
+NAME          ADDRESSTYPE   PORTS   ENDPOINTS                             AGE
+nginx-x4x2f   IPv4          80      10.244.1.14,10.244.3.13,10.244.2.14   4m
 
 $ kubectl run alpine --image=alpine:latest --quiet --restart=Never --rm --stdin --tty -- \
 wget -O - -q -T 5 nginx-1.nginx.default.svc.cluster.local
