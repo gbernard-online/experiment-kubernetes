@@ -18,11 +18,14 @@ https://www.youtube.com/watch?v=1HrHv_HBxwI&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjk
 $ kubectl api-resources --no-headers | fgrep storageclass
 storageclasses                      sc         storage.k8s.io/v1                 false   StorageClass
 
-$ kubectl explain storageClasses --output=plaintext-openapiv2
-|...|
-
 $ kubectl api-resources --no-headers | fgrep persistentvolumes
 persistentvolumes                   pv         v1                                false   PersistentVolume
+
+$ kubectl api-resources --no-headers | fgrep persistentvolumeclaims
+persistentvolumeclaims              pvc        v1                                true    PersistentVolumeClaim
+
+$ kubectl explain storageClasses --output=plaintext-openapiv2
+|...|
 
 $ kubectl explain persistentvolumes --output=plaintext-openapiv2
 |...|
@@ -30,16 +33,17 @@ $ kubectl explain persistentvolumes --output=plaintext-openapiv2
 $ kubectl explain persistentvolumes.spec --output=plaintext-openapiv2
 |...|
 
-$ kubectl explain persistentvolumes.spec.nfs --output=plaintext-openapiv2
+$ kubectl explain persistentvolumes.spec --output=plaintext-openapiv2 --recursive
 |...|
 
-$ kubectl api-resources --no-headers | fgrep persistentvolumeclaims
-persistentvolumeclaims              pvc        v1                                true    PersistentVolumeClaim
 
 $ kubectl explain persistentvolumeclaims --output=plaintext-openapiv2
 |...|
 
 $ kubectl explain persistentvolumeclaims.spec --output=plaintext-openapiv2
+|...|
+
+$ kubectl explain persistentvolumeclaims.spec --output=plaintext-openapiv2 --recursive
 |...|
 ```
 
