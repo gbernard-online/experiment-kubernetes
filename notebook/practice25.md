@@ -36,7 +36,7 @@ $ kubectl run nginx --dry-run=client --image=nginx:latest --output=yaml --overri
         "30"
       ],
       "image": "alpine:latest",
-      "name": "alpine1"
+      "name": "alpine-1"
     },
     {
       "command": [
@@ -44,7 +44,7 @@ $ kubectl run nginx --dry-run=client --image=nginx:latest --output=yaml --overri
         "30"
       ],
       "image": "alpine:latest",
-      "name": "alpine2"
+      "name": "alpine-2"
     }
   ]
 }
@@ -64,12 +64,12 @@ spec:
     - sleep
     - "30"
     image: alpine:latest
-    name: alpine1
+    name: alpine-1
   - command:
     - sleep
     - "30"
     image: alpine:latest
-    name: alpine2
+    name: alpine-2
   restartPolicy: OnFailure
 
 $ kubectl apply --filename=pod.yaml
