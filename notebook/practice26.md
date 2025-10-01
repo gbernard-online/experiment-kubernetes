@@ -181,28 +181,29 @@ $ kubectl get statefulsets.apps nginx
 NAME    READY   AGE
 nginx   0/3     31s
 
-$ kubectl get pods --selector=app=nginx
-NAME      READY   STATUS     RESTARTS   AGE
-nginx-1   0/1     Init:0/1   0          45s
+$ kubectl get pods --selector=app=nginx --output=name
+pod/nginx-1
 
 $ kubectl get statefulsets.apps nginx
 NAME    READY   AGE
 nginx   1/3     74s
 
-$ kubectl get pods --selector=app=nginx
-NAME      READY   STATUS     RESTARTS   AGE
-nginx-1   1/1     Running    0          2m15s
-nginx-2   0/1     Init:0/1   0          66s
+$ kubectl get pods --selector=app=nginx --output=name
+pod/nginx-1
+pod/nginx-2
+
+$ kubectl get statefulsets.apps nginx
+NAME    READY   AGE
+nginx   2/3     2m15s
+
+$ kubectl get pods --selector=app=nginx --output=name
+pod/nginx-1
+pod/nginx-2
+pod/nginx-3
 
 $ kubectl get statefulsets.apps nginx
 NAME    READY   AGE
 nginx   3/3     3m18s
-
-$ kubectl get pods --selector=app=nginx
-NAME      READY   STATUS    RESTARTS   AGE
-nginx-1   1/1     Running   0          3m28s
-nginx-2   1/1     Running   0          2m19s
-nginx-3   1/1     Running   0          72s
 
 $ kubectl get endpointslices.discovery.k8s.io nginx-x4x2f
 NAME          ADDRESSTYPE   PORTS   ENDPOINTS                             AGE
@@ -260,13 +261,34 @@ $ kubectl get statefulsets.apps nginx
 NAME    READY   AGE
 nginx   3/6     8m
 
+$ kubectl get pods --selector=app=nginx --output=name
+pod/nginx-1
+pod/nginx-2
+pod/nginx-3
+pod/nginx-4
+
 $ kubectl get statefulsets.apps nginx
 NAME    READY   AGE
 nginx   4/6     9m
 
+$ kubectl get pods --selector=app=nginx --output=name
+pod/nginx-1
+pod/nginx-2
+pod/nginx-3
+pod/nginx-4
+pod/nginx-5
+
 $ kubectl get statefulsets.apps nginx
 NAME    READY   AGE
 nginx   5/6     10m
+
+$ kubectl get pods --selector=app=nginx --output=name
+pod/nginx-1
+pod/nginx-2
+pod/nginx-3
+pod/nginx-4
+pod/nginx-5
+pod/nginx-6
 
 $ kubectl get statefulsets.apps nginx
 NAME    READY   AGE
@@ -287,6 +309,18 @@ persistentvolumeclaim/nginx-nginx-3
 persistentvolumeclaim/nginx-nginx-4
 persistentvolumeclaim/nginx-nginx-5
 persistentvolumeclaim/nginx-nginx-6
+
+$ kubectl scale statefulset nginx --replicas=3
+statefulset.apps/nginx scaled
+
+$ kubectl get statefulsets.apps nginx
+NAME    READY   AGE
+nginx   3/3     13m
+
+$ kubectl get pods --selector=app=nginx --output=name
+pod/nginx-1
+pod/nginx-2
+pod/nginx-3
 
 $ kubectl delete --filename=service.yaml
 service "nginx" deleted
