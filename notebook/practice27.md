@@ -43,8 +43,6 @@ spec:
       containers:
       - image: nginx:alpine
         name: nginx
-        ports:
-        - containerPort: 80
       hostNetwork: true' | kubectl-neat | tee daemonset.yaml
 apiVersion: apps/v1
 kind: DaemonSet
@@ -62,8 +60,6 @@ spec:
       containers:
       - image: nginx:alpine
         name: nginx
-        ports:
-        - containerPort: 80
       hostNetwork: true
 
 $ kubeconform -verbose daemonset.yaml
@@ -119,7 +115,7 @@ $ curl --connect-timeout 5 --fail --show-error --silent 172.17.1.5
 $ kubectl delete --filename=daemonset.yaml
 daemonset.apps "nginx" deleted from default namespace
 
-$ rm --verbose daemonset.yaml
+$ rm --verbose daemonset.yaml 
 removed 'daemonset.yaml'
 ```
 
