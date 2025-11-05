@@ -227,7 +227,8 @@ $ kubectl run alpine --image=alpine:latest --quiet --restart=Never --rm --stdin 
 wget -O - -q -T 5 nginx-3.nginx.default.svc.cluster.local
 nginx-3
 
-$ kubectl run alpine --image=alpine:latest --quiet --restart=Never --rm --stdin --tty -- nslookup nginx.default.svc.cluster.local | cat --squeeze-blank
+$ kubectl run alpine --image=alpine:latest --quiet --restart=Never --rm --stdin --tty -- \
+nslookup nginx.default.svc.cluster.local | cat --squeeze-blank
 Server:		10.96.0.10
 Address:	10.96.0.10:53
 
