@@ -1,8 +1,12 @@
 .editorconfig
+.files.txt
 .prettierrc
+README.md
+kind.webp
+kubernetes.webp
+microk8s.webp
 notebook/img/github.webp
 notebook/img/kind.webp
-notebook/img/kubeadm.webp
 notebook/img/kubernetes.webp
 notebook/img/linkedin.webp
 notebook/img/microk8s.webp
@@ -36,9 +40,3 @@ notebook/practice25.md
 notebook/practice26.md
 notebook/practice27.md
 notebook/purge.md
-kubeadm.webp
-kubernetes.webp
-kind.webp
-microk8s.webp
-.files.txt
-README.md
