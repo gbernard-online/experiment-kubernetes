@@ -66,7 +66,7 @@ $ kubectl get nodes --output=json | jq '.items[].metadata.labels'
 
 ```bash
 $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --restart=OnFailure -- sleep 60 |
-kubectl-neat | yq '.spec.nodeName="cluster-worker-yellow" | sort_keys(.spec)' | tee pod.yaml
+kubectl-neat | yq '.spec.nodeName = "cluster-worker-yellow" | sort_keys(.spec)' | tee pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:

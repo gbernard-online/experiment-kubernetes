@@ -28,7 +28,7 @@ jq '.spec.template.spec.topologySpreadConstraints = input' - <(echo '[
     "topologyKey": "color",
     "whenUnsatisfiable": "DoNotSchedule"
   }
-]') | kubectl-neat --output=yaml  | tee deployment.yaml
+]') | kubectl-neat --output=yaml | tee deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:

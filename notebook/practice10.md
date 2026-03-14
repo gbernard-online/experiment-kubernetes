@@ -22,7 +22,7 @@ $ kubectl explain secrets --output=plaintext-openapiv2
 
 ```bash
 $ kubectl create secret generic alpine --dry-run=client --from-literal=password='~=*SECRET*=~' \
---output=yaml | yq '.type="Opaque"' | kubectl-neat | tee secret.yaml
+--output=yaml | yq '.type = "Opaque"' | kubectl-neat | tee secret.yaml
 apiVersion: v1
 data:
   password: fj0qU0VDUkVUKj1+

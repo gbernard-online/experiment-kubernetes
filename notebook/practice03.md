@@ -35,7 +35,7 @@ $ kubectl explain replicasets.spec.template --output=plaintext-openapiv2
 
 ```bash
 $ kubectl create deployment nginx --dry-run=client --image=nginx:alpine --output=yaml --replicas=3 |
-yq '.kind="ReplicaSet"' | kubectl-neat | tee replicaset.yaml
+yq '.kind = "ReplicaSet"' | kubectl-neat | tee replicaset.yaml
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:

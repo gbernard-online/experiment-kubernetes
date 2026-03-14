@@ -56,7 +56,7 @@ jq '.spec.template.spec.affinity = input' - <(echo '{
       ]
     }
   }
-}') | kubectl-neat --output=yaml  | tee deployment.yaml
+}') | kubectl-neat --output=yaml | tee deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -148,7 +148,7 @@ jq '.spec.template.spec.affinity = input' - <(echo '{
       ]
     }
   }
-}') | kubectl-neat --output=yaml  | tee deployment.yaml
+}') | kubectl-neat --output=yaml | tee deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -236,7 +236,7 @@ jq '.spec.template.spec.affinity = input' - <(echo '{
       ]
     }
   }
-}') | kubectl-neat --output=yaml  | tee deployment.yaml
+}') | kubectl-neat --output=yaml | tee deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:

@@ -22,9 +22,9 @@ $ kubectl run alpine --dry-run=client --image=alpine:latest --output=yaml --over
     }
   ]
 }
-]' --override-type=json --restart=OnFailure -- sleep 60 | yq 'with(.spec.containers; .[1]=.[0])' |
-yq 'with(.spec.containers; (.[0].name,.[0].env[0].value)="alpine-1")' |
-yq 'with(.spec.containers; (.[1].name,.[1].env[0].value)="alpine-2")' |
+]' --override-type=json --restart=OnFailure -- sleep 60 | yq 'with(.spec.containers; .[1] = .[0])' |
+yq 'with(.spec.containers; (.[0].name,.[0].env[0].value) = "alpine-1")' |
+yq 'with(.spec.containers; (.[1].name,.[1].env[0].value) = "alpine-2")' |
 kubectl-neat | tee pod.yaml
 apiVersion: v1
 kind: Pod
