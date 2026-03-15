@@ -36,7 +36,8 @@
 [Practice #26](notebook/practice26.md) StatefulSet  
 [Practice #27](notebook/practice27.md) DaemonSet  
 [Practice #28](notebook/practice28.md) ServiceAccount  
-[Practice #29](notebook/practice29.md) ServiceAccount Role RoleBinding
+[Practice #29](notebook/practice29.md) ServiceAccount Role RoleBinding  
+[Practice #30](notebook/practice30.md) ServiceAccount ClusterRole ClusterRoleBinding
 
 [Purge](notebook/purge.md)
 

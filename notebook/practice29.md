@@ -7,7 +7,7 @@ https://kubernetes.io/docs/reference/access-authn-authz/rbac
 
 https://www.youtube.com/watch?v=gkOMeqUV52U&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
-## PRACTICE #29- KUBERNETES - KIND - UBUNTU 24
+## PRACTICE #29 - KUBERNETES - KIND - UBUNTU 24
 
 [![Kubernetes](img/kubernetes.webp "Kubernetes")](https://kubernetes.io)1
 [![Kind](img/kind.webp "Kind")](https://kind.sigs.k8s.io)0
