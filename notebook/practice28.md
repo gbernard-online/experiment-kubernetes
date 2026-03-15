@@ -99,7 +99,7 @@ serviceaccount "nginx" deleted from default namespace
 
 $ rm --verbose pod.yaml serviceaccount.yaml
 removed 'pod.yaml'
-removed 'daemonset.yaml'
+removed 'serviceaccount.yaml'
 ```
 
 &nbsp;
