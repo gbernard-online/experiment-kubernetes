@@ -62,6 +62,26 @@ no
 $ kubectl auth can-i --as=system:serviceaccount:default:nginx watch pods
 no
 
+$ kubectl api-resources --no-headers --output=yaml | yq '.resources.[] | select(.kind == "Pod")'
+categories:
+  - all
+kind: Pod
+name: pods
+namespaced: true
+shortNames:
+  - po
+singularName: pod
+verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+version: v1
+
 $ kubectl create role nginx --verb=get,list --resource=pods --dry-run=client --output=yaml |
 kubectl-neat | tee role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
