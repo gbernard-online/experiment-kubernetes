@@ -50,9 +50,6 @@ serviceaccount.yaml - ServiceAccount nginx is valid
 $ kubectl apply --filename=serviceaccount.yaml
 serviceaccount/nginx created
 
-$ kubectl auth can-i --as=system:serviceaccount:default:nginx --list
-|...|
-
 $ kubectl auth can-i --as=system:serviceaccount:default:nginx get pods
 no
 
@@ -124,8 +121,9 @@ rolebinding.yaml - RoleBinding nginx is valid
 $ kubectl apply --filename=rolebinding.yaml
 rolebinding.rbac.authorization.k8s.io/nginx created
 
-$ kubectl auth can-i --as=system:serviceaccount:default:nginx --list --no-headers | fgrep pods
-pods                                            []                                     []    [get list]
+$ kubectl auth can-i --as=system:serviceaccount:default:nginx --list --no-headers | fgrep pods |
+tr --squeeze-repeats ' '
+pods [] [] [get list]
 
 $ kubectl auth can-i --as=system:serviceaccount:default:nginx get pods
 yes
