@@ -35,7 +35,8 @@
 [Practice #25](notebook/practice25.md) Pod InitContainer  
 [Practice #26](notebook/practice26.md) StatefulSet  
 [Practice #27](notebook/practice27.md) DaemonSet  
-[Practice #28](notebook/practice28.md) ServiceAccount
+[Practice #28](notebook/practice28.md) ServiceAccount  
+[Practice #29](notebook/practice29.md) ServiceAccount Role RoleBinding
 
 [Purge](notebook/purge.md)
 
