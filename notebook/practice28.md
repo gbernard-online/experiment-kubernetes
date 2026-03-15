@@ -2,7 +2,8 @@
 
 ## REFERENCES
 
-https://kubernetes.io/docs/concepts/security/service-accounts
+https://kubernetes.io/docs/concepts/security/service-accounts  
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account
 
 https://www.youtube.com/watch?v=BdXhAvXDqWY&list=PLn6POgpklwWo6wiy2G3SjBubF6zXjksap
 
