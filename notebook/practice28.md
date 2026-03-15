@@ -18,6 +18,9 @@ serviceaccounts                     sa         v1                               
 
 $ kubectl explain serviceaccounts --output=plaintext-openapiv2
 |...|
+
+$ kubectl explain pods.spec.serviceAccountName --output=plaintext-openapiv2
+|...|
 ```
 
 ```bash
