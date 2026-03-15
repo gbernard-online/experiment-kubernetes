@@ -37,7 +37,8 @@ $ kubectl explain rolebindings.subjects --output=plaintext-openapiv2
 ```
 
 ```bash
-$ kubectl create serviceaccount nginx --dry-run=client --output=yaml | kubectl-neat | tee serviceaccount.yaml
+$ kubectl create serviceaccount nginx --dry-run=client --output=yaml |
+kubectl-neat | tee serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -61,7 +62,8 @@ no
 $ kubectl auth can-i --as=system:serviceaccount:default:nginx watch pods
 no
 
-$ kubectl create role nginx --verb=get,list --resource=pods --dry-run=client --output=yaml | kubectl-neat | tee role.yaml
+$ kubectl create role nginx --verb=get,list --resource=pods --dry-run=client --output=yaml |
+kubectl-neat | tee role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
