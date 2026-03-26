@@ -76,6 +76,9 @@ $ kubectl get pods nginx
 NAME    READY   STATUS      RESTARTS   AGE
 nginx   0/1     Completed   0          65s
 
+$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+false
+
 $ kubectl delete --filename=pod.yaml
 pod "nginx" deleted from default namespace
 
@@ -113,6 +116,135 @@ nginx   1/1     Running   0          78s
 
 $ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
 true
+
+$ kubectl delete --filename=pod.yaml
+pod "nginx" deleted from default namespace
+
+$ rm --verbose pod.yaml
+removed 'pod.yaml'
+```
+
+```bash
+$ kubectl run nginx --dry-run=client --image=nginx:alpine --output=json --restart=Never |
+jq '.spec.containers[0].livenessProbe = input' - <(echo '{
+  "httpGet": {
+    "port":8080
+  },
+  "initialDelaySeconds": 30,
+  "periodSeconds": 15
+}') | kubectl-neat --output=yaml | tee pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  containers:
+  - image: nginx:alpine
+    livenessProbe:
+      httpGet:
+        port: 8080
+      initialDelaySeconds: 30
+      periodSeconds: 15
+    name: nginx
+  restartPolicy: Never
+
+$ kubeconform -verbose pod.yaml
+pod.yaml - Pod nginx is valid
+
+$ kubectl apply --filename=pod.yaml
+pod/nginx created
+
+$ kubectl get pods nginx
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   0/1     Running   0          6s
+
+$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+true
+
+$ kubectl get pods nginx
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          37s
+
+$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+true
+
+$ kubectl get pods nginx
+NAME    READY   STATUS      RESTARTS   AGE
+nginx   0/1     Completed   0          68s
+
+$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+false
+
+$ kubectl delete --filename=pod.yaml
+pod "nginx" deleted from default namespace
+
+$ rm --verbose pod.yaml
+removed 'pod.yaml'
+```
+
+```bash
+$ kubectl run nginx --dry-run=client --image=nginx:alpine --output=json --restart=Never |
+jq '.spec.containers[0].readinessProbe = input' - <(echo '{
+  "httpGet": {
+    "port":8080
+  },
+  "initialDelaySeconds": 30,
+  "periodSeconds": 15
+}') | kubectl-neat --output=yaml | tee pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  containers:
+  - image: nginx:alpine
+    name: nginx
+    readinessProbe:
+      httpGet:
+        port: 8080
+      initialDelaySeconds: 30
+      periodSeconds: 15
+  restartPolicy: Never
+
+$ kubeconform -verbose pod.yaml
+pod.yaml - Pod nginx is valid
+
+$ kubectl apply --filename=pod.yaml
+pod/nginx created
+
+$ kubectl get pods nginx
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   0/1     Running   0          8s
+
+$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+true
+
+$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].ready
+false
+
+$ kubectl get pods nginx
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          37s
+
+$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+true
+
+$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].ready
+false
+
+$ kubectl get pods nginx
+NAME    READY   STATUS      RESTARTS   AGE
+nginx   0/1     Completed   0          77s
+
+$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+true
+
+$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].ready
+false
 
 $ kubectl delete --filename=pod.yaml
 pod "nginx" deleted from default namespace
