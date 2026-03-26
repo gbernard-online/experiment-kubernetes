@@ -62,21 +62,24 @@ $ kubectl get pods nginx
 NAME    READY   STATUS    RESTARTS   AGE
 nginx   0/1     Running   0          6s
 
-$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+$ kubectl get pods nginx --output=yaml | yq '.status.containerStatuses[0] | (.started,.ready)'
+false
 false
 
 $ kubectl get pods nginx
 NAME    READY   STATUS    RESTARTS   AGE
-nginx   1/1     Running   0          37s
+nginx   0/1     Running   0          37s
 
-$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+$ kubectl get pods nginx --output=yaml | yq '.status.containerStatuses[0] | (.started,.ready)'
+false
 false
 
 $ kubectl get pods nginx
 NAME    READY   STATUS      RESTARTS   AGE
 nginx   0/1     Completed   0          65s
 
-$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+$ kubectl get pods nginx --output=yaml | yq '.status.containerStatuses[0] | (.started,.ready)'
+false
 false
 
 $ kubectl delete --filename=pod.yaml
@@ -100,21 +103,24 @@ $ kubectl get pods nginx
 NAME    READY   STATUS    RESTARTS   AGE
 nginx   0/1     Running   0          7s
 
-$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+$ kubectl get pods nginx --output=yaml | yq '.status.containerStatuses[0] | (.started,.ready)'
+false
 false
 
 $ kubectl get pods nginx
 NAME    READY   STATUS    RESTARTS   AGE
 nginx   1/1     Running   0          34s
 
-$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+$ kubectl get pods nginx --output=yaml | yq '.status.containerStatuses[0] | (.started,.ready)'
+true
 true
 
 $ kubectl get pods nginx
 NAME    READY   STATUS    RESTARTS   AGE
 nginx   1/1     Running   0          78s
 
-$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+$ kubectl get pods nginx --output=yaml | yq '.status.containerStatuses[0] | (.started,.ready)'
+true
 true
 
 $ kubectl delete --filename=pod.yaml
@@ -160,21 +166,24 @@ $ kubectl get pods nginx
 NAME    READY   STATUS    RESTARTS   AGE
 nginx   1/1     Running   0          6s
 
-$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+$ kubectl get pods nginx --output=yaml | yq '.status.containerStatuses[0] | (.started,.ready)'
+true
 true
 
 $ kubectl get pods nginx
 NAME    READY   STATUS    RESTARTS   AGE
 nginx   1/1     Running   0          37s
 
-$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+$ kubectl get pods nginx --output=yaml | yq '.status.containerStatuses[0] | (.started,.ready)'
+true
 true
 
 $ kubectl get pods nginx
 NAME    READY   STATUS      RESTARTS   AGE
 nginx   0/1     Completed   0          68s
 
-$ kubectl get pods nginx --output=yaml | yq .status.containerStatuses[0].started
+$ kubectl get pods nginx --output=yaml | yq '.status.containerStatuses[0] | (.started,.ready)'
+false
 false
 
 $ kubectl delete --filename=pod.yaml
