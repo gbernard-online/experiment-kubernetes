@@ -197,7 +197,6 @@ Transfer rate:          5.26 [Kbytes/sec] received
 $ kubectl get pods --output=yaml --selector=app=apache | yq .items[].spec.nodeName
 cluster-worker-red
 cluster-worker-yellow
-cluster-worker-yellow
 cluster-worker-red
 cluster-worker-green
 
