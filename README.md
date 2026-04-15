@@ -39,7 +39,8 @@
 [Practice #29](notebook/practice29.md) ServiceAccount Role RoleBinding  
 [Practice #30](notebook/practice30.md) ServiceAccount ClusterRole ClusterRoleBinding  
 [Practice #31](notebook/practice31.md) Probe Startup Liveness Readiness  
-[Practice #32](notebook/practice32.md) Resource Limit Request CPU
+[Practice #32](notebook/practice32.md) Resource Limit Request CPU  
+[Practice #33](notebook/practice33.md) HorizontalPodAutoscaling CPU
 
 [Purge](notebook/purge.md)
 
