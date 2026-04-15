@@ -98,10 +98,6 @@ $ kubectl top node
 NAME     CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)
 ubuntu   337m         8%       1618Mi          42%
 
-$ kubectl top pod
-NAME    CPU(cores)   MEMORY(bytes)
-nginx   0m           4Mi
-
 $ kubectl delete pod/nginx
 pod "nginx" deleted
 ```
