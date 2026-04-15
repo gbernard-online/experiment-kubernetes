@@ -38,7 +38,8 @@
 [Practice #28](notebook/practice28.md) ServiceAccount  
 [Practice #29](notebook/practice29.md) ServiceAccount Role RoleBinding  
 [Practice #30](notebook/practice30.md) ServiceAccount ClusterRole ClusterRoleBinding  
-[Practice #31](notebook/practice31.md) Pod Probe Startup Liveness Readiness
+[Practice #31](notebook/practice31.md) Pod Probe Startup Liveness Readiness  
+[Practice #32](notebook/practice32.md) Pod Resource Limit Request CPU
 
 [Purge](notebook/purge.md)
 
