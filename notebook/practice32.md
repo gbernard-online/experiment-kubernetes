@@ -25,7 +25,7 @@ $ kubectl explain pods.spec.containers.resources.requests --output=plaintext-ope
 ```
 
 ```bash
-$ kubectl run apache --dry-run=client --image=registry.k8s.io/hpa-example --output=json |
+$ kubectl run apache --dry-run=client --image=registry.k8s.io/hpa-example:latest --output=json |
 kubectl-neat --output=yaml | tee pod.yaml
 apiVersion: v1
 kind: Pod
@@ -35,8 +35,8 @@ metadata:
   name: apache
 spec:
   containers:
-  - image: registry.k8s.io/hpa-example
-    name: apach
+  - image: registry.k8s.io/hpa-example:latest
+    name: apache
 
 $ kubeconform -verbose pod.yaml
 pod.yaml - Pod apache is valid
