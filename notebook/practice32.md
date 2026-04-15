@@ -69,7 +69,7 @@ Licensed to The Apache Software Foundation, http://www.apache.org/
 Benchmarking 10.244.3.5 (be patient)
 Finished 1254 requests
 
-[...]
+|...|
 
 Concurrency Level:      1
 Time taken for tests:   60.047 seconds
@@ -82,7 +82,7 @@ Time per request:       47.884 [ms] (mean)
 Time per request:       47.884 [ms] (mean, across all concurrent requests)
 Transfer rate:          4.20 [Kbytes/sec] received
 
-[...]
+|...|
 
 $ kubectl top pod apache
 NAME     CPU(cores)   MEMORY(bytes)
@@ -97,7 +97,7 @@ Licensed to The Apache Software Foundation, http://www.apache.org/
 Benchmarking 10.244.3.5 (be patient)
 Finished 3648 requests
 
-[...]
+|...|
 
 Concurrency Level:      3
 Time taken for tests:   60.003 seconds
@@ -110,7 +110,7 @@ Time per request:       49.344 [ms] (mean)
 Time per request:       16.448 [ms] (mean, across all concurrent requests)
 Transfer rate:          12.23 [Kbytes/sec] received
 
-[...]
+|...|
 
 $ kubectl top pod apache
 NAME     CPU(cores)   MEMORY(bytes)
@@ -159,7 +159,7 @@ Licensed to The Apache Software Foundation, http://www.apache.org/
 Benchmarking 10.244.3.6 (be patient)
 Finished 1247 requests
 
-[...]
+|...|
 
 Concurrency Level:      1
 Time taken for tests:   60.034 seconds
@@ -172,7 +172,7 @@ Time per request:       48.142 [ms] (mean)
 Time per request:       48.142 [ms] (mean, across all concurrent requests)
 Transfer rate:          4.18 [Kbytes/sec] received
 
-[...]
+|...|
 
 $ kubectl top pod apache
 NAME     CPU(cores)   MEMORY(bytes)
@@ -187,7 +187,7 @@ Licensed to The Apache Software Foundation, http://www.apache.org/
 Benchmarking 10.244.3.6 (be patient)
 Finished 1021 requests
 
-[...]
+|...|
 
 Concurrency Level:      3
 Time taken for tests:   60.088 seconds
@@ -200,7 +200,7 @@ Time per request:       176.555 [ms] (mean)
 Time per request:       58.852 [ms] (mean, across all concurrent requests)
 Transfer rate:          3.42 [Kbytes/sec] received
 
-[...]
+|...|
 
 $ kubectl top pod apache
 NAME     CPU(cores)   MEMORY(bytes)
