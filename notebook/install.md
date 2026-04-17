@@ -405,8 +405,20 @@ $ kind create cluster --config=- <<EOF
 apiVersion: kind.x-k8s.io/v1alpha4
 kind: Cluster
 name: cluster
+networking:
+  apiServerAddress: 0.0.0.0
+  apiServerPort: 6443
 nodes:
-- role: control-plane
+- extraPortMappings:
+  - containerPort: 80
+    hostPort: 80
+    listenAddress: 127.0.0.1
+    protocol: TCP
+  - containerPort: 443
+    hostPort: 443
+    listenAddress: 127.0.0.1
+    protocol: TCP
+  role: control-plane
 - kubeadmConfigPatches:
   - |
     kind: JoinConfiguration
@@ -448,8 +460,8 @@ kubectl cluster-info --context kind-cluster
 Thanks for using kind! 😊
 
 $ kubectl cluster-info --context=kind-cluster
-Kubernetes control plane is running at https://127.0.0.1:41155
-CoreDNS is running at https://127.0.0.1:41155/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+Kubernetes control plane is running at https://0.0.0.0:6443
+CoreDNS is running at https://0.0.0.0:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
@@ -469,7 +481,7 @@ cluster-worker-red      Ready    <none>          2m9s    v1.34.0
 cluster-worker-yellow   Ready    <none>          2m9s    v1.34.0
 
 $ docker container ls --format='{{ .Names }} {{ .Ports }}'
-cluster-control-plane 127.0.0.1:42207->6443/tcp
+cluster-control-plane 127.0.0.1:80->80/tcp, 127.0.0.1:443->443/tcp, 0.0.0.0:6443->6443/tcp
 cluster-worker
 cluster-worker3
 cluster-worker2
@@ -507,17 +519,14 @@ patches:
       path: /spec/template/spec/containers/0/args/-
       value: --kubelet-insecure-tls
     - op: add
+      path: /spec/template/spec/nodeSelector/node-role.kubernetes.io~1control-plane
+      value: ''
+    - op: add
       path: "/spec/template/spec/tolerations"
       value:
         - effect: NoSchedule
-          key: node-role.kubernetes.io/master
-          operator: Equal
-        - effect: NoSchedule
           key: node-role.kubernetes.io/control-plane
           operator: Equal
-    - op: add
-      path: "/spec/template/spec/nodeSelector/kubernetes.io~1hostname"
-      value: cluster-control-plane
   target:
     kind: Deployment
     name: metrics-server
@@ -550,8 +559,8 @@ $ cat >kustomization.yaml <<EOF
 patches:
 - patch: |-
     - op: add
-      path: "/spec/template/spec/nodeSelector/kubernetes.io~1hostname"
-      value: cluster-control-plane
+      path: /spec/template/spec/nodeSelector/node-role.kubernetes.io~1control-plane
+      value: ''
   target:
     kind: Deployment
     name: ingress-nginx-controller
