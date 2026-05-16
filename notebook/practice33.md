@@ -29,7 +29,8 @@ $ kubectl explain horizontalpodautoscalers.spec.metrics --output=plaintext-opena
 ```
 
 ```bash
-$ kubectl create deployment apache --dry-run=client --image=registry.k8s.io/hpa-example --output=json | jq '.spec.template.spec.containers[0].resources = input' - <(echo '{
+$ kubectl create deployment apache --dry-run=client --image=registry.k8s.io/hpa-example --output=json |
+jq '.spec.template.spec.containers[0].resources = input' - <(echo '{
   "limits": {
     "cpu": "1000m"
   },
